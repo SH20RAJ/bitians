@@ -5,7 +5,7 @@ import {
   Home, 
   TrendingUp, 
   Plus, 
-  Flame, 
+  Play, 
   User, 
   Users,
   Calendar,
@@ -37,10 +37,10 @@ export default function BottomNavigation({ currentPage = "home" }) {
       isSpecial: true,
     },
     {
-      id: "hot",
-      label: "Hot",
-      icon: Flame,
-      href: "/hot-or-not",
+      id: "watch",
+      label: "Watch",
+      icon: Play,
+      href: "/watch",
     },
     {
       id: "profile",
