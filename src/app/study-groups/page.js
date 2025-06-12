@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { PageLayout } from "@/components/PageLayout";
+import  {PageLayout}  from "@/components/PageLayout";
 import { Button } from "@/components/ui/Button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
