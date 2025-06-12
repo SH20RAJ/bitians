@@ -6,6 +6,9 @@ import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Avatar } from '@/components/ui/Avatar';
 import { Badge } from '@/components/ui/Badge';
+import { MediaPlayer, MediaGrid } from '@/components/ui/MediaPlayer';
+import { KBatchBadge } from '@/components/ui/KBatchBadge';
+import { RichText } from '@/components/ui/RichText';
 import BottomNavigation from '@/components/BottomNavigation';
 import { 
   Edit3, 
@@ -33,13 +36,14 @@ export default function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false);
   const [profileData, setProfileData] = useState({
     name: 'Alex Johnson',
-    bio: '🎓 Final Year CSE | 💻 Full Stack Developer | 🚀 Tech Enthusiast',
+    bio: '🎓 Final Year CSE | 💻 Full Stack Developer | 🚀 Tech Enthusiast | Love #coding and #innovation',
     location: 'BIT Mesra, Ranchi',
     email: 'alex.johnson@bitmesra.ac.in',
     phone: '+91 9876543210',
     joinDate: 'August 2021',
     branch: 'Computer Science & Engineering',
     year: '4th Year',
+    kBatch: 'K21',
     followers: 234,
     following: 189,
     posts: 67
@@ -48,24 +52,48 @@ export default function ProfilePage() {
   const [userPosts] = useState([
     {
       id: 1,
-      content: 'Just finished my final year project presentation! 🎉 The professors were really impressed with our AI-based solution.',
+      content: 'Just finished my final year project presentation! 🎉 The professors were really impressed with our AI-based solution. Thanks to @professor_sharma for the guidance and @team_alpha for the amazing collaboration. #fyp #ai #bitmesra #graduation',
       timeAgo: '2 hours ago',
       likes: 45,
       comments: 12,
-      type: 'text'
+      type: 'multimedia',
+      media: [
+        {
+          id: "p1",
+          type: "image",
+          url: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&h=400&fit=crop",
+          alt: "Final year project presentation",
+          caption: "Our AI-based solution presentation slides"
+        },
+        {
+          id: "p2", 
+          type: "video",
+          url: "https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4",
+          thumbnail: "https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=600&h=400&fit=crop",
+          caption: "Project demo video"
+        }
+      ]
     },
     {
       id: 2,
-      content: 'Amazing sunset from the hostel rooftop! BIT Mesra campus looks beautiful in golden hour ✨',
+      content: 'Amazing sunset from the hostel rooftop! BIT Mesra campus looks beautiful in golden hour ✨ Perfect spot for relaxation after a long day of coding. #sunset #hostellife #bitmesra #photography #peaceful',
       timeAgo: '1 day ago',
       likes: 67,
       comments: 8,
-      type: 'image',
-      imageUrl: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&h=300&fit=crop'
+      type: 'multimedia',
+      media: [
+        {
+          id: "p3",
+          type: "image",
+          url: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=400&fit=crop",
+          alt: "Beautiful sunset from hostel rooftop",
+          caption: "Golden hour at BIT Mesra"
+        }
+      ]
     },
     {
       id: 3,
-      content: 'Tech fest preparations are going great! Our team is ready to showcase our innovations 💻',
+      content: 'Tech fest preparations are going great! Our team is ready to showcase our innovations 💻 Special shoutout to @sarah_tech and @rohit_dev for their incredible work. #techfest #innovation #teamwork #coding #hackathon',
       timeAgo: '3 days ago',
       likes: 23,
       comments: 15,
@@ -152,8 +180,20 @@ export default function ProfilePage() {
                   </div>
                 ) : (
                   <>
-                    <h2 className="text-2xl font-bold">{profileData.name}</h2>
-                    <p className="text-gray-600">{profileData.bio}</p>
+                    <div className="flex items-center space-x-3">
+                      <h2 className="text-2xl font-bold">{profileData.name}</h2>
+                      <KBatchBadge kBatch={profileData.kBatch} size="md" />
+                    </div>
+                    <RichText 
+                      content={profileData.bio}
+                      className="text-gray-600"
+                      onHashtagClick={(hashtag) => {
+                        console.log('Hashtag clicked:', hashtag);
+                      }}
+                      onMentionClick={(username) => {
+                        console.log('Mention clicked:', username);
+                      }}
+                    />
                   </>
                 )}
 
@@ -277,16 +317,32 @@ export default function ProfilePage() {
                     <div className="flex-1">
                       <div className="flex items-center space-x-2">
                         <h3 className="font-semibold">{profileData.name}</h3>
+                        <KBatchBadge kBatch={profileData.kBatch} size="sm" />
                         <span className="text-sm text-gray-500">{post.timeAgo}</span>
                       </div>
-                      <p className="mt-2 text-gray-800">{post.content}</p>
                       
-                      {post.type === 'image' && post.imageUrl && (
+                      <div className="mt-2">
+                        <RichText 
+                          content={post.content}
+                          className="text-gray-800"
+                          onHashtagClick={(hashtag) => {
+                            console.log('Hashtag clicked:', hashtag);
+                          }}
+                          onMentionClick={(username) => {
+                            console.log('Mention clicked:', username);
+                          }}
+                        />
+                      </div>
+                      
+                      {/* Media Content */}
+                      {post.media && post.media.length > 0 && (
                         <div className="mt-3">
-                          <img 
-                            src={post.imageUrl} 
-                            alt="Post content" 
-                            className="w-full rounded-lg max-h-96 object-cover"
+                          <MediaGrid 
+                            mediaItems={post.media}
+                            className="rounded-lg overflow-hidden"
+                            onMediaClick={(media) => {
+                              console.log('Media clicked:', media);
+                            }}
                           />
                         </div>
                       )}

@@ -6,6 +6,9 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/Avatar';
 import { Badge } from '@/components/ui/Badge';
+import { MediaPlayer, MediaGrid } from '@/components/ui/MediaPlayer';
+import { KBatchBadge } from '@/components/ui/KBatchBadge';
+import { RichText } from '@/components/ui/RichText';
 import { useTheme } from '@/components/ThemeProvider';
 import { useToast } from '@/components/Toast';
 import BottomNavigation from '@/components/BottomNavigation';
@@ -45,17 +48,17 @@ export default function HomePage() {
     const [likedPosts, setLikedPosts] = useState(new Set());
     const [bookmarkedPosts, setBookmarkedPosts] = useState(new Set());
 
-    useEffect(() => {
-        setIsLoaded(true);
-        // Welcome toast
-        setTimeout(() => {
-            toast({
-                title: 'Welcome to BITians.org! 🎉',
-                description: 'Connect with your fellow BIT Mesra students',
-                type: 'success',
-            });
-        }, 1000);
-    }, [toast]);
+    // useEffect(() => {
+    //     setIsLoaded(true);
+    //     // Welcome toast
+    //     setTimeout(() => {
+    //         toast({
+    //             title: 'Welcome to BITians.org! 🎉',
+    //             description: 'Connect with your fellow BIT Mesra students',
+    //             type: 'success',
+    //         });
+    //     }, 1000);
+    // }, [toast]);
 
     const handleLike = (postId) => {
         const newLiked = new Set(likedPosts);
@@ -124,50 +127,94 @@ export default function HomePage() {
             id: 1,
             author: 'Arjun Sharma',
             avatar: 'AS',
+            kBatch: 'K23',
             time: '2h',
-            content: 'Just aced my Data Structures exam! 🎉 Thanks to the amazing study group we formed last week. Collaboration really works!',
+            content: 'Just aced my Data Structures exam! 🎉 Thanks to the amazing study group we formed last week. Collaboration really works! Special thanks to @priya_mehta and @rohit_verma for the help. #DSA #academics #bitlife #teamwork',
             likes: 42,
             comments: 8,
             branch: 'CSE',
             year: '2nd Year',
-            verified: true
+            verified: true,
+            category: 'academic',
+            media: [
+                {
+                    id: "m1",
+                    type: "image",
+                    url: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=500&h=300&fit=crop",
+                    alt: "Data Structures textbook and notes",
+                    caption: "My DSA notes and reference books"
+                }
+            ]
         },
         {
             id: 2,
             author: 'Photography Club',
             avatar: 'PC',
+            kBatch: 'Official',
             time: '3h',
-            content: '🔥 New post in Photography Circle! Check out this stunning sunset shot from the hostel terrace. Join our circle for daily photo challenges and tips! #BitPhotography',
+            content: '🔥 New post in Photography Circle! Check out this stunning sunset shot from the hostel terrace. Join our circle for daily photo challenges and tips! @everyone come check this out! #BitPhotography #sunset #hostellife #photography',
             likes: 67,
             comments: 23,
             branch: 'Circle',
             year: 'Community',
             verified: true,
-            isCirclePost: true
+            isCirclePost: true,
+            category: 'circles',
+            media: [
+                {
+                    id: "m2",
+                    type: "image",
+                    url: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=400&fit=crop",
+                    alt: "Beautiful sunset from hostel terrace",
+                    caption: "Sunset from Hostel C terrace - Shot on iPhone"
+                }
+            ]
         },
         {
             id: 3,
             author: 'Priya Mehta',
             avatar: 'PM',
+            kBatch: 'K22',
             time: '4h',
-            content: 'Anyone interested in a weekend trek to Hundru Falls? Looking for adventure buddies! 🏔️',
+            content: 'Anyone interested in a weekend trek to Hundru Falls? Looking for adventure buddies! 🏔️ Planning to leave Saturday morning. @arjun_sharma @neha_gupta you guys in? #trek #adventure #weekend #hundru_falls #bitlife',
             likes: 28,
             comments: 15,
             branch: 'ECE',
             year: '3rd Year',
-            verified: false
+            verified: false,
+            category: 'social',
+            media: [
+                {
+                    id: "m4",
+                    type: "video",
+                    url: "https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4",
+                    thumbnail: "https://images.unsplash.com/photo-1551632811-561732d1e306?w=600&h=400&fit=crop",
+                    caption: "Last year's trek to Hundru Falls - it was amazing!"
+                }
+            ]
         },
         {
             id: 4,
             author: 'Rahul Singh',
             avatar: 'RS',
+            kBatch: 'K21',
             time: '6h',
-            content: 'Selling my Java programming books - perfect condition! Great for semester prep. DM if interested 📚',
+            content: 'Selling my Java programming books - perfect condition! Great for semester prep. DM if interested 📚 Especially good for @k24_students who are starting with programming. #books #java #programming #semester #bitmart #textbooks',
             likes: 19,
             comments: 5,
             branch: 'IT',
             year: '4th Year',
-            verified: true
+            verified: true,
+            category: 'marketplace',
+            media: [
+                {
+                    id: "m5",
+                    type: "image",
+                    url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&h=300&fit=crop",
+                    alt: "Java programming books for sale",
+                    caption: "Complete Java reference books - like new condition"
+                }
+            ]
         }
     ];
 
@@ -467,6 +514,8 @@ export default function HomePage() {
                                                                 <span className="text-xs text-white">✓</span>
                                                             </div>
                                                         )}
+                                                        {/* K-Batch Badge */}
+                                                        <KBatchBadge kBatch={post.kBatch} size="sm" />
                                                         <Badge variant="outline" className={`text-xs ${post.isCirclePost ? 'border-indigo-300 text-indigo-600 dark:border-indigo-700 dark:text-indigo-400' : ''
                                                             }`}>
                                                             {post.branch}
@@ -484,8 +533,49 @@ export default function HomePage() {
                                             </Button>
                                         </div>
 
-                                        {/* Post Content */}
-                                        <p className="mb-4 leading-relaxed">{post.content}</p>
+                                        {/* Post Content with Rich Text */}
+                                        <div className="mb-4">
+                                            <RichText 
+                                                content={post.content} 
+                                                className="leading-relaxed"
+                                                onHashtagClick={(hashtag) => {
+                                                    toast({
+                                                        title: `Hashtag clicked: ${hashtag}`,
+                                                        description: `Searching for posts with ${hashtag}`,
+                                                        type: "info",
+                                                        duration: 2000,
+                                                    });
+                                                }}
+                                                onMentionClick={(username) => {
+                                                    toast({
+                                                        title: `@${username}`,
+                                                        description: `Viewing ${username}'s profile`,
+                                                        type: "info",
+                                                        duration: 2000,
+                                                    });
+                                                    // Navigate to user profile
+                                                    window.location.href = `/profile/${username}`;
+                                                }}
+                                            />
+                                        </div>
+
+                                        {/* Media Content */}
+                                        {post.media && post.media.length > 0 && (
+                                            <div className="mb-4">
+                                                <MediaGrid 
+                                                    mediaItems={post.media}
+                                                    className="rounded-lg overflow-hidden"
+                                                    onMediaClick={(media) => {
+                                                        toast({
+                                                            title: "Media opened",
+                                                            description: media.caption || "Viewing media",
+                                                            type: "info",
+                                                            duration: 2000,
+                                                        });
+                                                    }}
+                                                />
+                                            </div>
+                                        )}
 
                                         {/* Post Actions */}
                                         <div className="flex items-center justify-between pt-4 border-t border-border/50">

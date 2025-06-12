@@ -6,6 +6,9 @@ import { Card, CardContent } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
 import { Avatar, AvatarFallback } from "@/components/ui/Avatar";
 import { Badge } from "@/components/ui/Badge";
+import { MediaPlayer, MediaGrid } from "@/components/ui/MediaPlayer";
+import { KBatchBadge } from "@/components/ui/KBatchBadge";
+import { RichText } from "@/components/ui/RichText";
 import { useTheme } from "@/components/ThemeProvider";
 import { useToast } from "@/components/Toast";
 import BottomNavigation from "@/components/BottomNavigation";
@@ -117,61 +120,109 @@ export default function FeedsPage() {
             id: 1,
             author: "Arjun Sharma",
             avatar: "AS",
+            kBatch: "K23",
             time: "2h",
-            content: "Just aced my Data Structures exam! 🎉 Thanks to the amazing study group we formed last week. Collaboration really works!",
+            content: "Just aced my Data Structures exam! 🎉 Thanks to the amazing study group we formed last week. Collaboration really works! Special thanks to @priya_mehta and @rohit_verma for the help. #DSA #academics #bitlife #teamwork",
             likes: 42,
             comments: 8,
             branch: "CSE",
             year: "2nd Year",
             verified: true,
-            category: "academic"
+            category: "academic",
+            media: [
+                {
+                    id: "m1",
+                    type: "image",
+                    url: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=500&h=300&fit=crop",
+                    alt: "Data Structures textbook and notes",
+                    caption: "My DSA notes and reference books"
+                }
+            ]
         },
         {
             id: 2,
             author: "Photography Club",
             avatar: "PC",
+            kBatch: "Official",
             time: "3h",
-            content: "🔥 New post in Photography Circle! Check out this stunning sunset shot from the hostel terrace. Join our circle for daily photo challenges and tips! #BitPhotography",
+            content: "🔥 New post in Photography Circle! Check out this stunning sunset shot from the hostel terrace. Join our circle for daily photo challenges and tips! @everyone come check this out! #BitPhotography #sunset #hostellife #photography #golden_hour",
             likes: 67,
             comments: 23,
             branch: "Circle",
             year: "Community",
             verified: true,
             isCirclePost: true,
-            category: "circles"
+            category: "circles",
+            media: [
+                {
+                    id: "m2",
+                    type: "image",
+                    url: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=400&fit=crop",
+                    alt: "Beautiful sunset from hostel terrace",
+                    caption: "Sunset from Hostel C terrace - Shot on iPhone"
+                },
+                {
+                    id: "m3",
+                    type: "image",
+                    url: "https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=600&h=400&fit=crop",
+                    alt: "Another angle of the sunset",
+                    caption: "Different angle of the same sunset"
+                }
+            ]
         },
         {
             id: 3,
             author: "Priya Mehta",
             avatar: "PM",
+            kBatch: "K22",
             time: "4h",
-            content: "Anyone interested in a weekend trek to Hundru Falls? Looking for adventure buddies! 🏔️",
+            content: "Anyone interested in a weekend trek to Hundru Falls? Looking for adventure buddies! 🏔️ Planning to leave Saturday morning. @arjun_sharma @neha_gupta you guys in? #trek #adventure #weekend #hundru_falls #bitlife",
             likes: 28,
             comments: 15,
             branch: "ECE",
             year: "3rd Year",
             verified: false,
-            category: "social"
+            category: "social",
+            media: [
+                {
+                    id: "m4",
+                    type: "video",
+                    url: "https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4",
+                    thumbnail: "https://images.unsplash.com/photo-1551632811-561732d1e306?w=600&h=400&fit=crop",
+                    caption: "Last year's trek to Hundru Falls - it was amazing!"
+                }
+            ]
         },
         {
             id: 4,
             author: "Rahul Singh",
             avatar: "RS",
+            kBatch: "K21",
             time: "6h",
-            content: "Selling my Java programming books - perfect condition! Great for semester prep. DM if interested 📚",
+            content: "Selling my Java programming books - perfect condition! Great for semester prep. DM if interested 📚 Especially good for @k24_students who are starting with programming. #books #java #programming #semester #bitmart #textbooks",
             likes: 19,
             comments: 5,
             branch: "IT",
             year: "4th Year",
             verified: true,
-            category: "marketplace"
+            category: "marketplace",
+            media: [
+                {
+                    id: "m5",
+                    type: "image",
+                    url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&h=300&fit=crop",
+                    alt: "Java programming books for sale",
+                    caption: "Complete Java reference books - like new condition"
+                }
+            ]
         },
         {
             id: 5,
             author: "Neha Gupta",
             avatar: "NG",
+            kBatch: "K24",
             time: "8h",
-            content: "Lost my water bottle near the library. It's a blue Tupperware bottle with 'Neha' written on it. Please message if found! 💧",
+            content: "Lost my water bottle near the library. It's a blue Tupperware bottle with 'Neha' written on it. Please message if found! 💧 Really need it back, it was a gift from home. #lost #library #help #waterbottle",
             likes: 12,
             comments: 3,
             branch: "ME",
@@ -181,42 +232,77 @@ export default function FeedsPage() {
         },
         {
             id: 6,
-            author: "Anonymous",
-            avatar: "?",
-            time: "10h",
-            content: "I have a huge crush on someone from my class but I'm too shy to talk to them. Any advice on how to start a conversation? 😅",
-            likes: 156,
-            comments: 47,
-            branch: "Anonymous",
-            year: "Student",
-            verified: false,
-            category: "confessions"
-        },
-        {
-            id: 7,
             author: "Tech Society BIT",
             avatar: "TS",
-            time: "12h",
-            content: "🚀 Hackathon registration is now open! 48 hours of non-stop coding, amazing prizes, and networking opportunities. Register now: bit.ly/hackathon2024",
+            kBatch: "Official",
+            time: "10h",
+            content: "🚀 Hackathon registration is now open! 48 hours of non-stop coding, amazing prizes, and networking opportunities. Register now at bit.ly/hackathon2024. Special tracks for @k24_students and @k23_students! #hackathon #coding #techfest #registration #prizes #innovation",
             likes: 89,
             comments: 32,
             branch: "Society",
             year: "Official",
             verified: true,
-            category: "events"
+            category: "events",
+            media: [
+                {
+                    id: "m6",
+                    type: "video",
+                    url: "https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_2mb.mp4",
+                    thumbnail: "https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=600&h=400&fit=crop",
+                    caption: "Highlights from last year's hackathon"
+                },
+                {
+                    id: "m7",
+                    type: "audio",
+                    url: "https://www.soundjay.com/misc/sounds/bell-ringing-05.wav",
+                    title: "Hackathon Announcement",
+                    caption: "Audio announcement from the organizing committee"
+                }
+            ]
         },
         {
-            id: 8,
+            id: 7,
             author: "Amit Kumar",
             avatar: "AK",
-            time: "14h",
-            content: "Looking for study partners for Advanced Algorithms. Let's meet at the library every evening at 6 PM. Who's in? 📖",
+            kBatch: "K23",
+            time: "12h",
+            content: "Looking for study partners for Advanced Algorithms. Let's meet at the library every evening at 6 PM. Who's in? 📖 @priya_mehta @arjun_sharma are you guys interested? #study #algorithms #library #evening #group_study",
             likes: 24,
             comments: 11,
             branch: "CSE",
-            year: "3rd Year",
+            year: "2nd Year",
             verified: false,
             category: "academic"
+        },
+        {
+            id: 8,
+            author: "Music Club BIT",
+            avatar: "MC",
+            kBatch: "Official",
+            time: "14h",
+            content: "🎵 New cover released! Our rendition of 'Vande Mataram' for Republic Day. Check out the full video and audio! Amazing vocals by @shreya_singer and guitar by @rahul_guitarist. #music #cover #vande_mataram #republic_day #singing #guitar",
+            likes: 156,
+            comments: 47,
+            branch: "Club",
+            year: "Official",
+            verified: true,
+            category: "events",
+            media: [
+                {
+                    id: "m8",
+                    type: "audio",
+                    url: "https://www.soundjay.com/misc/sounds/bell-ringing-05.wav",
+                    title: "Vande Mataram Cover - Music Club BIT",
+                    caption: "Republic Day special cover by Music Club"
+                },
+                {
+                    id: "m9",
+                    type: "video",
+                    url: "https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4",
+                    thumbnail: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=600&h=400&fit=crop",
+                    caption: "Behind the scenes of our recording session"
+                }
+            ]
         }
     ];
 
@@ -359,6 +445,8 @@ export default function FeedsPage() {
                                                         <span className="text-xs text-white">✓</span>
                                                     </div>
                                                 )}
+                                                {/* K-Batch Badge */}
+                                                <KBatchBadge kBatch={post.kBatch} size="sm" />
                                             </div>
                                             <div className="flex items-center space-x-2 text-xs text-muted-foreground">
                                                 <Badge variant="outline" className="text-xs px-1 py-0">
@@ -374,8 +462,49 @@ export default function FeedsPage() {
                                     </Button>
                                 </div>
 
-                                {/* Post Content */}
-                                <p className="mb-4 leading-relaxed text-sm">{post.content}</p>
+                                {/* Post Content with Rich Text */}
+                                <div className="mb-4">
+                                    <RichText 
+                                        content={post.content} 
+                                        className="leading-relaxed text-sm"
+                                        onHashtagClick={(hashtag) => {
+                                            toast({
+                                                title: `Hashtag clicked: ${hashtag}`,
+                                                description: `Searching for posts with ${hashtag}`,
+                                                type: "info",
+                                                duration: 2000,
+                                            });
+                                        }}
+                                        onMentionClick={(username) => {
+                                            toast({
+                                                title: `@${username}`,
+                                                description: `Viewing ${username}'s profile`,
+                                                type: "info",
+                                                duration: 2000,
+                                            });
+                                            // Navigate to user profile
+                                            window.location.href = `/profile/${username}`;
+                                        }}
+                                    />
+                                </div>
+
+                                {/* Media Content */}
+                                {post.media && post.media.length > 0 && (
+                                    <div className="mb-4">
+                                        <MediaGrid 
+                                            mediaItems={post.media}
+                                            className="rounded-lg overflow-hidden"
+                                            onMediaClick={(media) => {
+                                                toast({
+                                                    title: "Media opened",
+                                                    description: media.caption || "Viewing media",
+                                                    type: "info",
+                                                    duration: 2000,
+                                                });
+                                            }}
+                                        />
+                                    </div>
+                                )}
 
                                 {/* Post Actions */}
                                 <div className="flex items-center justify-between pt-3 border-t border-border/50">
