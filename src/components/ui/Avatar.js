@@ -14,10 +14,11 @@ function Avatar({ className, ...props }) {
   );
 }
 
-function AvatarImage({ className, ...props }) {
+function AvatarImage({ className, alt = "", ...props }) {
   return (
     <img
       className={cn("aspect-square h-full w-full object-cover", className)}
+      alt={alt}
       {...props}
     />
   );

@@ -37,7 +37,7 @@ export function ToastProvider({ children }) {
     setToasts((prev) => prev.filter((toast) => toast.id !== id));
   }, []);
 
-  const toast = useCallback((props) => addToast(props), [addToast]);
+  const toast = useCallback((props) => addToast(props), [addToast, removeToast]);
 
   return (
     <ToastContext.Provider value={{ toast, removeToast }}>

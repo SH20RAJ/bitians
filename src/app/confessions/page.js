@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import PageLayout from '@/components/PageLayout';
+import { PageLayout } from '@/components/PageLayout';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
@@ -19,7 +19,7 @@ import {
   EyeOff,
   TrendingUp,
   Clock,
-  Fire,
+  Flame,
   Smile,
   Frown,
   Coffee,
@@ -429,7 +429,7 @@ export default function ConfessionsPage() {
         {/* Trending Tags */}
         <Card className="mt-8 p-6">
           <h3 className="font-semibold mb-4 flex items-center gap-2">
-            <Fire className="h-4 w-4 text-orange-500" />
+            <Flame className="h-4 w-4 text-orange-500" />
             Trending Tags
           </h3>
           <div className="flex flex-wrap gap-2">

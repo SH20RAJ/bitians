@@ -155,6 +155,7 @@ export default function CirclesPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [newPost, setNewPost] = useState('');
   const [newMessage, setNewMessage] = useState('');
+  const [activeTab, setActiveTab] = useState('posts'); // 'posts' or 'chat'
   const { showToast } = useToast();
 
   const categories = [
@@ -477,7 +478,7 @@ export default function CirclesPage() {
     <div className="space-y-6">
       <div className="text-center">
         <h2 className="text-2xl font-bold mb-2">My Circles</h2>
-        <p className="text-muted-foreground">Circles you're part of</p>
+        <p className="text-muted-foreground">Circles you&apos;re part of</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -531,8 +532,6 @@ export default function CirclesPage() {
   );
 
   const renderCircleDetailView = () => {
-    const [activeTab, setActiveTab] = useState('posts'); // 'posts' or 'chat'
-    
     return (
       <div className="space-y-6">
         {/* Circle Header */}
