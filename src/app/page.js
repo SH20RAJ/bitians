@@ -220,12 +220,11 @@ export default function HomePage() {
 
     const quickActions = [
         { icon: Users, label: 'Circles', color: 'text-indigo-500', bg: 'bg-indigo-500/10', action: () => window.location.href = '/circles' },
-        { icon: GraduationCap, label: 'Study Groups', color: 'text-blue-500', bg: 'bg-blue-500/10', action: () => window.location.href = '/study-groups' },
-        { icon: BookOpen, label: 'Notes Share', color: 'text-emerald-500', bg: 'bg-emerald-500/10', action: () => window.location.href = '/notes' },
-        { icon: ShoppingBag, label: 'BitMart', color: 'text-purple-500', bg: 'bg-purple-500/10', action: () => window.location.href = '/bitmart' },
+        { icon: BookOpen, label: 'Notes', color: 'text-emerald-500', bg: 'bg-emerald-500/10', action: () => window.location.href = '/notes' },
         { icon: Calendar, label: 'Events', color: 'text-orange-500', bg: 'bg-orange-500/10', action: () => window.location.href = '/events' },
-        { icon: MapPin, label: 'Lost & Found', color: 'text-red-500', bg: 'bg-red-500/10', action: () => window.location.href = '/lost-found' },
+        { icon: TrendingUp, label: 'Feeds', color: 'text-green-500', bg: 'bg-green-500/10', action: () => window.location.href = '/feeds' },
         { icon: Coffee, label: 'Confessions', color: 'text-pink-500', bg: 'bg-pink-500/10', action: () => window.location.href = '/confessions' },
+        { icon: Zap, label: 'Watch', color: 'text-red-500', bg: 'bg-red-500/10', action: () => window.location.href = '/watch' },
     ];
 
     const stats = [
@@ -264,24 +263,6 @@ export default function HomePage() {
 
                         {/* Right Actions */}
                         <div className="flex items-center space-x-3">
-                            <Button
-                                variant="outline"
-                                size="sm"
-                                className="hidden md:flex bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white border-0 btn-scale"
-                                onClick={() => window.location.href = '/feeds'}
-                            >
-                                <TrendingUp className="w-4 h-4 mr-1" />
-                                Feeds
-                            </Button>
-                            <Button
-                                variant="outline"
-                                size="sm"
-                                className="hidden md:flex bg-gradient-to-r from-pink-500 to-red-500 hover:from-pink-600 hover:to-red-600 text-white border-0 btn-scale"
-                                onClick={() => window.location.href = '/hot-or-not'}
-                            >
-                                <Zap className="w-4 h-4 mr-1" />
-                                Hot or Not
-                            </Button>
                             <Button
                                 variant="outline"
                                 size="sm"
