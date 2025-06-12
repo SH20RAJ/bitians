@@ -12,6 +12,7 @@ import { RichText } from '@/components/ui/RichText';
 import { useTheme } from '@/components/ThemeProvider';
 import { useToast } from '@/components/Toast';
 import BottomNavigation from '@/components/BottomNavigation';
+import MobileHamburgerMenu from '@/components/MobileHamburgerMenu';
 import {
     Heart,
     MessageCircle,
@@ -47,6 +48,7 @@ export default function HomePage() {
     const [activeTab, setActiveTab] = useState('home');
     const [likedPosts, setLikedPosts] = useState(new Set());
     const [bookmarkedPosts, setBookmarkedPosts] = useState(new Set());
+    const [showProfileMenu, setShowProfileMenu] = useState(false);
 
     // useEffect(() => {
     //     setIsLoaded(true);
@@ -281,9 +283,70 @@ export default function HomePage() {
                             <Button variant="ghost" size="icon" onClick={toggleTheme} className="btn-scale">
                                 {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
                             </Button>
-                            <Avatar className="w-8 h-8 cursor-pointer hover:ring-2 hover:ring-primary transition-all">
-                                <AvatarFallback className="bg-gradient-to-r from-blue-500 to-purple-500 text-white">SR</AvatarFallback>
-                            </Avatar>
+                            <div className="relative profile-menu-container hidden md:block">
+                                <Avatar 
+                                    className="w-8 h-8 cursor-pointer hover:ring-2 hover:ring-primary transition-all"
+                                    onClick={() => setShowProfileMenu(!showProfileMenu)}
+                                >
+                                    <AvatarFallback className="bg-gradient-to-r from-blue-500 to-purple-500 text-white">SR</AvatarFallback>
+                                </Avatar>
+                                
+                                {/* Profile Dropdown Menu */}
+                                {showProfileMenu && (
+                                    <div className="absolute right-0 top-10 w-56 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-50">
+                                        <div className="p-4 border-b border-gray-200 dark:border-gray-700">
+                                            <div className="flex items-center gap-3">
+                                                <Avatar className="w-10 h-10">
+                                                    <AvatarFallback className="bg-gradient-to-r from-blue-500 to-purple-500 text-white">SR</AvatarFallback>
+                                                </Avatar>
+                                                <div>
+                                                    <div className="font-medium text-gray-900 dark:text-white">Shaswat Raj</div>
+                                                    <div className="text-sm text-gray-600 dark:text-gray-400">@shaswatraj</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="p-2">
+                                            <button
+                                                onClick={() => {
+                                                    window.location.href = '/profile/shaswatraj';
+                                                    setShowProfileMenu(false);
+                                                }}
+                                                className="w-full flex items-center gap-3 px-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors"
+                                            >
+                                                <User className="w-4 h-4" />
+                                                <span>My Profile</span>
+                                            </button>
+                                            <button
+                                                onClick={() => {
+                                                    window.location.href = '/settings';
+                                                    setShowProfileMenu(false);
+                                                }}
+                                                className="w-full flex items-center gap-3 px-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors"
+                                            >
+                                                <Settings className="w-4 h-4" />
+                                                <span>Settings</span>
+                                            </button>
+                                            <div className="border-t border-gray-200 dark:border-gray-700 my-2"></div>
+                                            <button
+                                                onClick={() => {
+                                                    toast({
+                                                        title: 'Signed out successfully',
+                                                        description: 'You have been logged out',
+                                                        type: 'success',
+                                                        duration: 2000,
+                                                    });
+                                                    setShowProfileMenu(false);
+                                                }}
+                                                className="w-full flex items-center gap-3 px-3 py-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-md transition-colors"
+                                            >
+                                                <span>Sign Out</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                            {/* Mobile Hamburger Menu */}
+                            <MobileHamburgerMenu />
                         </div>
                     </div>
                 </div>

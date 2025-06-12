@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { PageLayout } from "@/components/PageLayout";
+import BottomNavigation from "@/components/BottomNavigation";
 import { Button } from "@/components/ui/Button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
@@ -572,6 +573,7 @@ export default function EventsPage() {
           </Card>
         )}
       </div>
+      <BottomNavigation currentPage="events" />
     </PageLayout>
   );
 }

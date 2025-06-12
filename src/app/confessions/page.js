@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { PageLayout } from '@/components/PageLayout';
+import BottomNavigation from '@/components/BottomNavigation';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
@@ -446,6 +447,7 @@ export default function ConfessionsPage() {
           </div>
         </Card>
       </div>
+      <BottomNavigation currentPage="confessions" />
     </PageLayout>
   );
 }

@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import { PageLayout } from '@/components/PageLayout';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
@@ -12,7 +11,6 @@ import { MediaPlayer, MediaGrid } from '@/components/ui/MediaPlayer';
 import { KBatchBadge } from '@/components/ui/KBatchBadge';
 import { RichText } from '@/components/ui/RichText';
 import { useToast } from '@/components/Toast';
-import BottomNavigation from '@/components/BottomNavigation';
 import {
     Heart,
     MessageCircle,
@@ -40,7 +38,6 @@ import {
 } from 'lucide-react';
 
 export default function FeedsPage() {
-    const router = useRouter();
     const [posts, setPosts] = useState([]);
     const [likedPosts, setLikedPosts] = useState(new Set());
     const [bookmarkedPosts, setBookmarkedPosts] = useState(new Set());
@@ -477,12 +474,7 @@ export default function FeedsPage() {
                                         </Avatar>
                                         <div className="flex-1">
                                             <div className="flex items-center gap-2">
-                                                <button 
-                                                    onClick={() => router.push(`/profile/${post.author.toLowerCase().replace(' ', '')}`)}
-                                                    className="font-semibold hover:text-blue-600 transition-colors cursor-pointer"
-                                                >
-                                                    {post.author}
-                                                </button>
+                                                <h4 className="font-semibold">{post.author}</h4>
                                                 {post.isVerified && (
                                                     <div className="w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
                                                         <span className="text-xs text-white">✓</span>
@@ -517,10 +509,20 @@ export default function FeedsPage() {
                                         content={post.content}
                                         className="leading-relaxed"
                                         onHashtagClick={(hashtag) => {
-                                            router.push(`/hashtags?tag=${hashtag}`);
+                                            toast({
+                                                title: `Hashtag clicked: ${hashtag}`,
+                                                description: `Searching for posts with ${hashtag}`,
+                                                type: "info",
+                                                duration: 2000,
+                                            });
                                         }}
                                         onMentionClick={(username) => {
-                                            router.push(`/profile/${username}`);
+                                            toast({
+                                                title: `@${username}`,
+                                                description: `Opening ${username}'s profile`,
+                                                type: "info",
+                                                duration: 2000,
+                                            });
                                         }}
                                     />
                                 </div>
@@ -546,8 +548,8 @@ export default function FeedsPage() {
                                         <button
                                             onClick={() => handleLike(post.id)}
                                             className={`flex items-center gap-2 transition-colors ${likedPosts.has(post.id)
-                                                ? 'text-red-500 hover:text-red-600'
-                                                : 'text-muted-foreground hover:text-red-500'
+                                                    ? 'text-red-500 hover:text-red-600'
+                                                    : 'text-muted-foreground hover:text-red-500'
                                                 }`}
                                         >
                                             <Heart className={`w-5 h-5 ${likedPosts.has(post.id) ? 'fill-current' : ''}`} />
@@ -568,8 +570,8 @@ export default function FeedsPage() {
                                     <button
                                         onClick={() => handleBookmark(post.id)}
                                         className={`transition-colors ${bookmarkedPosts.has(post.id)
-                                            ? 'text-yellow-500'
-                                            : 'text-muted-foreground hover:text-yellow-500'
+                                                ? 'text-yellow-500'
+                                                : 'text-muted-foreground hover:text-yellow-500'
                                             }`}
                                     >
                                         <Bookmark className={`w-5 h-5 ${bookmarkedPosts.has(post.id) ? 'fill-current' : ''}`} />
@@ -591,8 +593,5 @@ export default function FeedsPage() {
                 )}
             </div>
         </PageLayout>
-        
-        {/* Bottom Navigation */}
-        <BottomNavigation currentPage="feeds" />
     );
 }

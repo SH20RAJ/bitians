@@ -1,12 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+import { PageLayout } from '@/components/PageLayout';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Avatar } from '@/components/ui/Avatar';
+import { Badge } from '@/components/ui/Badge';
 import { useToast } from '@/components/Toast';
-import BottomNavigation from '@/components/BottomNavigation';
 import { 
   Image, 
   Video, 
@@ -26,17 +27,22 @@ import {
   Send,
   X,
   Plus,
-  ArrowLeft
+  ArrowLeft,
+  At,
+  EyeOff,
+  FileText,
+  Music
 } from 'lucide-react';
 
 export default function CreatePostPage() {
   const [postContent, setPostContent] = useState('');
-  const [postType, setPostType] = useState('text'); // text, image, video, poll, event
-  const [privacy, setPrivacy] = useState('public'); // public, friends, private
+  const [postType, setPostType] = useState('text');
+  const [privacy, setPrivacy] = useState('public');
   const [tags, setTags] = useState([]);
   const [location, setLocation] = useState('');
   const [feeling, setFeeling] = useState('');
   const [images, setImages] = useState([]);
+  const [isAnonymous, setIsAnonymous] = useState(false);
   const [pollOptions, setPollOptions] = useState(['', '']);
   const [eventDetails, setEventDetails] = useState({
     title: '',
@@ -44,12 +50,33 @@ export default function CreatePostPage() {
     time: '',
     location: ''
   });
-  const { showToast } = useToast();
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [charCount, setCharCount] = useState(0);
+  const textareaRef = useRef(null);
+  const fileInputRef = useRef(null);
+  const { toast } = useToast();
 
   const postTypes = [
-    { id: 'text', label: 'Text Post', icon: Hash, color: 'text-blue-500' },
-    { id: 'image', label: 'Photo', icon: Camera, color: 'text-green-500' },
-    { id: 'video', label: 'Video', icon: Video, color: 'text-purple-500' },
+    { id: 'text', label: 'Text', icon: FileText, color: 'bg-blue-500', description: 'Share your thoughts' },
+    { id: 'image', label: 'Photo', icon: Camera, color: 'bg-green-500', description: 'Upload images' },
+    { id: 'video', label: 'Video', icon: Video, color: 'bg-purple-500', description: 'Share videos' },
+    { id: 'poll', label: 'Poll', icon: BarChart3, color: 'bg-orange-500', description: 'Create a poll' },
+    { id: 'event', label: 'Event', icon: Calendar, color: 'bg-pink-500', description: 'Organize events' },
+    { id: 'confession', label: 'Confession', icon: EyeOff, color: 'bg-gray-500', description: 'Anonymous post' }
+  ];
+
+  const feelings = [
+    { emoji: '😊', label: 'Happy' },
+    { emoji: '😢', label: 'Sad' },
+    { emoji: '😎', label: 'Cool' },
+    { emoji: '😍', label: 'Love' },
+    { emoji: '🤔', label: 'Thinking' },
+    { emoji: '😴', label: 'Sleepy' },
+    { emoji: '🎉', label: 'Celebrating' },
+    { emoji: '😤', label: 'Frustrated' }
+  ];
+
+  const maxChars = 500;
     { id: 'poll', label: 'Poll', icon: BarChart3, color: 'text-orange-500' },
     { id: 'event', label: 'Event', icon: Calendar, color: 'text-pink-500' }
   ];
@@ -373,9 +400,6 @@ export default function CreatePostPage() {
           </div>
         </Card>
       </div>
-      
-      {/* Bottom Navigation */}
-      <BottomNavigation currentPage="create" />
     </div>
   );
 }

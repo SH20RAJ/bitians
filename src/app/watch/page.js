@@ -11,6 +11,7 @@ import { MediaPlayer } from '@/components/ui/MediaPlayer';
 import { KBatchBadge } from '@/components/ui/KBatchBadge';
 import { RichText } from '@/components/ui/RichText';
 import { useToast } from '@/components/Toast';
+import BottomNavigation from '@/components/BottomNavigation';
 import {
     Search,
     Filter,
@@ -573,5 +574,9 @@ export default function WatchPage() {
                 </Card>
             </div>
         </PageLayout>
+        
+        {/* Bottom Navigation */}
+        <BottomNavigation currentPage="watch" />
     );
+}
 }

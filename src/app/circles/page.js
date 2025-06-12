@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import {PageLayout} from '@/components/PageLayout';
+import BottomNavigation from '@/components/BottomNavigation';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
@@ -44,8 +45,211 @@ import {
 
 export default function CirclesPage() {
   const [circles, setCircles] = useState([
+    // Official BIT Mesra Technical Clubs
     {
       id: 1,
+      name: 'ACM BIT Mesra',
+      description: 'Association of Computer Machinery - Technical excellence in computing',
+      memberCount: 450,
+      postCount: 234,
+      category: 'Technical',
+      privacy: 'public',
+      isJoined: false,
+      isAdmin: false,
+      isOfficial: true,
+      avatar: 'ACM',
+      cover: '/api/placeholder/400/200',
+      lastActivity: '30 minutes ago',
+      newMessages: 0,
+      trending: true,
+      tags: ['acm', 'programming', 'technical', 'computing'],
+      website: 'https://www.instagram.com/acmbitm',
+      verified: true
+    },
+    {
+      id: 2,
+      name: 'EDC BIT Mesra',
+      description: 'Entrepreneurship Development Cell - Building future entrepreneurs',
+      memberCount: 380,
+      postCount: 189,
+      category: 'Technical',
+      privacy: 'public',
+      isJoined: true,
+      isAdmin: false,
+      isOfficial: true,
+      avatar: 'EDC',
+      cover: '/api/placeholder/400/200',
+      lastActivity: '1 hour ago',
+      newMessages: 3,
+      trending: true,
+      tags: ['entrepreneurship', 'startup', 'business', 'innovation'],
+      website: 'https://www.edcbitmesra.in/',
+      verified: true
+    },
+    {
+      id: 3,
+      name: 'IEEE BIT Mesra',
+      description: 'Institute of Electrical and Electronics Engineers Student Branch',
+      memberCount: 520,
+      postCount: 312,
+      category: 'Technical',
+      privacy: 'public',
+      isJoined: true,
+      isAdmin: false,
+      isOfficial: true,
+      avatar: 'IEEE',
+      cover: '/api/placeholder/400/200',
+      lastActivity: '2 hours ago',
+      newMessages: 1,
+      trending: true,
+      tags: ['ieee', 'electronics', 'electrical', 'engineering'],
+      website: 'https://www.ieeebitmesra.in/',
+      verified: true
+    },
+    {
+      id: 4,
+      name: 'Robolution',
+      description: 'Robotics and Automation Club - Building the future with robots',
+      memberCount: 290,
+      postCount: 156,
+      category: 'Technical',
+      privacy: 'public',
+      isJoined: false,
+      isAdmin: false,
+      isOfficial: true,
+      avatar: 'ROB',
+      cover: '/api/placeholder/400/200',
+      lastActivity: '3 hours ago',
+      newMessages: 0,
+      trending: false,
+      tags: ['robotics', 'automation', 'ai', 'machine-learning'],
+      website: 'https://robolution.bitmesra.ac.in/',
+      verified: true
+    },
+    {
+      id: 5,
+      name: 'Team Firebolt Racing',
+      description: 'Formula Student Racing Team - Speed, Innovation, Excellence',
+      memberCount: 85,
+      postCount: 98,
+      category: 'Technical',
+      privacy: 'public',
+      isJoined: false,
+      isAdmin: false,
+      isOfficial: true,
+      avatar: 'FBR',
+      cover: '/api/placeholder/400/200',
+      lastActivity: '4 hours ago',
+      newMessages: 0,
+      trending: false,
+      tags: ['racing', 'formula-student', 'automotive', 'engineering'],
+      website: 'https://www.fireboltracing.com/',
+      verified: true
+    },
+    {
+      id: 6,
+      name: 'Team Srijan',
+      description: 'Innovation and Technology Team - Creating tomorrow today',
+      memberCount: 120,
+      postCount: 145,
+      category: 'Technical',
+      privacy: 'public',
+      isJoined: true,
+      isAdmin: false,
+      isOfficial: true,
+      avatar: 'SRJ',
+      cover: '/api/placeholder/400/200',
+      lastActivity: '5 hours ago',
+      newMessages: 2,
+      trending: false,
+      tags: ['innovation', 'technology', 'research', 'development'],
+      website: 'https://teamsrijan.org/',
+      verified: true
+    },
+    // Cultural Clubs
+    {
+      id: 7,
+      name: 'Ehsaas - Dramatics Society',
+      description: 'Theater, Drama, and Performing Arts Society',
+      memberCount: 180,
+      postCount: 234,
+      category: 'Cultural',
+      privacy: 'public',
+      isJoined: false,
+      isAdmin: false,
+      isOfficial: true,
+      avatar: 'EHS',
+      cover: '/api/placeholder/400/200',
+      lastActivity: '1 hour ago',
+      newMessages: 0,
+      trending: true,
+      tags: ['drama', 'theater', 'acting', 'performing-arts'],
+      website: 'https://ehsaas.bitmesra.ac.in/',
+      verified: true
+    },
+    {
+      id: 8,
+      name: 'Fine Arts Society (FAS)',
+      description: 'Exploring creativity through visual arts and design',
+      memberCount: 156,
+      postCount: 189,
+      category: 'Cultural',
+      privacy: 'public',
+      isJoined: true,
+      isAdmin: false,
+      isOfficial: true,
+      avatar: 'FAS',
+      cover: '/api/placeholder/400/200',
+      lastActivity: '2 hours ago',
+      newMessages: 1,
+      trending: false,
+      tags: ['fine-arts', 'painting', 'design', 'creativity'],
+      website: 'https://fasmesra.vercel.app/',
+      verified: true
+    },
+    {
+      id: 9,
+      name: 'Literary Society (LitSoc)',
+      description: 'For lovers of literature, poetry, and creative writing',
+      memberCount: 134,
+      postCount: 167,
+      category: 'Cultural',
+      privacy: 'public',
+      isJoined: false,
+      isAdmin: false,
+      isOfficial: true,
+      avatar: 'LIT',
+      cover: '/api/placeholder/400/200',
+      lastActivity: '3 hours ago',
+      newMessages: 0,
+      trending: false,
+      tags: ['literature', 'poetry', 'writing', 'books'],
+      website: 'https://www.theliterarysocietybitm.com/',
+      verified: true
+    },
+    {
+      id: 10,
+      name: 'Photographic Society (Psoc)',
+      description: 'Capturing moments, creating memories through photography',
+      memberCount: 298,
+      postCount: 456,
+      category: 'Cultural',
+      privacy: 'public',
+      isJoined: true,
+      isAdmin: false,
+      isOfficial: true,
+      avatar: 'PSC',
+      cover: '/api/placeholder/400/200',
+      lastActivity: '30 minutes ago',
+      newMessages: 4,
+      trending: true,
+      tags: ['photography', 'visual-arts', 'camera', 'creative'],
+      website: 'https://www.instagram.com/psoc.bitm/',
+      verified: true
+    },
+    // Student Circles
+    {
+      id: 11,
       name: 'CSE 2022 Batch',
       description: 'Official circle for Computer Science Engineering 2022 batch students',
       memberCount: 156,
@@ -54,7 +258,8 @@ export default function CirclesPage() {
       privacy: 'private',
       isJoined: true,
       isAdmin: false,
-      avatar: '/api/placeholder/80/80',
+      isOfficial: false,
+      avatar: 'K22',
       cover: '/api/placeholder/400/200',
       lastActivity: '2 minutes ago',
       newMessages: 5,
@@ -62,24 +267,7 @@ export default function CirclesPage() {
       tags: ['cse', 'batch2022', 'academics']
     },
     {
-      id: 2,
-      name: 'BIT Photography Club',
-      description: 'Share your best shots and learn photography techniques together',
-      memberCount: 89,
-      postCount: 234,
-      category: 'Hobby',
-      privacy: 'public',
-      isJoined: true,
-      isAdmin: true,
-      avatar: '/api/placeholder/80/80',
-      cover: '/api/placeholder/400/200',
-      lastActivity: '15 minutes ago',
-      newMessages: 0,
-      trending: false,
-      tags: ['photography', 'art', 'creative']
-    },
-    {
-      id: 3,
+      id: 12,
       name: 'Placement Prep Warriors',
       description: 'Coding practice, interview tips, and placement discussions',
       memberCount: 234,
@@ -88,7 +276,8 @@ export default function CirclesPage() {
       privacy: 'private',
       isJoined: false,
       isAdmin: false,
-      avatar: '/api/placeholder/80/80',
+      isOfficial: false,
+      avatar: 'PPW',
       cover: '/api/placeholder/400/200',
       lastActivity: '1 hour ago',
       newMessages: 0,
@@ -394,6 +583,9 @@ export default function CirclesPage() {
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
                       <h3 className="font-semibold text-lg line-clamp-1">{circle.name}</h3>
+                      {circle.isOfficial && circle.verified && (
+                        <Star className="h-4 w-4 text-blue-500" title="Official BIT Mesra Club" />
+                      )}
                       {circle.isAdmin && (
                         <Crown className="h-4 w-4 text-yellow-500" />
                       )}
@@ -463,6 +655,16 @@ export default function CirclesPage() {
                     >
                       <UserPlus className="h-3 w-3 mr-1" />
                       Join Circle
+                    </Button>
+                  )}
+                  {circle.isOfficial && circle.website && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => window.open(circle.website, '_blank')}
+                      title="Visit official website"
+                    >
+                      <Globe className="h-3 w-3" />
                     </Button>
                   )}
                 </div>
@@ -810,6 +1012,7 @@ export default function CirclesPage() {
           </>
         )}
       </div>
+      <BottomNavigation currentPage="circles" />
     </PageLayout>
   );
 }
