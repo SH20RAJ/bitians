@@ -572,11 +572,13 @@ export default function WatchPage() {
                         ))}
                     </div>
                 </Card>
-            </div>
+            </div><BottomNavigation
+            currentPage="watch"
+            onNavigate={(page) => {
+                // Handle navigation logic here
+            }}
+        />
         </PageLayout>
         
-        {/* Bottom Navigation */}
-        <BottomNavigation currentPage="watch" />
     );
-}
 }
