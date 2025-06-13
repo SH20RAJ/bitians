@@ -9,14 +9,8 @@ const compat = new FlatCompat({
   baseDirectory: __dirname,
 });
 
-const eslintConfig = [...compat.extends("next/core-web-vitals"), {
-  rules: {
-    "react/no-unescaped-entities": "off",
-    "react/jsx-key": "warn",
-    "react/jsx-no-undef": "error",
-    "react/jsx-uses-react": "off",
-    "react/react-in-jsx-scope": "off",
-  }
-}];
+const eslintConfig = [
+  ...compat.extends("next/core-web-vitals", "next/typescript"),
+];
 
 export default eslintConfig;
