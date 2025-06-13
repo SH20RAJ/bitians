@@ -237,6 +237,7 @@ export default function FeedsPage() {
 
     useEffect(() => {
         setPosts(mockPosts);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const filteredPosts = posts.filter(post => {
@@ -405,7 +406,7 @@ export default function FeedsPage() {
                         Community Feeds
                     </h1>
                     <p className="text-muted-foreground text-lg">
-                        Discover what's happening in the BIT community
+                        Discover what&apos;s happening in the BIT community
                     </p>
                 </div>
 
@@ -590,9 +591,7 @@ export default function FeedsPage() {
                     </Card>
                 )}
             </div>
+            <BottomNavigation currentPage="feeds" />
         </PageLayout>
-        
-        {/* Bottom Navigation */}
-        <BottomNavigation currentPage="feeds" />
     );
 }
