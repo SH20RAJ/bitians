@@ -232,7 +232,7 @@ export default function MobileHeader({ title = "BITians.org", showSearch = true 
       </header>
 
       {/* Spacer for fixed header */}
-      <div className="h-14"></div>
+      {/* <div className="h-14"></div> */}
     </>
   );
 }

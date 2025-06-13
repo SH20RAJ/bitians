@@ -37,7 +37,8 @@ import {
     Gift,
     Zap,
     ThumbsUp,
-    EyeOff
+    EyeOff,
+    Search
 } from 'lucide-react';
 import { PageLayout } from '@/components/PageLayout';
 

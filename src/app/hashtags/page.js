@@ -375,8 +375,5 @@ export default function HashtagPage() {
         </Card>
       </div>
     </PageLayout>
-    
-    {/* Bottom Navigation */ }
-  <BottomNavigation currentPage="hashtags" />
   );
 }

@@ -77,9 +77,6 @@ export default function CreatePostPage() {
   ];
 
   const maxChars = 500;
-    { id: 'poll', label: 'Poll', icon: BarChart3, color: 'text-orange-500' },
-    { id: 'event', label: 'Event', icon: Calendar, color: 'text-pink-500' }
-  ];
 
   const feelings = [
     'happy', 'excited', 'blessed', 'grateful', 'loved', 'amazing', 

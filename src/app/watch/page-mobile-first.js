@@ -29,40 +29,15 @@ import {
   Clock,
   Eye,
   Users,
-  Filter,
-  Grid3X3,
-  List,
-  Maximize,
-  Minimize,
   SkipBack,
   SkipForward,
-  Repeat,
-  Shuffle,
-  ThumbsUp,
-  ThumbsDown,
   Plus,
   Check,
-  Star,
-  Flag,
-  Download,
   Send,
   Smile,
-  Camera,
-  Mic,
-  Image,
-  Gift,
-  Hash,
-  AtSign,
-  MapPin,
-  Calendar,
-  Settings,
-  UserPlus,
   Crown,
-  Verified,
-  Zap,
-  Target,
-  Trophy,
-  Sparkles,
+  BookOpen,
+  Calendar,
   X
 } from 'lucide-react';
 
@@ -78,7 +53,6 @@ export default function WatchPage() {
   const [likedVideos, setLikedVideos] = useState(new Set());
   const [followedUsers, setFollowedUsers] = useState(new Set());
   const [savedVideos, setSavedVideos] = useState(new Set());
-  const videoRef = useRef(null);
 
   // Enhanced video data following UI/UX principles
   const videos = [
@@ -101,10 +75,8 @@ export default function WatchPage() {
       shares: 156,
       timestamp: '2h ago',
       thumbnail: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&h=600&fit=crop',
-      videoUrl: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4',
       tags: ['campus', 'lifestyle', 'bitmesra', 'student'],
       category: 'Lifestyle',
-      engagement: 8.5,
       trending: true
     },
     {
@@ -126,10 +98,8 @@ export default function WatchPage() {
       shares: 234,
       timestamp: '4h ago',
       thumbnail: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=600&fit=crop',
-      videoUrl: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_2mb.mp4',
       tags: ['coding', 'react', 'tutorial', 'programming'],
       category: 'Education',
-      engagement: 9.2,
       trending: false
     },
     {
@@ -151,10 +121,8 @@ export default function WatchPage() {
       shares: 567,
       timestamp: '1d ago',
       thumbnail: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=600&fit=crop',
-      videoUrl: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4',
       tags: ['food', 'hostel', 'funny', 'relatable'],
       category: 'Comedy',
-      engagement: 9.8,
       trending: true
     },
     {
@@ -176,36 +144,9 @@ export default function WatchPage() {
       shares: 89,
       timestamp: '6h ago',
       thumbnail: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&h=600&fit=crop',
-      videoUrl: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_2mb.mp4',
       tags: ['study', 'exam', 'library', 'student'],
       category: 'Education',
-      engagement: 7.8,
       trending: false
-    },
-    {
-      id: 5,
-      title: 'BIT Mesra Cultural Fest Highlights 🎭🎨',
-      author: {
-        name: 'Cultural Committee BIT',
-        username: 'bit_cultural',
-        avatar: 'BC',
-        kBatch: 'Official',
-        verified: true,
-        followers: '45.6K'
-      },
-      description: 'Recap of our amazing cultural fest! Dance, music, drama, and so much more. Thanks to everyone who participated! 🙌',
-      duration: '3:22',
-      views: '234.5K',
-      likes: 18900,
-      comments: 2340,
-      shares: 1200,
-      timestamp: '3d ago',
-      thumbnail: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&h=600&fit=crop',
-      videoUrl: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_2mb.mp4',
-      tags: ['cultural', 'fest', 'dance', 'music', 'official'],
-      category: 'Events',
-      engagement: 9.5,
-      trending: true
     }
   ];
 
@@ -282,7 +223,6 @@ export default function WatchPage() {
 
   const togglePlayPause = () => {
     setIsPlaying(!isPlaying);
-    // In real implementation, control actual video playback
   };
 
   const toggleMute = () => {
@@ -356,7 +296,7 @@ export default function WatchPage() {
       <div className="relative h-screen pt-28">
         {/* Video Container */}
         <div className="relative h-full w-full">
-          {/* Video Placeholder (In real app, this would be video element) */}
+          {/* Video Placeholder */}
           <div 
             className="h-full w-full bg-cover bg-center relative"
             style={{ backgroundImage: `url(${currentVideo.thumbnail})` }}
@@ -569,7 +509,6 @@ export default function WatchPage() {
             </div>
             
             <div className="flex-1 overflow-y-auto p-4 space-y-4 max-h-[50vh]">
-              {/* Sample Comments */}
               {[...Array(10)].map((_, index) => (
                 <div key={index} className="flex space-x-3">
                   <Avatar className="w-8 h-8">
