@@ -1,12 +1,13 @@
 import { PageLayout } from '@/components/layout/PageLayout';
+import { UserProfile } from '@/components/profile/UserProfile';
 
 export default function ProfilePage() {
+  // In a real app, you'd get the current user from auth context
+  const currentUsername = 'rahul_k23';
+  
   return (
     <PageLayout title="Profile" showBack={false}>
-      <div className="p-4">
-        <h1 className="text-2xl font-bold mb-4">Profile</h1>
-        <p className="text-muted-foreground">Your BITians profile and achievements...</p>
-      </div>
+      <UserProfile username={currentUsername} />
     </PageLayout>
   );
 }

@@ -19,7 +19,7 @@ const MOCK_EVENTS = [
     attendees: 145,
     maxAttendees: 200,
     category: 'Technical',
-    image: true,
+    image: '/api/placeholder/400/200',
   },
   {
     id: '2',
@@ -31,6 +31,7 @@ const MOCK_EVENTS = [
     location: 'Main Auditorium',
     attendees: 450,
     category: 'Cultural',
+    image: '/api/placeholder/400/200',
   },
   {
     id: '3',
@@ -42,6 +43,7 @@ const MOCK_EVENTS = [
     location: 'BIT Cricket Ground',
     attendees: 89,
     category: 'Sports',
+    image: '/api/placeholder/400/200',
   }
 ];
 

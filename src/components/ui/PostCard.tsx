@@ -30,11 +30,11 @@ interface PostCardProps {
   id: string;
   author: PostAuthor;
   content: string;
-  type: 'text' | 'image' | 'video' | 'poll' | 'event';
-  media?: string[];
+  type: 'text' | 'image' | 'video' | 'poll' | 'event' | 'announcement' | 'achievement' | 'resource';
+  media?: readonly string[];
   timestamp: string;
   engagement: PostEngagement;
-  tags: string[];
+  tags: readonly string[];
   onLike?: (id: string) => void;
   onComment?: (id: string) => void;
   onShare?: (id: string) => void;

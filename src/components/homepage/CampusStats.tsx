@@ -11,7 +11,7 @@ interface Stat {
 }
 
 interface CampusStatsProps {
-  stats: Stat[];
+  stats: readonly Stat[];
   className?: string;
 }
 

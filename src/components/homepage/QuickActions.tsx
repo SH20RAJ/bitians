@@ -16,7 +16,7 @@ interface QuickAction {
 }
 
 interface QuickActionsProps {
-  actions: QuickAction[];
+  actions: readonly QuickAction[];
   className?: string;
 }
 
