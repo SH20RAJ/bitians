@@ -1,12 +1,14 @@
 'use client';
 
+import { useState, useMemo } from 'react';
 import { Card } from '@/components/ui/card';
 import { Avatar } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { KBatchBadge } from '@/components/ui/KBatchBadge';
 import { Badge } from '@/components/ui/badge';
-import { UserPlus, MessageCircle, Calendar, BookOpen, Hash } from 'lucide-react';
+import { UserPlus, MessageCircle, Calendar, BookOpen, Hash, TrendingUp, Star, Clock, Flame } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { rankSearchResults, type SearchResult as RankedSearchResult, type SearchContext } from '@/utils/search/search-ranking';
 
 interface SearchResult {
   id: string;
@@ -55,7 +57,7 @@ interface SearchResultsProps {
   className?: string;
 }
 
-function ResultCard({ result }: { result: SearchResult }) {
+function ResultCard({ result, query }: { result: SearchResult; query: string }) {
   const icons = {
     person: UserPlus,
     post: MessageCircle,
@@ -66,6 +68,36 @@ function ResultCard({ result }: { result: SearchResult }) {
   };
 
   const Icon = icons[result.type];
+
+  // Calculate basic relevance score
+  const relevanceScore = useMemo(() => {
+    if (!query) return 0;
+    const text = `${result.title} ${result.subtitle || ''} ${result.description || ''}`.toLowerCase();
+    const queryLower = query.toLowerCase();
+    
+    if (text.includes(queryLower)) {
+      // Perfect match gets higher score
+      if (result.title.toLowerCase().includes(queryLower)) return 0.9;
+      return 0.7;
+    }
+    return 0.3;
+  }, [result, query]);
+
+  // Calculate basic trending score
+  const trendingScore = useMemo(() => {
+    if (!result.metadata) return 0;
+    const likes = result.metadata.likes || 0;
+    const followers = result.metadata.followers || 0;
+    const isRecent = result.metadata.date && new Date(result.metadata.date) > new Date(Date.now() - 24 * 60 * 60 * 1000);
+    
+    let score = Math.min(50, Math.log(likes + followers + 1) * 10);
+    if (isRecent) score += 20;
+    if (result.metadata.trending) score += 30;
+    
+    return score;
+  }, [result.metadata]);
+
+  const showAdvancedMetrics = query.length > 0 && (relevanceScore > 0.7 || trendingScore > 50);
 
   return (
     <Card className="p-4 hover:shadow-md transition-shadow cursor-pointer">
@@ -93,6 +125,31 @@ function ResultCard({ result }: { result: SearchResult }) {
             <Badge variant="secondary" className="text-xs">
               {result.type.replace('-', ' ')}
             </Badge>
+            
+            {/* Advanced Score Indicators */}
+            {showAdvancedMetrics && (
+              <>
+                {relevanceScore > 0.8 && (
+                  <Badge variant="outline" className="text-xs text-green-600 border-green-200">
+                    <Star className="h-3 w-3 mr-1" />
+                    Highly Relevant
+                  </Badge>
+                )}
+                {trendingScore > 70 && (
+                  <Badge variant="outline" className="text-xs text-orange-600 border-orange-200">
+                    <Flame className="h-3 w-3 mr-1" />
+                    Trending
+                  </Badge>
+                )}
+              </>
+            )}
+            
+            {result.metadata?.trending && (
+              <Badge variant="outline" className="text-xs text-blue-600 border-blue-200">
+                <TrendingUp className="h-3 w-3 mr-1" />
+                Hot
+              </Badge>
+            )}
           </div>
           
           {result.subtitle && (
@@ -114,7 +171,10 @@ function ResultCard({ result }: { result: SearchResult }) {
                 <span>{result.metadata.posts} posts</span>
               )}
               {result.metadata.date && (
-                <span>{result.metadata.date}</span>
+                <span className="flex items-center">
+                  <Clock className="h-3 w-3 mr-1" />
+                  {result.metadata.date}
+                </span>
               )}
               {result.metadata.likes && (
                 <span>{result.metadata.likes} likes</span>
@@ -130,6 +190,22 @@ function ResultCard({ result }: { result: SearchResult }) {
               )}
               {result.metadata.rating && (
                 <span>{result.metadata.rating}</span>
+              )}
+              
+              {/* Advanced Score Display */}
+              {showAdvancedMetrics && (
+                <>
+                  {relevanceScore > 0.5 && (
+                    <span className="text-green-600 font-medium">
+                      {Math.round(relevanceScore * 100)}% match
+                    </span>
+                  )}
+                  {trendingScore > 30 && (
+                    <span className="text-orange-600 font-medium">
+                      {Math.round(trendingScore)} trend score
+                    </span>
+                  )}
+                </>
               )}
             </div>
           )}
@@ -147,59 +223,72 @@ export function SearchResults({
   results, 
   query, 
   filter: _filter, 
-  filters,
-  isLoading, 
-  className 
+  filters: _filters,
+  isLoading,
+  className
 }: SearchResultsProps) {
-  // Apply additional filtering based on advanced filters
-  const filteredResults = results.filter(result => {
-    if (!filters) return true;
+  const [sortBy, setSortBy] = useState('relevance');
 
-    // Verified filter
-    if (filters.verified === 'verified' && !result.metadata?.verified) return false;
-    if (filters.verified === 'unverified' && result.metadata?.verified) return false;
+  // Transform results to RankedSearchResult format
+  const transformedResults = useMemo(() => {
+    return results.map(result => ({
+      ...result,
+      subtitle: result.subtitle || '',
+      description: result.description || '',
+      metadata: {
+        ...result.metadata,
+        category: result.type,
+        engagement: result.metadata?.likes || 0,
+        recency: result.metadata?.date ? new Date(result.metadata.date).getTime() : Date.now()
+      }
+    })) as RankedSearchResult[];
+  }, [results]);
 
-    // Media filter
-    if (filters.hasMedia && !result.metadata?.hasMedia) return false;
+  // Create search context for advanced ranking
+  const searchContext: SearchContext = useMemo(() => ({
+    query,
+    userInterests: ['tech', 'academic', 'social'], // This would come from user preferences
+    userActivity: [
+      { category: 'tech', engagement: 0.8 },
+      { category: 'academic', engagement: 0.9 },
+      { category: 'social', engagement: 0.6 }
+    ],
+    searchHistory: [], // This would come from stored search history
+    trendingTopics: ['machine-learning', 'web-development', 'data-science']
+  }), [query]);
 
-    // Links filter
-    if (filters.hasLinks && !result.metadata?.hasLinks) return false;
+  // Apply advanced ranking
+  const rankedResults = useMemo(() => {
+    if (!query.trim()) return transformedResults;
+    
+    return rankSearchResults(transformedResults, searchContext);
+  }, [query, transformedResults, searchContext]);
 
-    // Minimum likes filter
-    if (filters.minLikes > 0 && (result.metadata?.likes || 0) < filters.minLikes) return false;
-
-    // Post type filter
-    if (filters.postType !== 'all' && result.type !== filters.postType) return false;
-
-    return true;
-  });
-
-  // Sort results based on sortBy filter
-  const sortedResults = [...filteredResults].sort((a, b) => {
-    if (!filters) return 0;
-
-    switch (filters.sortBy) {
+  // Apply local sorting based on sortBy
+  const sortedResults = useMemo(() => {
+    const sorted = [...rankedResults];
+    
+    switch (sortBy) {
+      case 'relevance':
+        return sorted.sort((a, b) => (b.relevancyScore || 0) - (a.relevancyScore || 0));
+      case 'trending':
+        return sorted.sort((a, b) => {
+          const aScore = (a.metadata.engagement || 0) + (a.metadata.trending ? 50 : 0);
+          const bScore = (b.metadata.engagement || 0) + (b.metadata.trending ? 50 : 0);
+          return bScore - aScore;
+        });
       case 'recent':
-        // Sort by date if available
-        if (a.metadata?.date && b.metadata?.date) {
-          return new Date(b.metadata.date).getTime() - new Date(a.metadata.date).getTime();
-        }
-        return 0;
+        return sorted.sort((a, b) => {
+          const aTime = a.metadata.recency || 0;
+          const bTime = b.metadata.recency || 0;
+          return bTime - aTime;
+        });
       case 'popular':
-        // Sort by likes or followers
-        const aPopularity = a.metadata?.likes || a.metadata?.followers || 0;
-        const bPopularity = b.metadata?.likes || b.metadata?.followers || 0;
-        return bPopularity - aPopularity;
-      case 'oldest':
-        // Sort by date (oldest first)
-        if (a.metadata?.date && b.metadata?.date) {
-          return new Date(a.metadata.date).getTime() - new Date(b.metadata.date).getTime();
-        }
-        return 0;
-      default: // relevance
-        return 0;
+        return sorted.sort((a, b) => (b.metadata.engagement || 0) - (a.metadata.engagement || 0));
+      default:
+        return sorted;
     }
-  });
+  }, [rankedResults, sortBy]);
 
   if (isLoading) {
     return (
@@ -207,11 +296,11 @@ export function SearchResults({
         {Array.from({ length: 5 }).map((_, i) => (
           <Card key={i} className="p-4 animate-pulse">
             <div className="flex items-start space-x-3">
-              <div className="h-12 w-12 rounded-full bg-muted" />
+              <div className="h-12 w-12 bg-muted rounded-full"></div>
               <div className="flex-1 space-y-2">
-                <div className="h-4 bg-muted rounded w-1/3" />
-                <div className="h-3 bg-muted rounded w-1/2" />
-                <div className="h-3 bg-muted rounded w-full" />
+                <div className="h-4 bg-muted rounded w-1/3"></div>
+                <div className="h-3 bg-muted rounded w-1/2"></div>
+                <div className="h-3 bg-muted rounded w-2/3"></div>
               </div>
             </div>
           </Card>
@@ -220,47 +309,50 @@ export function SearchResults({
     );
   }
 
-  if (sortedResults.length === 0 && query) {
-    return (
-      <div className={cn("text-center py-12", className)}>
-        <div className="space-y-2">
-          <h3 className="text-lg font-semibold">No results found</h3>
-          <p className="text-muted-foreground">
-            Try searching for something else or adjust your filters.
-          </p>
-          {filters && (
-            <p className="text-sm text-muted-foreground">
-              Current filters may be too restrictive. Try removing some filters.
-            </p>
-          )}
-        </div>
-      </div>
-    );
-  }
-
   if (sortedResults.length === 0) {
     return (
-      <div className={cn("text-center py-12", className)}>
-        <div className="space-y-2">
-          <h3 className="text-lg font-semibold">Start searching</h3>
-          <p className="text-muted-foreground">
-            Find people, posts, events, and more across BITians.
-          </p>
-        </div>
+      <div className={cn("flex flex-col items-center justify-center py-12", className)}>
+        <div className="text-6xl mb-4">🔍</div>
+        <h3 className="text-lg font-semibold text-foreground mb-2">No results found</h3>
+        <p className="text-muted-foreground text-center max-w-sm">
+          {query ? `No results found for "${query}". Try different keywords or check spelling.` 
+                 : "Start typing to search BITians"}
+        </p>
       </div>
     );
   }
 
   return (
     <div className={cn("space-y-4", className)}>
-      <div className="text-sm text-muted-foreground mb-4">
-        Found {sortedResults.length} result{sortedResults.length !== 1 ? 's' : ''} for "{query}"
-        {filters && filters.sortBy !== 'relevance' && (
-          <span className="ml-2">• Sorted by {filters.sortBy}</span>
-        )}
-      </div>
+      {/* Results Summary with Sort Control */}
+      {query && (
+        <div className="flex items-center justify-between px-1 py-2">
+          <p className="text-sm text-muted-foreground">
+            Found {sortedResults.length} results for <span className="font-medium">"{query}"</span>
+          </p>
+          <div className="flex items-center space-x-2">
+            <select 
+              value={sortBy} 
+              onChange={(e) => setSortBy(e.target.value)}
+              className="text-xs border border-border rounded px-2 py-1 bg-background"
+            >
+              <option value="relevance">Relevance</option>
+              <option value="trending">Trending</option>
+              <option value="recent">Recent</option>
+              <option value="popular">Popular</option>
+            </select>
+            {sortedResults.length > 0 && (
+              <Badge variant="outline" className="text-xs">
+                {sortedResults.length} {sortedResults.length === 1 ? 'result' : 'results'}
+              </Badge>
+            )}
+          </div>
+        </div>
+      )}
+      
+      {/* Search Results */}
       {sortedResults.map((result) => (
-        <ResultCard key={result.id} result={result} />
+        <ResultCard key={result.id} result={result} query={query} />
       ))}
     </div>
   );

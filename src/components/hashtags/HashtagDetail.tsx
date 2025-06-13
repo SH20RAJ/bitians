@@ -4,11 +4,28 @@ import { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Hash, TrendingUp, Users, Calendar, Share2, Heart } from 'lucide-react';
+import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
+import { 
+  Hash, 
+  TrendingUp, 
+  TrendingDown,
+  Minus,
+  Users, 
+  Calendar, 
+  Share2, 
+  Heart,
+  MessageCircle,
+  Eye,
+  Filter,
+  Flame,
+  Clock
+} from 'lucide-react';
 import { PostCard } from '@/components/ui/PostCard';
 import { cn } from '@/lib/utils';
 import { TRENDING_HASHTAGS } from '@/constants/homepage/trending-data';
 import { FEED_POSTS } from '@/constants/homepage/feed-data';
+import { calculateTrendingScore, type TrendingItem } from '@/utils/search/trending-algorithm';
+import { useTrendingData } from '@/hooks/search/use-trending-data';
 
 interface HashtagDetailProps {
   tag: string;
@@ -18,10 +35,30 @@ export function HashtagDetail({ tag }: HashtagDetailProps) {
   const [isFollowing, setIsFollowing] = useState(false);
   const [selectedTab, setSelectedTab] = useState<'recent' | 'popular' | 'media'>('recent');
 
-  // Find hashtag data
+  // Get trending data for enhanced analytics
+  const { hashtags: trendingHashtags } = useTrendingData({
+    timeRange: '24h',
+    category: 'all',
+    minEngagement: 1
+  });
+
+  // Find hashtag data from both sources
   const hashtagData = TRENDING_HASHTAGS.find(h => 
     h.tag.toLowerCase().replace('#', '') === tag.toLowerCase()
   );
+
+  const trendingHashtagData = trendingHashtags.find(h => 
+    h.title.toLowerCase().replace('#', '') === tag.toLowerCase()
+  );
+
+  // Enhanced hashtag stats
+  const hashtagStats = {
+    posts: hashtagData?.posts || Math.floor(Math.random() * 1000 + 100),
+    contributors: Math.floor(Math.random() * 1000 + 500),
+    engagements: Math.floor(Math.random() * 50 + 10),
+    trendingScore: trendingHashtagData?.totalScore || 0,
+    isHot: (trendingHashtagData?.totalScore || 0) > 70
+  };
 
   // Filter posts that contain this hashtag
   const hashtagPosts = FEED_POSTS.filter(post => 
@@ -105,25 +142,34 @@ export function HashtagDetail({ tag }: HashtagDetailProps) {
           </div>
         </div>
 
-        {/* Stats */}
-        <div className="grid grid-cols-3 gap-4">
+        {/* Enhanced Stats */}
+        <div className="grid grid-cols-4 gap-4">
           <div className="text-center">
             <div className="text-2xl font-bold text-foreground">
-              {hashtagData?.posts.toLocaleString() || hashtagPosts.length}
+              {hashtagStats.posts.toLocaleString()}
             </div>
             <div className="text-sm text-muted-foreground">Posts</div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-foreground">
-              {Math.floor(Math.random() * 1000 + 500)}
+              {hashtagStats.contributors}
             </div>
             <div className="text-sm text-muted-foreground">Contributors</div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-foreground">
-              {Math.floor(Math.random() * 50 + 10)}K
+              {hashtagStats.engagements}K
             </div>
             <div className="text-sm text-muted-foreground">Engagements</div>
+          </div>
+          <div className="text-center">
+            <div className="flex items-center justify-center space-x-1">
+              <div className="text-lg font-bold text-foreground">
+                {Math.round(hashtagStats.trendingScore)}
+              </div>
+              {hashtagStats.isHot && <Flame className="h-4 w-4 text-orange-500" />}
+            </div>
+            <div className="text-sm text-muted-foreground">Trend Score</div>
           </div>
         </div>
       </div>

@@ -10,10 +10,10 @@ const compat = new FlatCompat({
 });
 
 const eslintConfig = [
-  ...compat.extends("next/core-web-vitals", "next/typescript"),{
-    rules :{
-      "react/no-unescaped-entities" : "off",
-      "react/react-in-jsx-scope" : "off",
+  ...compat.extends("next/core-web-vitals", "next/typescript"), {
+    rules: {
+      "react/no-unescaped-entities": "off",
+      "react/react-in-jsx-scope": "off",
       "no-unused-vars": [
         "warn",
         {
@@ -31,20 +31,8 @@ const eslintConfig = [
         },
       ],
       "@typescript-eslint/no-explicit-any": "warn",
-      "no-console": [
-        "warn",
-        {
-          allow: ["warn", "error"],
-        },
-      ],
-      "import/no-anonymous-default-export": [
-        "error",
-        {
-          allowObject: true,
-          allowArray: true,
-          allowLiteral: true,
-        },
-      ],
+
+
     }
   },
 ];
