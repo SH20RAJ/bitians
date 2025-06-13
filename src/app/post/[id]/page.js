@@ -10,11 +10,11 @@ import { Avatar } from '@/components/ui/Avatar';
 import { Badge } from '@/components/ui/Badge';
 import { useToast } from '@/components/Toast';
 import BottomNavigation from '@/components/BottomNavigation';
-import { 
-  Heart, 
-  MessageCircle, 
-  Share2, 
-  Bookmark, 
+import {
+  Heart,
+  MessageCircle,
+  Share2,
+  Bookmark,
   MoreHorizontal,
   Send,
   Reply,
@@ -33,7 +33,7 @@ export default function PostPage() {
   const params = useParams();
   const postId = params.id;
   const { showToast } = useToast();
-  
+
   const [post, setPost] = useState(null);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
@@ -161,8 +161,8 @@ export default function PostPage() {
     };
 
     if (replyTo) {
-      setComments(prev => prev.map(c => 
-        c.id === replyTo 
+      setComments(prev => prev.map(c =>
+        c.id === replyTo
           ? { ...c, replies: [...c.replies, { ...comment, id: Date.now() }] }
           : c
       ));
@@ -178,21 +178,21 @@ export default function PostPage() {
 
   const handleCommentLike = (commentId, isReply = false, parentId = null) => {
     if (isReply) {
-      setComments(prev => prev.map(c => 
-        c.id === parentId 
+      setComments(prev => prev.map(c =>
+        c.id === parentId
           ? {
-              ...c,
-              replies: c.replies.map(r => 
-                r.id === commentId 
-                  ? { ...r, likes: r.likes + 1 }
-                  : r
-              )
-            }
+            ...c,
+            replies: c.replies.map(r =>
+              r.id === commentId
+                ? { ...r, likes: r.likes + 1 }
+                : r
+            )
+          }
           : c
       ));
     } else {
-      setComments(prev => prev.map(c => 
-        c.id === commentId 
+      setComments(prev => prev.map(c =>
+        c.id === commentId
           ? { ...c, likes: c.likes + 1 }
           : c
       ));
@@ -261,7 +261,7 @@ export default function PostPage() {
               {/* Post Content */}
               <div className="space-y-4">
                 <p className="text-lg leading-relaxed">{post.content}</p>
-                
+
                 {/* Post Images */}
                 {post.images && post.images.length > 0 && (
                   <div className="grid grid-cols-1 gap-4">
@@ -352,7 +352,7 @@ export default function PostPage() {
             {/* Comments Section */}
             <Card className="p-6">
               <h3 className="font-semibold text-lg mb-4">Comments ({post.comments})</h3>
-              
+
               {/* Add Comment */}
               <div className="flex gap-3 mb-6">
                 <Avatar size="sm" />

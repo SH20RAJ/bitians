@@ -548,8 +548,8 @@ export default function FeedsPage() {
                                         <button
                                             onClick={() => handleLike(post.id)}
                                             className={`flex items-center gap-2 transition-colors ${likedPosts.has(post.id)
-                                                    ? 'text-red-500 hover:text-red-600'
-                                                    : 'text-muted-foreground hover:text-red-500'
+                                                ? 'text-red-500 hover:text-red-600'
+                                                : 'text-muted-foreground hover:text-red-500'
                                                 }`}
                                         >
                                             <Heart className={`w-5 h-5 ${likedPosts.has(post.id) ? 'fill-current' : ''}`} />
@@ -570,8 +570,8 @@ export default function FeedsPage() {
                                     <button
                                         onClick={() => handleBookmark(post.id)}
                                         className={`transition-colors ${bookmarkedPosts.has(post.id)
-                                                ? 'text-yellow-500'
-                                                : 'text-muted-foreground hover:text-yellow-500'
+                                            ? 'text-yellow-500'
+                                            : 'text-muted-foreground hover:text-yellow-500'
                                             }`}
                                     >
                                         <Bookmark className={`w-5 h-5 ${bookmarkedPosts.has(post.id) ? 'fill-current' : ''}`} />

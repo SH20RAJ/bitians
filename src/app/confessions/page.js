@@ -9,12 +9,12 @@ import { Input } from '@/components/ui/Input';
 import { Badge } from '@/components/ui/Badge';
 import { Loading } from '@/components/ui/Loading';
 import { useToast } from '@/components/Toast';
-import { 
-  Search, 
-  Plus, 
-  Heart, 
-  MessageCircle, 
-  Share2, 
+import {
+  Search,
+  Plus,
+  Heart,
+  MessageCircle,
+  Share2,
   Filter,
   Eye,
   EyeOff,
@@ -146,10 +146,10 @@ export default function ConfessionsPage() {
 
   const filteredConfessions = confessions.filter(confession => {
     const matchesSearch = confession.content.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         confession.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
-    const matchesCategory = selectedCategory === 'all' || 
-                           confession.category.toLowerCase().includes(selectedCategory.toLowerCase());
-    
+      confession.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
+    const matchesCategory = selectedCategory === 'all' ||
+      confession.category.toLowerCase().includes(selectedCategory.toLowerCase());
+
     return matchesSearch && matchesCategory;
   }).sort((a, b) => {
     switch (sortBy) {
@@ -161,13 +161,13 @@ export default function ConfessionsPage() {
   });
 
   const handleLike = (confessionId) => {
-    setConfessions(confessions.map(confession => 
-      confession.id === confessionId 
-        ? { 
-            ...confession, 
-            isLiked: !confession.isLiked,
-            likes: confession.isLiked ? confession.likes - 1 : confession.likes + 1
-          }
+    setConfessions(confessions.map(confession =>
+      confession.id === confessionId
+        ? {
+          ...confession,
+          isLiked: !confession.isLiked,
+          likes: confession.isLiked ? confession.likes - 1 : confession.likes + 1
+        }
         : confession
     ));
   };
@@ -375,16 +375,15 @@ export default function ConfessionsPage() {
                     <div className="flex items-center gap-6">
                       <button
                         onClick={() => handleLike(confession.id)}
-                        className={`flex items-center gap-2 transition-colors ${
-                          confession.isLiked 
-                            ? 'text-red-500 hover:text-red-600' 
+                        className={`flex items-center gap-2 transition-colors ${confession.isLiked
+                            ? 'text-red-500 hover:text-red-600'
                             : 'text-muted-foreground hover:text-red-500'
-                        }`}
+                          }`}
                       >
                         <Heart className={`h-4 w-4 ${confession.isLiked ? 'fill-current' : ''}`} />
                         <span className="text-sm">{confession.likes}</span>
                       </button>
-                      
+
                       <button
                         onClick={() => handleComment(confession)}
                         className="flex items-center gap-2 text-muted-foreground hover:text-blue-500 transition-colors"
@@ -392,7 +391,7 @@ export default function ConfessionsPage() {
                         <MessageCircle className="h-4 w-4" />
                         <span className="text-sm">{confession.comments}</span>
                       </button>
-                      
+
                       <button
                         onClick={() => handleShare(confession)}
                         className="flex items-center gap-2 text-muted-foreground hover:text-green-500 transition-colors"

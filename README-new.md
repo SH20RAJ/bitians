@@ -14,13 +14,15 @@ A comprehensive, feature-rich social media platform designed exclusively for BIT
 ## ✨ Features Overview
 
 ### 🏠 **Smart Feed System**
+
 - **Multi-Media Posts**: Share text, photos, videos, and audio content
 - **K-Batch System**: Smart batch identification (K24, K23, K22, etc.) based on admission year
 - **Hashtags & Mentions**: Tag content and mention fellow students with @username
 - **Interactive Engagement**: Like, comment, share, and bookmark posts
 - **Smart Filtering**: Filter content by academic year, branch, or interests
 
-### 🔥 **Hot or Not** 
+### 🔥 **Hot or Not**
+
 - **Student Rating System**: Rate and discover the most popular students
 - **Leaderboard Rankings**: See who's trending on campus
 - **Anonymous Voting**: Private rating system with public leaderboards
@@ -29,18 +31,21 @@ A comprehensive, feature-rich social media platform designed exclusively for BIT
 ### 👥 **Campus Communities**
 
 #### **🎯 Circles**
+
 - **Interest-Based Groups**: Join communities based on hobbies, academics, or projects
 - **Real-time Chat**: Group messaging within circles
 - **Event Organization**: Plan and coordinate circle activities
 - **Content Sharing**: Share posts exclusively within your circles
 
 #### **📚 Study Groups**
+
 - **Subject-wise Groups**: Find study partners for specific courses
 - **Session Scheduling**: Organize group study sessions
 - **Resource Sharing**: Share notes, assignments, and study materials
 - **Progress Tracking**: Monitor group learning goals
 
 ### 🛒 **BitMart - Campus Marketplace**
+
 - **Buy & Sell**: Trade textbooks, electronics, furniture, and more
 - **Service Exchange**: Offer tutoring, project help, or other services
 - **Safe Transactions**: Built-in rating and review system
@@ -49,24 +54,28 @@ A comprehensive, feature-rich social media platform designed exclusively for BIT
 ### 🎉 **Campus Life Features**
 
 #### **📅 Events Hub**
+
 - **Event Discovery**: Find workshops, fests, competitions, and social events
 - **Quick Registration**: One-click event registration and reminders
 - **Event Creation**: Organize your own campus events
 - **Calendar Integration**: Track your event schedule
 
 #### **💭 Anonymous Confessions**
+
 - **Safe Expression**: Share thoughts anonymously
 - **Topic Categories**: Love, academics, mental health, career advice
 - **Community Support**: Supportive responses from fellow students
 - **Trending Discussions**: Discover popular confession topics
 
 #### **🔍 Lost & Found**
+
 - **Item Recovery**: Report lost items and help others find theirs
 - **Photo Uploads**: Visual identification for lost items
 - **Location Tracking**: Mark where items were lost or found
 - **Reward System**: Offer incentives for item return
 
 #### **📝 Notes Sharing**
+
 - **Academic Resources**: Share and download study materials
 - **Quality Ratings**: Rate notes for accuracy and usefulness
 - **Subject Organization**: Categorized by semester, branch, and subject
@@ -75,12 +84,14 @@ A comprehensive, feature-rich social media platform designed exclusively for BIT
 ## 🎨 Design Philosophy
 
 ### **Modern Aesthetics**
+
 - **Glass Morphism**: Translucent design with backdrop blur effects
 - **Gradient Accents**: Beautiful color transitions throughout the platform
 - **Micro-Interactions**: Smooth animations and hover effects
 - **Responsive Design**: Seamless experience across all devices
 
 ### **User Experience**
+
 - **Intuitive Navigation**: Easy-to-use interface designed for students
 - **Dark/Light Mode**: Automatic theme switching with manual override
 - **Accessibility First**: WCAG compliant design for all users
@@ -142,7 +153,8 @@ Each user automatically receives their K-badge based on admission year, helping 
 ## 🛠️ Installation & Setup
 
 ### Prerequisites
-- Node.js 18+ 
+
+- Node.js 18+
 - npm or yarn
 - Git
 
@@ -201,18 +213,21 @@ src/
 ## 🎯 Key Features Deep Dive
 
 ### **Multi-Media Content Support**
+
 - 📸 **Photos**: High-quality image sharing with filters
 - 🎥 **Videos**: Video posts with thumbnail previews
 - 🎵 **Audio**: Voice notes and audio content sharing
 - 📝 **Text**: Rich text posts with hashtags and mentions
 
 ### **Social Engagement**
+
 - ❤️ **Reactions**: Like, love, and other emoji reactions
 - 💬 **Comments**: Threaded discussions on posts
 - 🔗 **Sharing**: Cross-platform content sharing
 - 🔖 **Bookmarks**: Save posts for later viewing
 
 ### **Smart Discovery**
+
 - 🏷️ **Hashtags**: Trending topics and content discovery
 - @️⃣ **Mentions**: Tag and notify other students
 - 🔍 **Search**: Intelligent search across all content
@@ -221,18 +236,21 @@ src/
 ## 🌟 User Experience Highlights
 
 ### **Onboarding**
+
 - Smooth registration process with batch year detection
 - Interactive tutorial for new users
 - Profile setup with interests and academic details
 - Automatic circle and study group recommendations
 
 ### **Daily Usage**
+
 - Personalized feed based on interests and connections
 - Real-time notifications for important updates
 - Quick access to frequently used features
 - Seamless mobile and desktop experience
 
 ### **Community Building**
+
 - Easy group creation and management
 - Event planning and coordination tools
 - Anonymous feedback and confession systems
@@ -249,24 +267,28 @@ src/
 ## 🚀 Future Roadmap
 
 ### **Phase 1: Enhanced Social Features**
+
 - [ ] Advanced post editing and formatting
 - [ ] Story/Status updates (24-hour posts)
 - [ ] Direct messaging system
 - [ ] Group video calls integration
 
 ### **Phase 2: Academic Integration**
+
 - [ ] Course schedule integration
 - [ ] Assignment tracking and reminders
 - [ ] Grade sharing and comparison
 - [ ] Professor rating system
 
 ### **Phase 3: Advanced Features**
+
 - [ ] AI-powered content recommendations
 - [ ] Campus map integration
 - [ ] Ride sharing for outstation students
 - [ ] Job and internship board
 
 ### **Phase 4: Platform Expansion**
+
 - [ ] Mobile app development (React Native)
 - [ ] Push notifications
 - [ ] Offline content access
@@ -275,12 +297,14 @@ src/
 ## 🏆 Why BITians.org?
 
 ### **For Students**
+
 - **Stay Connected**: Never miss out on campus happenings
 - **Academic Success**: Access to study resources and groups
 - **Social Growth**: Build meaningful friendships and networks
 - **Convenience**: All campus needs in one platform
 
 ### **For Campus Community**
+
 - **Information Hub**: Centralized campus communication
 - **Event Promotion**: Reach more students effectively
 - **Resource Sharing**: Collaborative learning environment
@@ -291,6 +315,7 @@ src/
 We welcome contributions from the BIT Mesra community! Here's how you can help:
 
 ### **For Developers**
+
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
 3. Make your changes and commit (`git commit -m 'Add amazing feature'`)
@@ -298,6 +323,7 @@ We welcome contributions from the BIT Mesra community! Here's how you can help:
 5. Open a Pull Request
 
 ### **For Students**
+
 - Report bugs and issues
 - Suggest new features
 - Share feedback and ideas
@@ -307,7 +333,7 @@ We welcome contributions from the BIT Mesra community! Here's how you can help:
 
 - **🐛 Report Issues**: [GitHub Issues](https://github.com/your-username/bitians/issues)
 - **💡 Feature Requests**: [Discussions](https://github.com/your-username/bitians/discussions)
-- **📧 Contact**: support@bitians.org
+- **📧 Contact**: <support@bitians.org>
 - **📱 Social**: Follow us on campus social media
 
 ## 📄 License

@@ -186,9 +186,9 @@ export default function BitMartPage() {
 
   const filteredProducts = products.filter(product => {
     const matchesSearch = product.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         product.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         product.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
-    
+      product.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      product.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
+
     const matchesCategory = selectedCategory === "all" || product.category === selectedCategory;
     const matchesCondition = selectedCondition === "all" || product.condition === selectedCondition;
 
@@ -244,8 +244,8 @@ export default function BitMartPage() {
   };
 
   return (
-    <PageLayout 
-      title="BitMart" 
+    <PageLayout
+      title="BitMart"
       subtitle="Buy and sell with your fellow BITians"
       icon={ShoppingBag}
     >
@@ -475,8 +475,8 @@ export default function BitMartPage() {
                     </div>
                   </div>
 
-                  <Button 
-                    size="sm" 
+                  <Button
+                    size="sm"
                     onClick={() => handleContact(product.seller)}
                     className="btn-scale"
                   >

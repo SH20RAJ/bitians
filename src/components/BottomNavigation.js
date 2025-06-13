@@ -1,12 +1,12 @@
 "use client";
 
 import { Button } from "@/components/ui/Button";
-import { 
-  Home, 
-  TrendingUp, 
-  Plus, 
-  Play, 
-  User, 
+import {
+  Home,
+  TrendingUp,
+  Plus,
+  Play,
+  User,
   Users,
   Calendar,
   Search
@@ -58,13 +58,12 @@ export default function BottomNavigation({ currentPage = "home" }) {
             key={item.id}
             variant="ghost"
             size="sm"
-            className={`flex-col space-y-1 h-auto py-2 transition-all ${
-              item.isSpecial
+            className={`flex-col space-y-1 h-auto py-2 transition-all ${item.isSpecial
                 ? "bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full w-12 h-12 hover:from-blue-600 hover:to-purple-600"
                 : currentPage === item.id
-                ? "text-primary"
-                : "text-muted-foreground hover:text-foreground"
-            }`}
+                  ? "text-primary"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
             onClick={() => router.push(item.href)}
           >
             {item.isSpecial ? (

@@ -8,15 +8,15 @@ import { Input } from '@/components/ui/Input';
 import { Avatar } from '@/components/ui/Avatar';
 import { Badge } from '@/components/ui/Badge';
 import { useToast } from '@/components/Toast';
-import { 
-  Image, 
-  Video, 
-  MapPin, 
-  Smile, 
-  Hash, 
-  Users, 
-  Globe, 
-  Lock, 
+import {
+  Image,
+  Video,
+  MapPin,
+  Smile,
+  Hash,
+  Users,
+  Globe,
+  Lock,
   Eye,
   Camera,
   Mic,
@@ -197,11 +197,10 @@ export default function CreatePostPage() {
                   <button
                     key={type.id}
                     onClick={() => setPostType(type.id)}
-                    className={`p-3 rounded-xl border-2 transition-all hover:scale-105 ${
-                      postType === type.id
+                    className={`p-3 rounded-xl border-2 transition-all hover:scale-105 ${postType === type.id
                         ? 'border-primary bg-primary/10'
                         : 'border-gray-200 dark:border-gray-700 hover:border-primary/50'
-                    }`}
+                      }`}
                   >
                     <div className={`w-8 h-8 rounded-lg ${type.color} flex items-center justify-center mx-auto mb-2`}>
                       <Icon className="w-4 h-4 text-white" />
@@ -223,8 +222,8 @@ export default function CreatePostPage() {
                   value={postContent}
                   onChange={handleContentChange}
                   placeholder={
-                    postType === 'confession' 
-                      ? "Share your thoughts anonymously..." 
+                    postType === 'confession'
+                      ? "Share your thoughts anonymously..."
                       : "What's on your mind?"
                   }
                   className="w-full min-h-[120px] p-4 border border-gray-200 dark:border-gray-700 rounded-xl resize-none focus:ring-2 focus:ring-primary focus:border-transparent bg-transparent placeholder:text-muted-foreground"
@@ -288,24 +287,24 @@ export default function CreatePostPage() {
                   <h4 className="font-medium">Event Details</h4>
                   <Input
                     value={eventDetails.title}
-                    onChange={(e) => setEventDetails({...eventDetails, title: e.target.value})}
+                    onChange={(e) => setEventDetails({ ...eventDetails, title: e.target.value })}
                     placeholder="Event title"
                   />
                   <div className="grid grid-cols-2 gap-3">
                     <Input
                       type="date"
                       value={eventDetails.date}
-                      onChange={(e) => setEventDetails({...eventDetails, date: e.target.value})}
+                      onChange={(e) => setEventDetails({ ...eventDetails, date: e.target.value })}
                     />
                     <Input
                       type="time"
                       value={eventDetails.time}
-                      onChange={(e) => setEventDetails({...eventDetails, time: e.target.value})}
+                      onChange={(e) => setEventDetails({ ...eventDetails, time: e.target.value })}
                     />
                   </div>
                   <Input
                     value={eventDetails.location}
-                    onChange={(e) => setEventDetails({...eventDetails, location: e.target.value})}
+                    onChange={(e) => setEventDetails({ ...eventDetails, location: e.target.value })}
                     placeholder="Event location"
                   />
                 </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import  {PageLayout}  from "@/components/PageLayout";
+import { PageLayout } from "@/components/PageLayout";
 import BottomNavigation from "@/components/BottomNavigation";
 import { Button } from "@/components/ui/Button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
@@ -109,12 +109,12 @@ export default function StudyGroupsPage() {
 
   const filteredGroups = studyGroups.filter(group => {
     const matchesSearch = group.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         group.subject.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         group.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
-    
+      group.subject.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      group.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
+
     const matchesFilter = selectedFilter === "all" ||
-                         (selectedFilter === "active" && group.activeNow) ||
-                         group.difficulty.toLowerCase() === selectedFilter;
+      (selectedFilter === "active" && group.activeNow) ||
+      group.difficulty.toLowerCase() === selectedFilter;
 
     return matchesSearch && matchesFilter;
   });
@@ -136,8 +136,8 @@ export default function StudyGroupsPage() {
   };
 
   return (
-    <PageLayout 
-      title="Study Groups" 
+    <PageLayout
+      title="Study Groups"
       subtitle="Find and join study groups for your subjects"
       icon={Users}
     >
@@ -272,9 +272,9 @@ export default function StudyGroupsPage() {
                     <span>{group.members}/{group.maxMembers} members</span>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <Badge 
-                      variant={group.difficulty === "Beginner" ? "success" : 
-                               group.difficulty === "Intermediate" ? "warning" : "destructive"}
+                    <Badge
+                      variant={group.difficulty === "Beginner" ? "success" :
+                        group.difficulty === "Intermediate" ? "warning" : "destructive"}
                       className="text-xs"
                     >
                       {group.difficulty}
@@ -304,16 +304,16 @@ export default function StudyGroupsPage() {
                   </div>
 
                   <div className="flex items-center space-x-2">
-                    <Button 
-                      variant="ghost" 
+                    <Button
+                      variant="ghost"
                       size="sm"
                       className="btn-scale"
                       onClick={() => toast({ title: "Chat", description: "Group chat coming soon! 💬", type: "info" })}
                     >
                       <MessageCircle className="w-4 h-4" />
                     </Button>
-                    <Button 
-                      size="sm" 
+                    <Button
+                      size="sm"
                       onClick={() => handleJoinGroup(group)}
                       disabled={group.members >= group.maxMembers}
                       className="btn-scale"

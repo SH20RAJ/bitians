@@ -10,13 +10,13 @@ import { Badge } from '@/components/ui/Badge';
 import { Avatar } from '@/components/ui/Avatar';
 import { Loading } from '@/components/ui/Loading';
 import { useToast } from '@/components/Toast';
-import { 
-  Search, 
-  Plus, 
-  MapPin, 
-  Clock, 
-  Eye, 
-  MessageCircle, 
+import {
+  Search,
+  Plus,
+  MapPin,
+  Clock,
+  Eye,
+  MessageCircle,
   Filter,
   Package,
   Smartphone,
@@ -163,11 +163,11 @@ export default function LostFoundPage() {
 
   const filteredItems = items.filter(item => {
     const matchesSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         item.description.toLowerCase().includes(searchTerm.toLowerCase());
+      item.description.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesType = selectedType === 'all' || item.type === selectedType;
-    const matchesCategory = selectedCategory === 'all' || 
-                           item.category.toLowerCase().includes(selectedCategory.toLowerCase());
-    
+    const matchesCategory = selectedCategory === 'all' ||
+      item.category.toLowerCase().includes(selectedCategory.toLowerCase());
+
     return matchesSearch && matchesType && matchesCategory;
   });
 
@@ -176,7 +176,7 @@ export default function LostFoundPage() {
   };
 
   const handleReport = (item) => {
-    setItems(items.map(i => 
+    setItems(items.map(i =>
       i.id === item.id ? { ...i, status: 'claimed' } : i
     ));
     showToast(`Marked "${item.title}" as claimed!`, 'success');
@@ -325,10 +325,10 @@ export default function LostFoundPage() {
                     <div className="absolute inset-0 flex items-center justify-center">
                       <CategoryIcon className="h-16 w-16 text-muted-foreground/30" />
                     </div>
-                    
+
                     {/* Type Badge */}
                     <div className="absolute top-3 left-3">
-                      <Badge 
+                      <Badge
                         variant={item.type === 'lost' ? 'destructive' : 'success'}
                         className="font-medium"
                       >

@@ -40,7 +40,7 @@ import {
   List,
   TrendingUp,
   Hash,
-  Clap,
+  PartyPopper,
   ThumbsUp,
   Send,
   Gift,
@@ -316,7 +316,7 @@ export default function ProfilePage() {
     // For username-based profiles, show the requested user
     const username = params.username || 'shaswatraj';
     const userData = mockUsers[username];
-    
+
     if (userData) {
       setUser(userData);
       setPosts(mockUserPosts);
@@ -324,7 +324,7 @@ export default function ProfilePage() {
     } else {
       setUser(null);
     }
-    
+
     setIsLoading(false);
   }, [params.username, mockUsers, mockUserPosts]);
 
@@ -425,18 +425,18 @@ export default function ProfilePage() {
                   <p className="text-blue-100">@{user.username}</p>
                 </div>
               </div>
-              
+
               {/* Action Buttons */}
               <div className="absolute bottom-4 right-6 flex gap-2">
                 <Button
                   onClick={handleApplaud}
                   size="sm"
-                  className={`${hasApplauded 
-                    ? 'bg-yellow-500 hover:bg-yellow-600' 
+                  className={`${hasApplauded
+                    ? 'bg-yellow-500 hover:bg-yellow-600'
                     : 'bg-white/20 hover:bg-white/30'
-                  } backdrop-blur-sm border-white/20`}
+                    } backdrop-blur-sm border-white/20`}
                 >
-                  <Clap className="w-4 h-4 mr-1" />
+                  <PartyPopper className="w-4 h-4 mr-1" />
                   {applauds}
                 </Button>
                 <Button
@@ -449,8 +449,8 @@ export default function ProfilePage() {
                 <Button
                   onClick={handleFollow}
                   size="sm"
-                  className={isFollowing 
-                    ? "bg-red-500 hover:bg-red-600" 
+                  className={isFollowing
+                    ? "bg-red-500 hover:bg-red-600"
                     : "bg-blue-500 hover:bg-blue-600"
                   }
                 >
@@ -559,7 +559,7 @@ export default function ProfilePage() {
                       <div className="flex justify-between border-t pt-2">
                         <span className="text-muted-foreground">Applauds Received</span>
                         <span className="font-bold text-yellow-600 flex items-center gap-1">
-                          <Clap className="w-3 h-3" />
+                          <PartyPopper className="w-3 h-3" />
                           {applauds}
                         </span>
                       </div>
@@ -645,7 +645,7 @@ export default function ProfilePage() {
                     Media
                   </Button>
                 </div>
-                
+
                 <div className="flex gap-1">
                   <Button
                     variant={viewMode === 'grid' ? 'default' : 'ghost'}
@@ -667,8 +667,8 @@ export default function ProfilePage() {
               {/* Tab Content */}
               <div className="p-4">
                 {activeTab === 'posts' && (
-                  <div className={viewMode === 'grid' 
-                    ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" 
+                  <div className={viewMode === 'grid'
+                    ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
                     : "space-y-4"
                   }>
                     {posts.map(post => (
@@ -682,13 +682,13 @@ export default function ProfilePage() {
                               </span>
                             </div>
                           )}
-                          
+
                           <RichText content={post.content} className="text-sm mb-3" />
-                          
+
                           {post.media && (
                             <MediaGrid mediaItems={post.media} className="mb-3" />
                           )}
-                          
+
                           <div className="flex items-center justify-between text-xs text-muted-foreground">
                             <span>{post.time}</span>
                             <div className="flex gap-3">
@@ -701,7 +701,7 @@ export default function ProfilePage() {
                                 {post.comments}
                               </span>
                               <span className="flex items-center gap-1">
-                                <Clap className="w-3 h-3" />
+                                <PartyPopper className="w-3 h-3" />
                                 {post.applauds}
                               </span>
                             </div>
@@ -741,8 +741,8 @@ export default function ProfilePage() {
                         {user.website && (
                           <div className="flex items-center gap-2">
                             <LinkIcon className="w-4 h-4 text-muted-foreground" />
-                            <a href={user.website} target="_blank" rel="noopener noreferrer" 
-                               className="text-blue-600 hover:underline">
+                            <a href={user.website} target="_blank" rel="noopener noreferrer"
+                              className="text-blue-600 hover:underline">
                               {user.website}
                             </a>
                           </div>

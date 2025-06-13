@@ -1,7 +1,7 @@
 // Hashtag processing utilities
 export const parseHashtags = (text) => {
   const hashtagRegex = /#[a-zA-Z0-9_]+/g;
-  return text.replace(hashtagRegex, (match) => 
+  return text.replace(hashtagRegex, (match) =>
     `<span class="hashtag text-blue-500 font-medium hover:text-blue-600 cursor-pointer">${match}</span>`
   );
 };
@@ -25,8 +25,8 @@ export const renderHashtagText = (text) => {
   return parts.map((part, index) => {
     if (part.startsWith('#')) {
       return (
-        <span 
-          key={index} 
+        <span
+          key={index}
           className="text-blue-500 font-medium hover:text-blue-600 cursor-pointer transition-colors"
           onClick={() => {
             // Handle hashtag click - could navigate to hashtag page

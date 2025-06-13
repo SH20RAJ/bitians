@@ -21,15 +21,15 @@ export function ToastProvider({ children }) {
   const addToast = useCallback(({ title, description, type = "default", duration = 5000 }) => {
     const id = Math.random().toString(36).substr(2, 9);
     const toast = { id, title, description, type, duration };
-    
+
     setToasts((prev) => [...prev, toast]);
-    
+
     if (duration > 0) {
       setTimeout(() => {
         removeToast(id);
       }, duration);
     }
-    
+
     return id;
   }, []);
 

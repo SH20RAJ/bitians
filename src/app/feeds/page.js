@@ -237,7 +237,7 @@ export default function FeedsPage() {
 
     useEffect(() => {
         setPosts(mockPosts);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const filteredPosts = posts.filter(post => {
@@ -478,7 +478,7 @@ export default function FeedsPage() {
                                         </Avatar>
                                         <div className="flex-1">
                                             <div className="flex items-center gap-2">
-                                                <button 
+                                                <button
                                                     onClick={() => router.push(`/profile/${post.author.toLowerCase().replace(' ', '')}`)}
                                                     className="font-semibold hover:text-blue-600 transition-colors cursor-pointer"
                                                 >

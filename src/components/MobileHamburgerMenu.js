@@ -2,13 +2,13 @@
 
 import { useState } from 'react';
 import { Button } from '@/components/ui/Button';
-import { 
-  Menu, 
-  X, 
-  Home, 
-  TrendingUp, 
-  Plus, 
-  Play, 
+import {
+  Menu,
+  X,
+  Home,
+  TrendingUp,
+  Plus,
+  Play,
   User,
   Settings,
   Bell,
@@ -62,11 +62,11 @@ export default function MobileHamburgerMenu() {
       {isOpen && (
         <div className="fixed inset-0 z-50 md:hidden">
           {/* Backdrop */}
-          <div 
+          <div
             className="fixed inset-0 bg-black/60 backdrop-blur-sm"
             onClick={() => setIsOpen(false)}
           />
-          
+
           {/* Menu Panel */}
           <div className="fixed right-0 top-0 h-full w-80 bg-background/95 backdrop-blur-lg shadow-2xl transform transition-transform duration-300 ease-in-out border-l border-border">
             <div className="flex flex-col h-full">

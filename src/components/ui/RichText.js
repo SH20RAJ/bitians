@@ -10,12 +10,12 @@ export function RichText({ children, className = "" }) {
   const processText = (text) => {
     // Split by hashtags and mentions while preserving them
     const parts = text.split(/(#[a-zA-Z0-9_]+|@[a-zA-Z0-9_]+)/g);
-    
+
     return parts.map((part, index) => {
       if (part.startsWith('#')) {
         return (
-          <span 
-            key={index} 
+          <span
+            key={index}
             className="text-blue-500 font-medium hover:text-blue-600 cursor-pointer transition-colors hover:underline"
             onClick={() => {
               // Handle hashtag click
@@ -27,8 +27,8 @@ export function RichText({ children, className = "" }) {
         );
       } else if (part.startsWith('@')) {
         return (
-          <span 
-            key={index} 
+          <span
+            key={index}
             className="text-indigo-500 font-medium hover:text-indigo-600 cursor-pointer transition-colors hover:underline"
             onClick={() => {
               // Handle mention click

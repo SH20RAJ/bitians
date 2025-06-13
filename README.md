@@ -15,6 +15,7 @@ A comprehensive, feature-rich social media platform designed exclusively for BIT
 ## ✨ Core Features
 
 ### 🏠 **Homepage - Social Media Feed**
+
 - **Multimedia Posts**: Support for photos, videos, and audio content
 - **Hashtag System**: Clickable hashtags (#coding #bitlife #placement)
 - **Mention System**: Tag users with @username for enhanced interaction
@@ -25,7 +26,9 @@ A comprehensive, feature-rich social media platform designed exclusively for BIT
 - **Dark/Light Mode**: Seamless theme switching with persistent preferences
 
 ### 🎯 **K-Batch System**
+
 Our innovative K-batch system organizes students by their admission year:
+
 - **K24**: 1st Year (2024-25 academic year) - Fresh BITians
 - **K23**: 2nd Year (2023-24 academic year) - Sophomores  
 - **K22**: 3rd Year (2022-23 academic year) - Juniors
@@ -36,6 +39,7 @@ Our innovative K-batch system organizes students by their admission year:
 ### 📱 **Quick Actions - Core Features**
 
 #### 1. **🔗 Circles** (Featured)
+
 - **Community Groups**: Topic-based communities for students
 - **Multimedia Sharing**: Share photos, videos, and audio in circles
 - **Hashtag Integration**: Use hashtags to categorize circle content
@@ -44,6 +48,7 @@ Our innovative K-batch system organizes students by their admission year:
 - **Privacy Options**: Public and private circles with K-batch filtering
 
 #### 2. **📚 Feeds**
+
 - **Multimedia Content**: Rich media posts with photos, videos, audio
 - **Smart Hashtags**: Clickable hashtags for content discovery
 - **User Mentions**: @username mentions with notifications
@@ -52,12 +57,14 @@ Our innovative K-batch system organizes students by their admission year:
 - **Advanced Interactions**: Like, comment, share, bookmark with real-time feedback
 
 #### 3. **🔥 Hot or Not**
+
 - **Interactive Rating**: Rate posts, photos, and content
 - **Batch-wise Leaderboards**: See trending content by K-batch
 - **Multimedia Support**: Rate photos, videos, and audio posts
 - **Social Engagement**: Comment and share rated content
 
 #### 4. **✏️ Create**
+
 - **Rich Media Upload**: Upload photos, videos, and audio files
 - **Hashtag Suggestions**: Auto-suggest relevant hashtags
 - **User Mention**: Tag other students with @username
@@ -65,6 +72,7 @@ Our innovative K-batch system organizes students by their admission year:
 - **Content Categories**: Organize posts by type and audience
 
 #### 5. **👤 Profile**
+
 - **K-Batch Badges**: Prominent display of student batch year
 - **Multimedia Gallery**: Showcase photos, videos, and audio content
 - **Hashtag History**: Track your most used hashtags
@@ -74,36 +82,42 @@ Our innovative K-batch system organizes students by their admission year:
 ### 🛠 **Additional Platform Features**
 
 #### **👥 Study Groups**
+
 - **K-Batch Matching**: Find study partners from your batch or seniors
 - **Group Discovery**: Search by subject, semester, and K-batch
 - **Multimedia Resources**: Share photos of notes, video tutorials, audio recordings
 - **Hashtag Organization**: Use #DSA #algorithms #midterms for easy discovery
 
 #### **📚 Notes Share**
+
 - **Rich Media Notes**: Upload photos of handwritten notes, video explanations, audio lectures
 - **K-Batch Categorization**: Organize by student year and subject
 - **Hashtag System**: Tag notes with #semester4 #computernetworks #important
 - **Quality Rating**: Rate and review shared study materials
 
 #### **🛒 BitMart**
+
 - **Multimedia Listings**: Add photos and videos of items for sale
 - **K-Batch Targeting**: Sell specifically to seniors, juniors, or freshers
 - **Hashtag Categories**: Use #textbooks #electronics #hostelstuff #farewell
 - **Trust System**: Verified K-batch sellers with ratings
 
 #### **🎉 Events**
+
 - **Event Media**: Event photos, promotional videos, and audio announcements
 - **K-Batch Registration**: Batch-specific events and restrictions
 - **Hashtag Promotion**: Use #techfest #culturals #placements #sports
 - **Social Integration**: Tag friends and share event updates
 
 #### **🔍 Lost & Found**
+
 - **Photo Evidence**: Upload photos of lost/found items
 - **K-Batch Filtering**: Search within your batch or across years
 - **Location Hashtags**: Use #library #hostel #cafeteria #playground
 - **Quick Identification**: Visual search with image uploads
 
 #### **💭 Confessions**
+
 - **Anonymous Multimedia**: Share anonymous photos, audio messages
 - **K-Batch Context**: Confessions specific to student year experiences
 - **Hashtag Emotions**: Use #firstyear #placement #crush #homesick
@@ -112,6 +126,7 @@ Our innovative K-batch system organizes students by their admission year:
 ## 🎨 Design System & UI/UX
 
 ### **Visual Elements**
+
 - **Glass Morphism**: Translucent cards with backdrop blur effects
 - **K-Batch Color Coding**: Unique color schemes for each student year
 - **Gradient Accents**: Beautiful blue-to-purple gradients throughout
@@ -120,6 +135,7 @@ Our innovative K-batch system organizes students by their admission year:
 - **Custom Scrollbars**: Styled scrollbars for enhanced user experience
 
 ### **Interactive Elements**
+
 - **Hashtag Highlighting**: Auto-linked hashtags with hover effects
 - **Mention Autocomplete**: Smart @username completion while typing
 - **Media Upload**: Drag-and-drop interface for multimedia content
@@ -128,6 +144,7 @@ Our innovative K-batch system organizes students by their admission year:
 - **Dopamine-driven UX**: Engaging micro-interactions and visual feedback
 
 ### **Responsive Design**
+
 - **Desktop (1024px+)**: Three-column layout with full media galleries
 - **Tablet (768px-1024px)**: Two-column layout with optimized media viewing
 - **Mobile (< 768px)**: Single-column layout with touch-optimized media interactions
@@ -135,6 +152,7 @@ Our innovative K-batch system organizes students by their admission year:
 ## 🚀 Technology Stack
 
 ### **Frontend**
+
 - **Framework**: Next.js 15.3.3 with App Router
 - **Styling**: Tailwind CSS with custom CSS variables
 - **Components**: Radix UI primitives with custom design system
@@ -143,6 +161,7 @@ Our innovative K-batch system organizes students by their admission year:
 - **Media Handling**: Native HTML5 media elements with custom controls
 
 ### **Features & Functionality**
+
 - **State Management**: React Hooks with Context API
 - **Theme System**: Custom ThemeProvider with localStorage persistence
 - **Notifications**: Custom Toast system for user feedback
@@ -151,6 +170,7 @@ Our innovative K-batch system organizes students by their admission year:
 - **K-Batch System**: Custom badge and filtering logic
 
 ### **Development Tools**
+
 - **Build Tool**: Turbopack for fast development
 - **Code Quality**: ESLint and Prettier for consistent code
 - **Deployment**: Optimized for Vercel deployment
@@ -206,6 +226,7 @@ bitians/
 ## 🚀 Quick Start
 
 ### Prerequisites
+
 - Node.js 18+ installed on your system
 - npm or yarn package manager
 - Git for version control
@@ -249,6 +270,7 @@ npm run test
 ## 📊 Feature Implementation Status
 
 ### ✅ Completed Features
+
 - [x] **Homepage & Navigation**: Fully functional with responsive design
 - [x] **Feeds System**: Interactive posts with like, comment, share functionality
 - [x] **Hot or Not**: Rating system with user interactions
@@ -268,11 +290,13 @@ npm run test
 - [x] **Custom Media Player**: Video controls, audio playback, image display
 
 ### 🚧 In Progress
+
 - [ ] **Backend Integration**: Database and authentication setup
 - [ ] **Real-time Chat**: WebSocket implementation for live messaging
 - [ ] **Push Notifications**: Browser notification system
 
 ### 📋 Planned Features
+
 - [ ] **Backend Integration**: Database and authentication
 - [ ] **Real-time Features**: WebSocket for live chat and notifications
 - [ ] **PWA Support**: Progressive Web App capabilities
@@ -285,6 +309,7 @@ npm run test
 ## 🎯 K-Batch System Deep Dive
 
 ### **Batch Calculation Logic**
+
 ```javascript
 // Current year: 2024
 // K24 = Admitted in 2024 (1st Year)
@@ -304,12 +329,14 @@ const getCurrentYear = (kBatch) => {
 ```
 
 ### **Badge Color System**
+
 - **K24 (1st Year)**: Fresh Green (#10B981) - New beginnings
 - **K23 (2nd Year)**: Ocean Blue (#3B82F6) - Growing confidence  
 - **K22 (3rd Year)**: Royal Purple (#8B5CF6) - Gaining expertise
 - **K21 (4th Year)**: Golden Orange (#F59E0B) - Senior wisdom
 
 ### **Batch-Specific Features**
+
 - **Content Filtering**: Filter posts by specific K-batches
 - **Mentorship Programs**: Connect juniors with seniors
 - **Placement Updates**: Year-specific career guidance
@@ -318,6 +345,7 @@ const getCurrentYear = (kBatch) => {
 ## 🔧 Development Guidelines
 
 ### **Code Style**
+
 - Use ES6+ JavaScript features
 - Follow React functional component patterns
 - Implement responsive design with Tailwind CSS
@@ -325,6 +353,7 @@ const getCurrentYear = (kBatch) => {
 - Comment complex logic and algorithms
 
 ### **Component Structure**
+
 ```javascript
 // Component template
 "use client";
@@ -348,6 +377,7 @@ export default function ComponentName() {
 ```
 
 ### **Hashtag Implementation**
+
 ```javascript
 // Hashtag parsing function
 const parseHashtags = (text) => {
@@ -359,6 +389,7 @@ const parseHashtags = (text) => {
 ```
 
 ### **Mention Implementation**
+
 ```javascript
 // Mention parsing function
 const parseMentions = (text) => {
@@ -374,6 +405,7 @@ const parseMentions = (text) => {
 We welcome contributions from the BIT Mesra community! Here's how you can help:
 
 ### **Getting Started**
+
 1. Fork the repository
 2. Create a feature branch: `git checkout -b feature/amazing-feature`
 3. Make your changes and test thoroughly
@@ -382,6 +414,7 @@ We welcome contributions from the BIT Mesra community! Here's how you can help:
 6. Open a Pull Request with detailed description
 
 ### **Contribution Areas**
+
 - 🎨 **UI/UX Improvements**: Enhance design and user experience
 - 🔧 **Feature Development**: Add new functionality and features
 - 🐛 **Bug Fixes**: Identify and fix issues
@@ -390,6 +423,7 @@ We welcome contributions from the BIT Mesra community! Here's how you can help:
 - 🚀 **Performance**: Optimize loading times and interactions
 
 ### **Development Setup**
+
 ```bash
 # Fork and clone your fork
 git clone https://github.com/your-username/bitians.git
@@ -412,13 +446,15 @@ git push origin feature/your-feature-name
 ## 📞 Support & Community
 
 ### **Getting Help**
-- 📧 **Email**: support@bitians.org
+
+- 📧 **Email**: <support@bitians.org>
 - 💬 **Discord**: [BITians Community Server](https://discord.gg/bitians)
 - 📱 **WhatsApp**: BIT Mesra Student Groups
 - 🐛 **Issues**: GitHub Issues for bug reports
 - 💡 **Feature Requests**: GitHub Discussions
 
 ### **Community Guidelines**
+
 - Be respectful and inclusive to all community members
 - Follow BIT Mesra's code of conduct and values
 - Keep discussions relevant to the platform and student life
@@ -442,12 +478,14 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 🚀 Roadmap 2024-25
 
 ### **Phase 1: Foundation** (Completed ✅)
+
 - [x] Core platform development
 - [x] Basic social media features
 - [x] Responsive design implementation
 - [x] Theme system and UI components
 
 ### **Phase 2: Enhanced Social Features** (Current 🚧)
+
 - [ ] Multimedia content support (photos, videos, audio)
 - [ ] Hashtag system with discovery and trending
 - [ ] User mention system with notifications
@@ -455,6 +493,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [ ] Enhanced feed algorithms
 
 ### **Phase 3: Community & Engagement** (Q1 2025)
+
 - [ ] Real-time chat and messaging
 - [ ] Advanced notification system
 - [ ] User verification and trust system
@@ -462,6 +501,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [ ] Analytics and insights
 
 ### **Phase 4: Platform Expansion** (Q2 2025)
+
 - [ ] Mobile app development (React Native)
 - [ ] Backend infrastructure and database
 - [ ] Advanced search and discovery

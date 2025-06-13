@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import {PageLayout} from '@/components/PageLayout';
+import { PageLayout } from '@/components/PageLayout';
 import BottomNavigation from '@/components/BottomNavigation';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
@@ -10,11 +10,11 @@ import { Badge } from '@/components/ui/Badge';
 import { Avatar } from '@/components/ui/Avatar';
 import { Loading } from '@/components/ui/Loading';
 import { useToast } from '@/components/Toast';
-import { 
-  Search, 
-  Plus, 
-  Users, 
-  MessageCircle, 
+import {
+  Search,
+  Plus,
+  Users,
+  MessageCircle,
   Settings,
   Crown,
   Lock,
@@ -414,18 +414,18 @@ export default function CirclesPage() {
 
   const filteredCircles = circles.filter(circle => {
     const matchesSearch = circle.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         circle.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === 'all' || 
-                           circle.category.toLowerCase() === selectedCategory;
-    
+      circle.description.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory = selectedCategory === 'all' ||
+      circle.category.toLowerCase() === selectedCategory;
+
     return matchesSearch && matchesCategory;
   });
 
   const myCircles = circles.filter(circle => circle.isJoined);
 
   const handleJoinCircle = (circleId) => {
-    setCircles(circles.map(circle => 
-      circle.id === circleId 
+    setCircles(circles.map(circle =>
+      circle.id === circleId
         ? { ...circle, isJoined: true, memberCount: circle.memberCount + 1 }
         : circle
     ));
@@ -433,8 +433,8 @@ export default function CirclesPage() {
   };
 
   const handleLeaveCircle = (circleId) => {
-    setCircles(circles.map(circle => 
-      circle.id === circleId 
+    setCircles(circles.map(circle =>
+      circle.id === circleId
         ? { ...circle, isJoined: false, memberCount: circle.memberCount - 1 }
         : circle
     ));
@@ -443,7 +443,7 @@ export default function CirclesPage() {
 
   const handlePostSubmit = () => {
     if (!newPost.trim()) return;
-    
+
     const post = {
       id: circlePosts.length + 1,
       author: 'You',
@@ -456,7 +456,7 @@ export default function CirclesPage() {
       isPinned: false,
       images: []
     };
-    
+
     setCirclePosts([post, ...circlePosts]);
     setNewPost('');
     showToast('Post shared successfully!', 'success');
@@ -464,16 +464,16 @@ export default function CirclesPage() {
 
   const handleMessageSubmit = () => {
     if (!newMessage.trim()) return;
-    
+
     const message = {
       id: circleMessages.length + 1,
       author: 'You',
       avatar: '/api/placeholder/32/32',
-      timestamp: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
+      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       content: newMessage,
       isOwn: true
     };
-    
+
     setCircleMessages([...circleMessages, message]);
     setNewMessage('');
   };
@@ -539,7 +539,7 @@ export default function CirclesPage() {
         {filteredCircles.map(circle => {
           const categoryInfo = getCategoryIcon(circle.category);
           const CategoryIcon = categoryInfo.icon;
-          
+
           return (
             <Card key={circle.id} className="overflow-hidden hover:shadow-xl transition-all duration-300 card-hover">
               {/* Cover Image */}
@@ -547,7 +547,7 @@ export default function CirclesPage() {
                 <div className="absolute inset-0 flex items-center justify-center">
                   <CategoryIcon className={`h-12 w-12 ${categoryInfo.color} opacity-30`} />
                 </div>
-                
+
                 {/* Privacy Badge */}
                 <div className="absolute top-3 right-3">
                   <Badge variant={circle.privacy === 'private' ? 'secondary' : 'outline'}>
@@ -687,18 +687,18 @@ export default function CirclesPage() {
         {myCircles.map(circle => {
           const categoryInfo = getCategoryIcon(circle.category);
           const CategoryIcon = categoryInfo.icon;
-          
+
           return (
             <Card key={circle.id} className="overflow-hidden hover:shadow-xl transition-all duration-300 card-hover cursor-pointer"
-                  onClick={() => {
-                    setSelectedCircle(circle);
-                    setView('circle-detail');
-                  }}>
+              onClick={() => {
+                setSelectedCircle(circle);
+                setView('circle-detail');
+              }}>
               <div className="relative h-32 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/20 dark:to-purple-900/20">
                 <div className="absolute inset-0 flex items-center justify-center">
                   <CategoryIcon className={`h-12 w-12 ${categoryInfo.color} opacity-30`} />
                 </div>
-                
+
                 {circle.isAdmin && (
                   <div className="absolute top-3 right-3">
                     <Badge className="bg-yellow-500 text-white">
@@ -856,9 +856,9 @@ export default function CirclesPage() {
                           </Button>
                         </div>
                       </div>
-                      
+
                       <p className="text-foreground">{post.content}</p>
-                      
+
                       {post.images.length > 0 && (
                         <div className="grid grid-cols-1 gap-2">
                           {post.images.map((image, index) => (
@@ -870,22 +870,22 @@ export default function CirclesPage() {
                           ))}
                         </div>
                       )}
-                      
+
                       <div className="flex items-center gap-6 pt-2 border-t">
                         <button className="flex items-center gap-2 text-muted-foreground hover:text-red-500 transition-colors">
                           <Heart className={`h-4 w-4 ${post.isLiked ? 'fill-current text-red-500' : ''}`} />
                           <span className="text-sm">{post.likes}</span>
                         </button>
-                        
+
                         <button className="flex items-center gap-2 text-muted-foreground hover:text-blue-500 transition-colors">
                           <MessageCircle className="h-4 w-4" />
                           <span className="text-sm">{post.comments}</span>
                         </button>
-                        
+
                         <button className="flex items-center gap-2 text-muted-foreground hover:text-green-500 transition-colors">
                           <Share2 className="h-4 w-4" />
                         </button>
-                        
+
                         <button className="flex items-center gap-2 text-muted-foreground hover:text-yellow-500 transition-colors ml-auto">
                           <Bookmark className="h-4 w-4" />
                         </button>
@@ -921,11 +921,10 @@ export default function CirclesPage() {
                     {!message.isOwn && (
                       <p className="text-xs text-muted-foreground mb-1">{message.author}</p>
                     )}
-                    <div className={`p-3 rounded-lg ${
-                      message.isOwn 
-                        ? 'bg-blue-500 text-white ml-auto' 
+                    <div className={`p-3 rounded-lg ${message.isOwn
+                        ? 'bg-blue-500 text-white ml-auto'
                         : 'bg-muted'
-                    }`}>
+                      }`}>
                       <p className="text-sm">{message.content}</p>
                     </div>
                     <p className="text-xs text-muted-foreground mt-1">{message.timestamp}</p>

@@ -222,13 +222,13 @@ export default function EventsPage() {
 
   const filteredEvents = events.filter(event => {
     const matchesSearch = event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         event.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         event.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
-    
+      event.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      event.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
+
     const matchesCategory = selectedCategory === "all" || event.category === selectedCategory;
-    const matchesFilter = selectedFilter === "all" || 
-                         (selectedFilter === "featured" && event.featured) ||
-                         event.status === selectedFilter;
+    const matchesFilter = selectedFilter === "all" ||
+      (selectedFilter === "featured" && event.featured) ||
+      event.status === selectedFilter;
 
     return matchesSearch && matchesCategory && matchesFilter;
   });
@@ -300,17 +300,17 @@ export default function EventsPage() {
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { 
-      weekday: 'short', 
-      year: 'numeric', 
-      month: 'short', 
-      day: 'numeric' 
+    return date.toLocaleDateString('en-US', {
+      weekday: 'short',
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
     });
   };
 
   return (
-    <PageLayout 
-      title="Events" 
+    <PageLayout
+      title="Events"
       subtitle="Discover and participate in campus events"
       icon={Calendar}
     >
@@ -532,22 +532,22 @@ export default function EventsPage() {
                     </div>
 
                     <div className="flex items-center space-x-2">
-                      <Button 
-                        variant="ghost" 
+                      <Button
+                        variant="ghost"
                         size="sm"
                         className="btn-scale"
                         onClick={() => toast({ title: "Share Event", description: "Sharing feature coming soon! 📤", type: "info" })}
                       >
                         <Share2 className="w-4 h-4" />
                       </Button>
-                      <Button 
-                        size="sm" 
+                      <Button
+                        size="sm"
                         onClick={() => handleRegister(event)}
                         disabled={event.registeredParticipants >= event.maxParticipants || event.status === "completed"}
                         className="btn-scale"
                       >
                         {event.status === "completed" ? "Completed" :
-                         event.registeredParticipants >= event.maxParticipants ? "Full" : "Register"}
+                          event.registeredParticipants >= event.maxParticipants ? "Full" : "Register"}
                       </Button>
                     </div>
                   </div>

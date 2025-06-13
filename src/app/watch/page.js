@@ -505,8 +505,8 @@ export default function WatchPage() {
                                             <button
                                                 onClick={() => handleLike(video.id)}
                                                 className={`flex items-center gap-1 text-xs transition-colors ${likedVideos.has(video.id)
-                                                        ? 'text-red-500 hover:text-red-600'
-                                                        : 'text-muted-foreground hover:text-red-500'
+                                                    ? 'text-red-500 hover:text-red-600'
+                                                    : 'text-muted-foreground hover:text-red-500'
                                                     }`}
                                             >
                                                 <Heart className={`h-3 w-3 ${likedVideos.has(video.id) ? 'fill-current' : ''}`} />
@@ -530,8 +530,8 @@ export default function WatchPage() {
                                         <button
                                             onClick={() => handleBookmark(video.id)}
                                             className={`transition-colors ${bookmarkedVideos.has(video.id)
-                                                    ? 'text-yellow-500'
-                                                    : 'text-muted-foreground hover:text-yellow-500'
+                                                ? 'text-yellow-500'
+                                                : 'text-muted-foreground hover:text-yellow-500'
                                                 }`}
                                         >
                                             <Bookmark className={`h-4 w-4 ${bookmarkedVideos.has(video.id) ? 'fill-current' : ''}`} />

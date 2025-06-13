@@ -11,7 +11,7 @@ export function KBatchBadge({ kBatch, showYear = false, size = "sm", className =
   const gradientClass = getKBatchGradient(kBatch);
 
   return (
-    <Badge 
+    <Badge
       className={`
         bg-gradient-to-r ${gradientClass} text-white font-semibold
         ${size === 'xs' ? 'text-xs px-1.5 py-0.5' : ''}

@@ -17,8 +17,8 @@ export const renderMentionText = (text) => {
   return parts.map((part, index) => {
     if (part.startsWith('@')) {
       return (
-        <span 
-          key={index} 
+        <span
+          key={index}
           className="text-indigo-500 font-medium hover:text-indigo-600 cursor-pointer transition-colors"
           onClick={() => {
             // Handle mention click - could navigate to user profile

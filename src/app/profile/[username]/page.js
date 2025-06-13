@@ -174,14 +174,14 @@ export default function UserProfilePage() {
   useEffect(() => {
     const username = params.username;
     const userData = mockUsers[username];
-    
+
     if (userData) {
       setUser(userData);
       setPosts(mockUserPosts);
     } else {
       setUser(null);
     }
-    
+
     setIsLoading(false);
   }, [params.username]);
 
@@ -189,8 +189,8 @@ export default function UserProfilePage() {
     setIsFollowing(!isFollowing);
     toast({
       title: isFollowing ? 'Unfollowed' : 'Following!',
-      description: isFollowing 
-        ? `You unfollowed ${user.name}` 
+      description: isFollowing
+        ? `You unfollowed ${user.name}`
         : `You are now following ${user.name}`,
       type: 'success'
     });
@@ -422,36 +422,33 @@ export default function UserProfilePage() {
                   <div className="flex gap-6">
                     <button
                       onClick={() => setActiveTab('posts')}
-                      className={`text-sm font-medium pb-2 border-b-2 transition-colors ${
-                        activeTab === 'posts'
+                      className={`text-sm font-medium pb-2 border-b-2 transition-colors ${activeTab === 'posts'
                           ? 'border-blue-500 text-blue-600'
                           : 'border-transparent text-muted-foreground hover:text-foreground'
-                      }`}
+                        }`}
                     >
                       Posts
                     </button>
                     <button
                       onClick={() => setActiveTab('media')}
-                      className={`text-sm font-medium pb-2 border-b-2 transition-colors ${
-                        activeTab === 'media'
+                      className={`text-sm font-medium pb-2 border-b-2 transition-colors ${activeTab === 'media'
                           ? 'border-blue-500 text-blue-600'
                           : 'border-transparent text-muted-foreground hover:text-foreground'
-                      }`}
+                        }`}
                     >
                       Media
                     </button>
                     <button
                       onClick={() => setActiveTab('likes')}
-                      className={`text-sm font-medium pb-2 border-b-2 transition-colors ${
-                        activeTab === 'likes'
+                      className={`text-sm font-medium pb-2 border-b-2 transition-colors ${activeTab === 'likes'
                           ? 'border-blue-500 text-blue-600'
                           : 'border-transparent text-muted-foreground hover:text-foreground'
-                      }`}
+                        }`}
                     >
                       Likes
                     </button>
                   </div>
-                  
+
                   <div className="flex items-center gap-2">
                     <Button
                       variant="ghost"
@@ -573,7 +570,7 @@ export default function UserProfilePage() {
       </div>
     </PageLayout>
     
-    {/* Bottom Navigation */}
-    <BottomNavigation currentPage="profile" />
+    {/* Bottom Navigation */ }
+  <BottomNavigation currentPage="profile" />
   );
 }

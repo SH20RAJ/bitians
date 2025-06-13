@@ -234,7 +234,7 @@ export default function HomePage() {
             media: [
                 {
                     id: "m6",
-                    type: "image", 
+                    type: "image",
                     url: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=500&h=300&fit=crop",
                     alt: "Robotics workshop in progress",
                     caption: "Building autonomous robots in the workshop"
@@ -259,7 +259,7 @@ export default function HomePage() {
                 {
                     id: "m7",
                     type: "image",
-                    url: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=500&h=300&fit=crop", 
+                    url: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=500&h=300&fit=crop",
                     alt: "ACM Coding Contest poster",
                     caption: "ACM Coding Contest 2024 - Register Now!"
                 }
@@ -349,7 +349,7 @@ export default function HomePage() {
         { label: 'Notes Shared', value: '500+', icon: GraduationCap },
     ];
 
-   
+
 
     return (
         <div className="min-h-screen bg-background">
@@ -397,13 +397,13 @@ export default function HomePage() {
                                 {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
                             </Button>
                             <div className="relative profile-menu-container hidden md:block">
-                                <Avatar 
+                                <Avatar
                                     className="w-8 h-8 cursor-pointer hover:ring-2 hover:ring-primary transition-all"
                                     onClick={() => setShowProfileMenu(!showProfileMenu)}
                                 >
                                     <AvatarFallback className="bg-gradient-to-r from-blue-500 to-purple-500 text-white">SR</AvatarFallback>
                                 </Avatar>
-                                
+
                                 {/* Profile Dropdown Menu */}
                                 {showProfileMenu && (
                                     <div className="absolute right-0 top-10 w-56 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-50">
@@ -659,8 +659,8 @@ export default function HomePage() {
                                             <div className="flex items-center space-x-3">
                                                 <Avatar>
                                                     <AvatarFallback className={`text-white ${post.isCirclePost
-                                                            ? 'bg-gradient-to-r from-indigo-500 to-purple-500'
-                                                            : 'bg-gradient-to-r from-blue-500 to-purple-500'
+                                                        ? 'bg-gradient-to-r from-indigo-500 to-purple-500'
+                                                        : 'bg-gradient-to-r from-blue-500 to-purple-500'
                                                         }`}>
                                                         {post.avatar}
                                                     </AvatarFallback>
@@ -694,8 +694,8 @@ export default function HomePage() {
 
                                         {/* Post Content with Rich Text */}
                                         <div className="mb-4">
-                                            <RichText 
-                                                content={post.content} 
+                                            <RichText
+                                                content={post.content}
                                                 className="leading-relaxed"
                                                 onHashtagClick={(hashtag) => {
                                                     toast({
@@ -721,7 +721,7 @@ export default function HomePage() {
                                         {/* Media Content */}
                                         {post.media && post.media.length > 0 && (
                                             <div className="mb-4">
-                                                <MediaGrid 
+                                                <MediaGrid
                                                     mediaItems={post.media}
                                                     className="rounded-lg overflow-hidden"
                                                     onMediaClick={(media) => {
@@ -806,11 +806,11 @@ export default function HomePage() {
                                 </Card>
                             ))}
                         </div>
-                        
+
                         {/* Load More Posts */}
                         <div className="text-center pt-4">
-                            <Button 
-                                variant="outline" 
+                            <Button
+                                variant="outline"
                                 className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white border-0"
                                 onClick={() => window.location.href = '/feeds'}
                             >

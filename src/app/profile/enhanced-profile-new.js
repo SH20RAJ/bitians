@@ -14,221 +14,221 @@ import { MediaGrid } from '@/components/ui/MediaPlayer';
 import { useToast } from '@/components/Toast';
 import BottomNavigation from '@/components/BottomNavigation';
 import {
-  Heart,
-  MessageCircle,
-  Share2,
-  Bookmark,
-  MoreVertical,
-  MapPin,
-  Calendar,
-  Link as LinkIcon,
-  Mail,
-  Phone,
-  Users,
-  Star,
-  Award,
-  Code,
-  Briefcase,
-  GraduationCap,
-  Camera,
-  Settings,
-  UserPlus,
-  UserCheck,
-  Eye,
-  Clock,
-  Grid3X3,
-  List,
-  TrendingUp,
-  Hash,
-  Zap,
-  Trophy,
-  ThumbsUp,
-  Send,
-  Gift,
-  Crown,
-  Sparkles
+    Heart,
+    MessageCircle,
+    Share2,
+    Bookmark,
+    MoreVertical,
+    MapPin,
+    Calendar,
+    Link as LinkIcon,
+    Mail,
+    Phone,
+    Users,
+    Star,
+    Award,
+    Code,
+    Briefcase,
+    GraduationCap,
+    Camera,
+    Settings,
+    UserPlus,
+    UserCheck,
+    Eye,
+    Clock,
+    Grid3X3,
+    List,
+    TrendingUp,
+    Hash,
+    Zap,
+    Trophy,
+    ThumbsUp,
+    Send,
+    Gift,
+    Crown,
+    Sparkles
 } from 'lucide-react';
 
 export default function EnhancedUserProfilePage() {
-  const params = useParams();
-  const router = useRouter();
-  const [user, setUser] = useState(null);
-  const [posts, setPosts] = useState([]);
-  const [activeTab, setActiveTab] = useState('posts');
-  const [viewMode, setViewMode] = useState('grid');
-  const [isFollowing, setIsFollowing] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const [applauds, setApplauds] = useState(new Set());
-  const { toast } = useToast();
+    const params = useParams();
+    const router = useRouter();
+    const [user, setUser] = useState(null);
+    const [posts, setPosts] = useState([]);
+    const [activeTab, setActiveTab] = useState('posts');
+    const [viewMode, setViewMode] = useState('grid');
+    const [isFollowing, setIsFollowing] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+    const [applauds, setApplauds] = useState(new Set());
+    const { toast } = useToast();
 
-  // Enhanced mock user data with new features
-  const mockUsers = {
-    'alex_johnson': {
-      id: 'alex_johnson',
-      name: 'Alex Johnson',
-      username: 'alex_johnson',
-      avatar: 'AJ',
-      kBatch: 'K21',
-      branch: 'Computer Science & Engineering',
-      year: '4th Year',
-      bio: 'Full Stack Developer | Open Source Enthusiast | Tech Community Builder | Always learning something new 🚀',
-      location: 'BIT Mesra, Ranchi',
-      joinedDate: 'August 2020',
-      isVerified: true,
-      
-      // Enhanced stats
-      stats: {
-        posts: 189,
-        followers: 1847,
-        following: 623,
-        totalLikes: 12456,    // New: Total likes received
-        totalComments: 3420,  // New: Total comments made  
-        totalShares: 856,     // New: Total posts shared
-        applaudsReceived: 234 // New: Applauds received
-      },
-      
-      // New: Relationship status
-      relationshipStatus: 'Single',
-      
-      // Enhanced profile details
-      contactInfo: {
-        email: 'alex.johnson@bitmesra.ac.in',
-        phone: '+91 98765 43210',
-        website: 'https://alexjohnson.dev',
-        linkedin: 'https://linkedin.com/in/alexjohnson',
-        github: 'https://github.com/alexjohnson',
-        instagram: 'https://instagram.com/alex.codes'
-      },
-      
-      achievements: [
-        { title: 'Microsoft Student Partner', year: '2024', icon: '💼', color: 'bg-blue-500' },
-        { title: 'Google Summer of Code', year: '2023', icon: '🌟', color: 'bg-green-500' },
-        { title: 'Hackathon Champion', year: '2023', icon: '🏆', color: 'bg-yellow-500' },
-        { title: 'Dean\'s List Scholar', year: '2022', icon: '📚', color: 'bg-purple-500' },
-        { title: 'Best Project Award', year: '2022', icon: '🎯', color: 'bg-red-500' }
-      ],
-      
-      skills: ['React', 'Node.js', 'Python', 'AWS', 'Docker', 'MongoDB', 'TypeScript', 'GraphQL'],
-      interests: ['Technology', 'Photography', 'Gaming', 'Music', 'Travel', 'Fitness'],
-      
-      // New: Activity insights
-      activityInsights: {
-        mostActiveDay: 'Wednesday',
-        avgPostsPerWeek: 12,
-        topHashtags: ['#coding', '#bitlife', '#tech', '#learning'],
-        engagementRate: '8.5%'
-      }
-    }
-  };
+    // Enhanced mock user data with new features
+    const mockUsers = {
+        'alex_johnson': {
+            id: 'alex_johnson',
+            name: 'Alex Johnson',
+            username: 'alex_johnson',
+            avatar: 'AJ',
+            kBatch: 'K21',
+            branch: 'Computer Science & Engineering',
+            year: '4th Year',
+            bio: 'Full Stack Developer | Open Source Enthusiast | Tech Community Builder | Always learning something new 🚀',
+            location: 'BIT Mesra, Ranchi',
+            joinedDate: 'August 2020',
+            isVerified: true,
 
-  // Mock posts with enhanced data
-  const mockUserPosts = [
-    {
-      id: 1,
-      type: 'image',
-      content: 'Just deployed my latest project! 🚀 A full-stack social platform built with React, Node.js, and MongoDB. Check out the live demo! #coding #fullstack #react #nodejs #mongodb #deployment',
-      time: '2h',
-      likes: 89,
-      comments: 23,
-      shares: 12,
-      views: 456,
-      applauds: 15,
-      media: [
-        {
-          id: 'm1',
-          type: 'image',
-          url: 'https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=600&h=400&fit=crop',
-          alt: 'Project deployment screenshot'
+            // Enhanced stats
+            stats: {
+                posts: 189,
+                followers: 1847,
+                following: 623,
+                totalLikes: 12456,    // New: Total likes received
+                totalComments: 3420,  // New: Total comments made  
+                totalShares: 856,     // New: Total posts shared
+                applaudsReceived: 234 // New: Applauds received
+            },
+
+            // New: Relationship status
+            relationshipStatus: 'Single',
+
+            // Enhanced profile details
+            contactInfo: {
+                email: 'alex.johnson@bitmesra.ac.in',
+                phone: '+91 98765 43210',
+                website: 'https://alexjohnson.dev',
+                linkedin: 'https://linkedin.com/in/alexjohnson',
+                github: 'https://github.com/alexjohnson',
+                instagram: 'https://instagram.com/alex.codes'
+            },
+
+            achievements: [
+                { title: 'Microsoft Student Partner', year: '2024', icon: '💼', color: 'bg-blue-500' },
+                { title: 'Google Summer of Code', year: '2023', icon: '🌟', color: 'bg-green-500' },
+                { title: 'Hackathon Champion', year: '2023', icon: '🏆', color: 'bg-yellow-500' },
+                { title: 'Dean\'s List Scholar', year: '2022', icon: '📚', color: 'bg-purple-500' },
+                { title: 'Best Project Award', year: '2022', icon: '🎯', color: 'bg-red-500' }
+            ],
+
+            skills: ['React', 'Node.js', 'Python', 'AWS', 'Docker', 'MongoDB', 'TypeScript', 'GraphQL'],
+            interests: ['Technology', 'Photography', 'Gaming', 'Music', 'Travel', 'Fitness'],
+
+            // New: Activity insights
+            activityInsights: {
+                mostActiveDay: 'Wednesday',
+                avgPostsPerWeek: 12,
+                topHashtags: ['#coding', '#bitlife', '#tech', '#learning'],
+                engagementRate: '8.5%'
+            }
         }
-      ]
-    },
-    {
-      id: 2,
-      type: 'text',
-      content: 'Excited to announce that I\'ll be interning at Microsoft this summer! 🎉 Looking forward to working on Azure cloud technologies. Thanks to everyone who supported me through this journey! #microsoft #internship #azure #grateful',
-      time: '1d',
-      likes: 234,
-      comments: 67,
-      shares: 45,
-      views: 1200,
-      applauds: 78
-    },
-    {
-      id: 3,
-      type: 'achievement',
-      content: '🏆 Won the National Hackathon 2024! Our team developed an AI-powered solution for sustainable agriculture. Proud moment for BIT Mesra! #hackathon #winner #ai #agriculture #bitmesra',
-      time: '3d',
-      likes: 456,
-      comments: 89,
-      shares: 67,
-      views: 2100,
-      applauds: 123,
-      achievement: {
-        title: 'National Hackathon Winner',
-        badge: '🏆'
-      }
+    };
+
+    // Mock posts with enhanced data
+    const mockUserPosts = [
+        {
+            id: 1,
+            type: 'image',
+            content: 'Just deployed my latest project! 🚀 A full-stack social platform built with React, Node.js, and MongoDB. Check out the live demo! #coding #fullstack #react #nodejs #mongodb #deployment',
+            time: '2h',
+            likes: 89,
+            comments: 23,
+            shares: 12,
+            views: 456,
+            applauds: 15,
+            media: [
+                {
+                    id: 'm1',
+                    type: 'image',
+                    url: 'https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=600&h=400&fit=crop',
+                    alt: 'Project deployment screenshot'
+                }
+            ]
+        },
+        {
+            id: 2,
+            type: 'text',
+            content: 'Excited to announce that I\'ll be interning at Microsoft this summer! 🎉 Looking forward to working on Azure cloud technologies. Thanks to everyone who supported me through this journey! #microsoft #internship #azure #grateful',
+            time: '1d',
+            likes: 234,
+            comments: 67,
+            shares: 45,
+            views: 1200,
+            applauds: 78
+        },
+        {
+            id: 3,
+            type: 'achievement',
+            content: '🏆 Won the National Hackathon 2024! Our team developed an AI-powered solution for sustainable agriculture. Proud moment for BIT Mesra! #hackathon #winner #ai #agriculture #bitmesra',
+            time: '3d',
+            likes: 456,
+            comments: 89,
+            shares: 67,
+            views: 2100,
+            applauds: 123,
+            achievement: {
+                title: 'National Hackathon Winner',
+                badge: '🏆'
+            }
+        }
+    ];
+
+    useEffect(() => {
+        const username = params.username;
+        const userData = mockUsers[username] || mockUsers['alex_johnson'];
+
+        setUser(userData);
+        setPosts(mockUserPosts);
+        setIsLoading(false);
+    }, [params.username]);
+
+    const handleFollow = () => {
+        setIsFollowing(!isFollowing);
+        toast({
+            title: isFollowing ? 'Unfollowed' : 'Following!',
+            description: isFollowing ? `You unfollowed ${user.name}` : `You are now following ${user.name}`,
+            duration: 3000,
+        });
+    };
+
+    const handleApplaud = (postId) => {
+        const newApplauds = new Set(applauds);
+        if (newApplauds.has(postId)) {
+            newApplauds.delete(postId);
+        } else {
+            newApplauds.add(postId);
+            toast({
+                title: '👏 Applauded!',
+                description: 'You gave an applaud for their contribution!',
+                duration: 2000,
+            });
+        }
+        setApplauds(newApplauds);
+    };
+
+    if (isLoading) {
+        return (
+            <PageLayout>
+                <div className="container mx-auto px-4 py-6 max-w-6xl">
+                    <div className="animate-pulse space-y-6">
+                        <div className="h-64 bg-muted rounded-lg"></div>
+                        <div className="h-32 bg-muted rounded-lg"></div>
+                    </div>
+                </div>
+            </PageLayout>
+        );
     }
-  ];
 
-  useEffect(() => {
-    const username = params.username;
-    const userData = mockUsers[username] || mockUsers['alex_johnson'];
-    
-    setUser(userData);
-    setPosts(mockUserPosts);
-    setIsLoading(false);
-  }, [params.username]);
-
-  const handleFollow = () => {
-    setIsFollowing(!isFollowing);
-    toast({
-      title: isFollowing ? 'Unfollowed' : 'Following!',
-      description: isFollowing ? `You unfollowed ${user.name}` : `You are now following ${user.name}`,
-      duration: 3000,
-    });
-  };
-
-  const handleApplaud = (postId) => {
-    const newApplauds = new Set(applauds);
-    if (newApplauds.has(postId)) {
-      newApplauds.delete(postId);
-    } else {
-      newApplauds.add(postId);
-      toast({
-        title: '👏 Applauded!',
-        description: 'You gave an applaud for their contribution!',
-        duration: 2000,
-      });
+    if (!user) {
+        return (
+            <PageLayout>
+                <div className="container mx-auto px-4 py-6 max-w-6xl text-center">
+                    <h1 className="text-2xl font-bold mb-4">User not found</h1>
+                    <p className="text-muted-foreground mb-6">The profile you're looking for doesn't exist.</p>
+                    <Button onClick={() => router.push('/')}>Go Home</Button>
+                </div>
+            </PageLayout>
+        );
     }
-    setApplauds(newApplauds);
-  };
 
-  if (isLoading) {
     return (
-      <PageLayout>
-        <div className="container mx-auto px-4 py-6 max-w-6xl">
-          <div className="animate-pulse space-y-6">
-            <div className="h-64 bg-muted rounded-lg"></div>
-            <div className="h-32 bg-muted rounded-lg"></div>
-          </div>
-        </div>
-      </PageLayout>
-    );
-  }
-
-  if (!user) {
-    return (
-      <PageLayout>
-        <div className="container mx-auto px-4 py-6 max-w-6xl text-center">
-          <h1 className="text-2xl font-bold mb-4">User not found</h1>
-          <p className="text-muted-foreground mb-6">The profile you're looking for doesn't exist.</p>
-          <Button onClick={() => router.push('/')}>Go Home</Button>
-        </div>
-      </PageLayout>
-    );
-  }
-
-  return (
     <PageLayout>
       <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
         <div className="container mx-auto px-4 py-6 max-w-6xl space-y-6">
@@ -541,7 +541,7 @@ export default function EnhancedUserProfilePage() {
           </Card>
         </div>
         <BottomNavigation currentPage="profile" />
-      </div>
-    </PageLayout>
+      </div >
+    </PageLayout >
   );
 }

@@ -7,15 +7,15 @@ import { Input } from '@/components/ui/Input';
 import { Avatar } from '@/components/ui/Avatar';
 import { useToast } from '@/components/Toast';
 import BottomNavigation from '@/components/BottomNavigation';
-import { 
-  Image, 
-  Video, 
-  MapPin, 
-  Smile, 
-  Hash, 
-  Users, 
-  Globe, 
-  Lock, 
+import {
+  Image,
+  Video,
+  MapPin,
+  Smile,
+  Hash,
+  Users,
+  Globe,
+  Lock,
   Eye,
   Camera,
   Mic,
@@ -55,7 +55,7 @@ export default function CreatePostPage() {
   ];
 
   const feelings = [
-    'happy', 'excited', 'blessed', 'grateful', 'loved', 'amazing', 
+    'happy', 'excited', 'blessed', 'grateful', 'loved', 'amazing',
     'wonderful', 'fantastic', 'proud', 'motivated', 'inspired',
     'sad', 'worried', 'stressed', 'confused', 'tired', 'sick'
   ];
@@ -111,7 +111,7 @@ export default function CreatePostPage() {
 
     console.log('Creating post:', postData);
     showToast('Post created successfully! 🎉', 'success');
-    
+
     // Reset form
     setPostContent('');
     setPostType('text');
@@ -129,8 +129,8 @@ export default function CreatePostPage() {
       <header className="sticky top-0 z-50 glass border-b">
         <div className="flex items-center justify-between p-4">
           <div className="flex items-center space-x-3">
-            <Button 
-              variant="ghost" 
+            <Button
+              variant="ghost"
               size="icon"
               onClick={() => window.location.href = '/'}
             >
@@ -138,7 +138,7 @@ export default function CreatePostPage() {
             </Button>
             <h1 className="text-xl font-bold gradient-text">Create Post</h1>
           </div>
-          <Button 
+          <Button
             onClick={handleSubmit}
             className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
           >
@@ -219,7 +219,7 @@ export default function CreatePostPage() {
                   <p className="text-xs text-muted-foreground mt-1">PNG, JPG, GIF up to 10MB</p>
                 </label>
               </div>
-              
+
               {images.length > 0 && (
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   {images.map((image, index) => (
@@ -270,24 +270,24 @@ export default function CreatePostPage() {
               <h4 className="font-medium">Event Details</h4>
               <Input
                 value={eventDetails.title}
-                onChange={(e) => setEventDetails({...eventDetails, title: e.target.value})}
+                onChange={(e) => setEventDetails({ ...eventDetails, title: e.target.value })}
                 placeholder="Event title"
               />
               <div className="grid grid-cols-2 gap-4">
                 <Input
                   type="date"
                   value={eventDetails.date}
-                  onChange={(e) => setEventDetails({...eventDetails, date: e.target.value})}
+                  onChange={(e) => setEventDetails({ ...eventDetails, date: e.target.value })}
                 />
                 <Input
                   type="time"
                   value={eventDetails.time}
-                  onChange={(e) => setEventDetails({...eventDetails, time: e.target.value})}
+                  onChange={(e) => setEventDetails({ ...eventDetails, time: e.target.value })}
                 />
               </div>
               <Input
                 value={eventDetails.location}
-                onChange={(e) => setEventDetails({...eventDetails, location: e.target.value})}
+                onChange={(e) => setEventDetails({ ...eventDetails, location: e.target.value })}
                 placeholder="Event location"
               />
             </div>
@@ -373,7 +373,7 @@ export default function CreatePostPage() {
           </div>
         </Card>
       </div>
-      
+
       {/* Bottom Navigation */}
       <BottomNavigation currentPage="create" />
     </div>

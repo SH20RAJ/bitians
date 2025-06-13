@@ -205,7 +205,7 @@ export default function SettingsPage() {
             disabled={!isEditing}
           />
         </div>
-        
+
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Username
@@ -294,7 +294,7 @@ export default function SettingsPage() {
             ))}
           </div>
         </div>
-        
+
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Skills
@@ -326,7 +326,7 @@ export default function SettingsPage() {
   const renderPrivacySettings = () => (
     <div className="space-y-6">
       <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Privacy Settings</h3>
-      
+
       <div className="space-y-4">
         <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
           <div>
@@ -383,13 +383,11 @@ export default function SettingsPage() {
           </div>
           <button
             onClick={() => setPrivacySettings(prev => ({ ...prev, showOnlineStatus: !prev.showOnlineStatus }))}
-            className={`w-12 h-6 rounded-full transition-colors ${
-              privacySettings.showOnlineStatus ? 'bg-blue-500' : 'bg-gray-300 dark:bg-gray-600'
-            }`}
+            className={`w-12 h-6 rounded-full transition-colors ${privacySettings.showOnlineStatus ? 'bg-blue-500' : 'bg-gray-300 dark:bg-gray-600'
+              }`}
           >
-            <div className={`w-5 h-5 bg-white rounded-full transition-transform ${
-              privacySettings.showOnlineStatus ? 'translate-x-6' : 'translate-x-1'
-            }`} />
+            <div className={`w-5 h-5 bg-white rounded-full transition-transform ${privacySettings.showOnlineStatus ? 'translate-x-6' : 'translate-x-1'
+              }`} />
           </button>
         </div>
 
@@ -400,13 +398,11 @@ export default function SettingsPage() {
           </div>
           <button
             onClick={() => setPrivacySettings(prev => ({ ...prev, showReadReceipts: !prev.showReadReceipts }))}
-            className={`w-12 h-6 rounded-full transition-colors ${
-              privacySettings.showReadReceipts ? 'bg-blue-500' : 'bg-gray-300 dark:bg-gray-600'
-            }`}
+            className={`w-12 h-6 rounded-full transition-colors ${privacySettings.showReadReceipts ? 'bg-blue-500' : 'bg-gray-300 dark:bg-gray-600'
+              }`}
           >
-            <div className={`w-5 h-5 bg-white rounded-full transition-transform ${
-              privacySettings.showReadReceipts ? 'translate-x-6' : 'translate-x-1'
-            }`} />
+            <div className={`w-5 h-5 bg-white rounded-full transition-transform ${privacySettings.showReadReceipts ? 'translate-x-6' : 'translate-x-1'
+              }`} />
           </button>
         </div>
       </div>
@@ -416,7 +412,7 @@ export default function SettingsPage() {
   const renderNotificationSettings = () => (
     <div className="space-y-6">
       <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Notification Preferences</h3>
-      
+
       <div className="space-y-4">
         <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
           <h4 className="font-medium text-blue-900 dark:text-blue-300 mb-2">Delivery Methods</h4>
@@ -433,13 +429,11 @@ export default function SettingsPage() {
                 </div>
                 <button
                   onClick={() => setNotificationSettings(prev => ({ ...prev, [key]: !prev[key] }))}
-                  className={`w-12 h-6 rounded-full transition-colors ${
-                    notificationSettings[key] ? 'bg-blue-500' : 'bg-gray-300 dark:bg-gray-600'
-                  }`}
+                  className={`w-12 h-6 rounded-full transition-colors ${notificationSettings[key] ? 'bg-blue-500' : 'bg-gray-300 dark:bg-gray-600'
+                    }`}
                 >
-                  <div className={`w-5 h-5 bg-white rounded-full transition-transform ${
-                    notificationSettings[key] ? 'translate-x-6' : 'translate-x-1'
-                  }`} />
+                  <div className={`w-5 h-5 bg-white rounded-full transition-transform ${notificationSettings[key] ? 'translate-x-6' : 'translate-x-1'
+                    }`} />
                 </button>
               </div>
             ))}
@@ -464,13 +458,11 @@ export default function SettingsPage() {
                 </div>
                 <button
                   onClick={() => setNotificationSettings(prev => ({ ...prev, [key]: !prev[key] }))}
-                  className={`w-10 h-5 rounded-full transition-colors ${
-                    notificationSettings[key] ? 'bg-blue-500' : 'bg-gray-300 dark:bg-gray-600'
-                  }`}
+                  className={`w-10 h-5 rounded-full transition-colors ${notificationSettings[key] ? 'bg-blue-500' : 'bg-gray-300 dark:bg-gray-600'
+                    }`}
                 >
-                  <div className={`w-4 h-4 bg-white rounded-full transition-transform ${
-                    notificationSettings[key] ? 'translate-x-5' : 'translate-x-0.5'
-                  }`} />
+                  <div className={`w-4 h-4 bg-white rounded-full transition-transform ${notificationSettings[key] ? 'translate-x-5' : 'translate-x-0.5'
+                    }`} />
                 </button>
               </div>
             ))}
@@ -483,7 +475,7 @@ export default function SettingsPage() {
   const renderAppearanceSettings = () => (
     <div className="space-y-6">
       <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Appearance & Display</h3>
-      
+
       <div className="space-y-4">
         <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
           <h4 className="font-medium text-gray-900 dark:text-white mb-3">Theme</h4>
@@ -496,15 +488,13 @@ export default function SettingsPage() {
               <button
                 key={value}
                 onClick={() => setAppSettings(prev => ({ ...prev, theme: value }))}
-                className={`p-4 rounded-lg border-2 transition-all ${
-                  appSettings.theme === value
+                className={`p-4 rounded-lg border-2 transition-all ${appSettings.theme === value
                     ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
                     : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
-                }`}
+                  }`}
               >
-                <Icon className={`w-6 h-6 mx-auto mb-2 ${
-                  appSettings.theme === value ? 'text-blue-500' : 'text-gray-500'
-                }`} />
+                <Icon className={`w-6 h-6 mx-auto mb-2 ${appSettings.theme === value ? 'text-blue-500' : 'text-gray-500'
+                  }`} />
                 <div className="text-sm font-medium">{label}</div>
               </button>
             ))}
@@ -526,13 +516,11 @@ export default function SettingsPage() {
                 </div>
                 <button
                   onClick={() => setAppSettings(prev => ({ ...prev, [key]: !prev[key] }))}
-                  className={`w-12 h-6 rounded-full transition-colors ${
-                    appSettings[key] ? 'bg-blue-500' : 'bg-gray-300 dark:bg-gray-600'
-                  }`}
+                  className={`w-12 h-6 rounded-full transition-colors ${appSettings[key] ? 'bg-blue-500' : 'bg-gray-300 dark:bg-gray-600'
+                    }`}
                 >
-                  <div className={`w-5 h-5 bg-white rounded-full transition-transform ${
-                    appSettings[key] ? 'translate-x-6' : 'translate-x-1'
-                  }`} />
+                  <div className={`w-5 h-5 bg-white rounded-full transition-transform ${appSettings[key] ? 'translate-x-6' : 'translate-x-1'
+                    }`} />
                 </button>
               </div>
             ))}
@@ -545,7 +533,7 @@ export default function SettingsPage() {
   const renderSecuritySettings = () => (
     <div className="space-y-6">
       <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Security Settings</h3>
-      
+
       <div className="space-y-4">
         <Card className="p-6">
           <h4 className="font-medium text-gray-900 dark:text-white mb-4">Password & Authentication</h4>
@@ -578,8 +566,8 @@ export default function SettingsPage() {
             <Button variant="outline" className="w-full text-red-600 border-red-300 hover:bg-red-50">
               Deactivate Account
             </Button>
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               onClick={handleAccountDelete}
               className="w-full text-red-600 border-red-300 hover:bg-red-50"
             >
@@ -605,7 +593,7 @@ export default function SettingsPage() {
   const renderDataSettings = () => (
     <div className="space-y-6">
       <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Data & Storage</h3>
-      
+
       <div className="space-y-4">
         <Card className="p-6">
           <h4 className="font-medium text-gray-900 dark:text-white mb-4">Data Export</h4>
@@ -651,13 +639,11 @@ export default function SettingsPage() {
               </div>
               <button
                 onClick={() => setAppSettings(prev => ({ ...prev, saveDataMode: !prev.saveDataMode }))}
-                className={`w-12 h-6 rounded-full transition-colors ${
-                  appSettings.saveDataMode ? 'bg-blue-500' : 'bg-gray-300 dark:bg-gray-600'
-                }`}
+                className={`w-12 h-6 rounded-full transition-colors ${appSettings.saveDataMode ? 'bg-blue-500' : 'bg-gray-300 dark:bg-gray-600'
+                  }`}
               >
-                <div className={`w-5 h-5 bg-white rounded-full transition-transform ${
-                  appSettings.saveDataMode ? 'translate-x-6' : 'translate-x-1'
-                }`} />
+                <div className={`w-5 h-5 bg-white rounded-full transition-transform ${appSettings.saveDataMode ? 'translate-x-6' : 'translate-x-1'
+                  }`} />
               </button>
             </div>
           </div>
@@ -669,7 +655,7 @@ export default function SettingsPage() {
   const renderHelpSettings = () => (
     <div className="space-y-6">
       <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Help & Support</h3>
-      
+
       <div className="space-y-4">
         <Card className="p-6">
           <h4 className="font-medium text-gray-900 dark:text-white mb-4">Get Help</h4>
@@ -717,8 +703,8 @@ export default function SettingsPage() {
 
         <Card className="p-6">
           <h4 className="font-medium text-gray-900 dark:text-white mb-4">Account Actions</h4>
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             className="w-full text-red-600 border-red-300 hover:bg-red-50 flex items-center gap-2"
           >
             <LogOut className="w-4 h-4" />
@@ -772,11 +758,10 @@ export default function SettingsPage() {
                     <button
                       key={section.id}
                       onClick={() => setActiveSection(section.id)}
-                      className={`w-full flex items-center gap-3 p-3 rounded-lg text-left transition-colors ${
-                        activeSection === section.id
+                      className={`w-full flex items-center gap-3 p-3 rounded-lg text-left transition-colors ${activeSection === section.id
                           ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300'
                           : 'hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300'
-                      }`}
+                        }`}
                     >
                       <Icon className="w-5 h-5" />
                       <div>
@@ -802,7 +787,7 @@ export default function SettingsPage() {
       </div>
     </PageLayout>
     
-    {/* Bottom Navigation */}
-    <BottomNavigation currentPage="settings" />
+    {/* Bottom Navigation */ }
+  <BottomNavigation currentPage="settings" />
   );
 }

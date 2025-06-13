@@ -162,13 +162,13 @@ export default function NotesPage() {
 
   const filteredNotes = notes.filter(note => {
     const matchesSearch = note.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         note.subject.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         note.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
-    
+      note.subject.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      note.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
+
     const matchesFilter = selectedFilter === "all" ||
-                         (selectedFilter === "trending" && note.trending) ||
-                         (selectedFilter === "verified" && note.verified) ||
-                         (selectedFilter === "recent" && note.uploadDate.includes("day"));
+      (selectedFilter === "trending" && note.trending) ||
+      (selectedFilter === "verified" && note.verified) ||
+      (selectedFilter === "recent" && note.uploadDate.includes("day"));
 
     const matchesSemester = selectedSemester === "all" || note.semester === selectedSemester;
 
@@ -203,8 +203,8 @@ export default function NotesPage() {
   };
 
   return (
-    <PageLayout 
-      title="Notes & Resources" 
+    <PageLayout
+      title="Notes & Resources"
       subtitle="Share and access study materials"
       icon={BookOpen}
     >
@@ -242,7 +242,7 @@ export default function NotesPage() {
               </Button>
             ))}
           </div>
-          
+
           <select
             value={selectedSemester}
             onChange={(e) => setSelectedSemester(e.target.value)}
@@ -414,8 +414,8 @@ export default function NotesPage() {
                     </div>
 
                     <div className="flex items-center space-x-2">
-                      <Button 
-                        variant="outline" 
+                      <Button
+                        variant="outline"
                         size="sm"
                         className="btn-scale"
                         onClick={() => toast({ title: "Preview", description: "File preview coming soon! 👁️", type: "info" })}
@@ -423,8 +423,8 @@ export default function NotesPage() {
                         <Eye className="w-4 h-4 mr-1" />
                         Preview
                       </Button>
-                      <Button 
-                        size="sm" 
+                      <Button
+                        size="sm"
                         onClick={() => handleDownload(note)}
                         className="btn-scale"
                       >

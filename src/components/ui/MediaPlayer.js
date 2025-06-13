@@ -34,8 +34,8 @@ export function MediaPlayer({ media, className = "" }) {
   if (media.type === 'image') {
     return (
       <div className={`relative rounded-lg overflow-hidden ${className}`}>
-        <img 
-          src={media.url} 
+        <img
+          src={media.url}
           alt={media.alt || "Post image"}
           className="w-full h-auto object-cover"
           loading="lazy"
@@ -52,7 +52,7 @@ export function MediaPlayer({ media, className = "" }) {
   if (media.type === 'video') {
     return (
       <div className={`relative rounded-lg overflow-hidden bg-black ${className}`}>
-        <video 
+        <video
           className="w-full h-auto"
           controls
           preload="metadata"
@@ -86,7 +86,7 @@ export function MediaPlayer({ media, className = "" }) {
           >
             {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
           </Button>
-          
+
           <div className="flex-1">
             <div className="flex items-center justify-between mb-2">
               <span className="font-medium text-sm">{media.title || 'Audio Message'}</span>
@@ -94,9 +94,9 @@ export function MediaPlayer({ media, className = "" }) {
                 {formatTime(currentTime)} / {formatTime(duration)}
               </span>
             </div>
-            
+
             <div className="w-full bg-white/20 rounded-full h-2">
-              <div 
+              <div
                 className="bg-gradient-to-r from-purple-500 to-pink-500 h-2 rounded-full transition-all"
                 style={{ width: `${(currentTime / duration) * 100 || 0}%` }}
               />
@@ -152,8 +152,8 @@ export function MediaGrid({ mediaItems, className = "" }) {
   return (
     <div className={`grid gap-2 ${getGridClass(mediaItems.length)} ${className}`}>
       {mediaItems.map((media, index) => (
-        <MediaPlayer 
-          key={media.id || index} 
+        <MediaPlayer
+          key={media.id || index}
           media={media}
           className={mediaItems.length > 3 && index >= 3 ? "hidden md:block" : ""}
         />
