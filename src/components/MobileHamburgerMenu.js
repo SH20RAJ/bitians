@@ -63,39 +63,41 @@ export default function MobileHamburgerMenu() {
         <div className="fixed inset-0 z-50 md:hidden">
           {/* Backdrop */}
           <div 
-            className="fixed inset-0 bg-black/50"
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm"
             onClick={() => setIsOpen(false)}
           />
           
           {/* Menu Panel */}
-          <div className="fixed right-0 top-0 h-full w-80 bg-white dark:bg-gray-900 shadow-xl transform transition-transform duration-300 ease-in-out">
+          <div className="fixed right-0 top-0 h-full w-80 bg-background/95 backdrop-blur-lg shadow-2xl transform transition-transform duration-300 ease-in-out border-l border-border">
             <div className="flex flex-col h-full">
               {/* Header */}
-              <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
+              <div className="flex items-center justify-between p-6 border-b border-border bg-gradient-to-r from-primary/5 to-purple-500/5">
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg flex items-center justify-center">
-                    <span className="text-white font-bold text-sm">B</span>
+                  <div className="w-8 h-8 bg-gradient-to-r from-primary to-purple-500 rounded-lg flex items-center justify-center shadow-lg">
+                    <span className="text-primary-foreground font-bold text-sm">B</span>
                   </div>
-                  <span className="text-lg font-bold text-gray-900 dark:text-white">BITians.org</span>
+                  <span className="text-lg font-bold text-foreground">BITians.org</span>
                 </div>
                 <Button
                   variant="ghost"
                   size="icon"
                   onClick={() => setIsOpen(false)}
+                  className="hover:bg-accent"
                 >
                   <X className="w-5 h-5" />
                 </Button>
               </div>
 
               {/* Profile Section */}
-              <div className="p-6 border-b border-gray-200 dark:border-gray-700">
+              <div className="p-6 border-b border-border bg-muted/30">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
-                    <span className="text-white font-bold">SR</span>
+                  <div className="w-12 h-12 bg-gradient-to-r from-primary to-purple-500 rounded-full flex items-center justify-center shadow-lg ring-2 ring-primary/20">
+                    <span className="text-primary-foreground font-bold">SR</span>
                   </div>
                   <div>
-                    <div className="font-medium text-gray-900 dark:text-white">Shaswat Raj</div>
-                    <div className="text-sm text-gray-600 dark:text-gray-400">@shaswatraj</div>
+                    <div className="font-semibold text-foreground">Shaswat Raj</div>
+                    <div className="text-sm text-muted-foreground">@shaswatraj</div>
+                    <div className="text-xs text-primary font-medium mt-1 px-2 py-1 bg-primary/10 rounded-full inline-block">CSE • 4th Year</div>
                   </div>
                 </div>
               </div>
@@ -109,9 +111,11 @@ export default function MobileHamburgerMenu() {
                       <button
                         key={item.id}
                         onClick={() => handleNavigation(item.href)}
-                        className="w-full flex items-center gap-3 px-3 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors text-left"
+                        className="w-full flex items-center gap-3 px-4 py-3 text-left text-foreground hover:bg-accent hover:text-accent-foreground rounded-lg transition-all duration-200 group"
                       >
-                        <Icon className="w-5 h-5" />
+                        <div className="w-8 h-8 flex items-center justify-center rounded-lg bg-muted group-hover:bg-primary/10 transition-colors">
+                          <Icon className="w-4 h-4 group-hover:text-primary transition-colors" />
+                        </div>
                         <span className="font-medium">{item.label}</span>
                       </button>
                     );
@@ -120,11 +124,12 @@ export default function MobileHamburgerMenu() {
               </div>
 
               {/* Footer */}
-              <div className="p-6 border-t border-gray-200 dark:border-gray-700">
-                <div className="text-xs text-gray-500 dark:text-gray-400 text-center">
-                  BITians.org v1.0.0
-                  <br />
-                  Made with ❤️ for BIT Mesra
+              <div className="p-6 border-t border-border bg-muted/30">
+                <div className="text-xs text-muted-foreground text-center space-y-1">
+                  <div className="font-medium text-foreground">BITians.org v1.0.0</div>
+                  <div className="flex items-center justify-center gap-1">
+                    Made with <span className="text-red-500">❤️</span> for BIT Mesra
+                  </div>
                 </div>
               </div>
             </div>

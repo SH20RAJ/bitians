@@ -48,132 +48,7 @@ import {
   Edit
 } from 'lucide-react';
 
-// Mock data moved outside component to avoid useEffect dependency issues
-const mockUsers = {
-  shaswatraj: {
-    id: 1,
-    username: 'shaswatraj',
-    name: 'Shaswat Raj',
-    avatar: 'SR',
-    kBatch: 'K20',
-    branch: 'CSE',
-    year: '4th Year',
-    bio: '🚀 Full Stack Developer | 💻 Tech Enthusiast | 🎯 Problem Solver | Building the future one line of code at a time',
-    location: 'Ranchi, Jharkhand',
-    joinedDate: 'September 2020',
-    website: 'https://shaswatraj.dev',
-    email: 'shaswat@bitmesra.ac.in',
-    verified: true,
-    followers: 1248,
-    following: 342,
-    postsCount: 156,
-    // New features
-    relationshipStatus: 'Single',
-    totalLikes: 5420,
-    totalComments: 892,
-    totalShares: 234,
-    applaudsReceived: 156,
-    profileViews: 12400,
-    interests: ['Web Development', 'Machine Learning', 'Photography', 'Cricket'],
-    skills: ['React', 'Node.js', 'Python', 'MongoDB', 'AWS', 'Docker'],
-    achievements: [
-      { title: 'Hackathon Winner', year: '2024', icon: '🏆' },
-      { title: 'Top Contributor', year: '2023', icon: '⭐' },
-      { title: 'Mentor of the Year', year: '2023', icon: '🎓' }
-    ],
-    socialLinks: {
-      github: 'https://github.com/shaswatraj',
-      linkedin: 'https://linkedin.com/in/shaswatraj',
-      instagram: 'https://instagram.com/shaswatraj'
-    }
-  },
-  alexjohnson: {
-    id: 2,
-    username: 'alexjohnson',
-    name: 'Alex Johnson',
-    avatar: 'AJ',
-    kBatch: 'K21',
-    branch: 'CSE',
-    year: '3rd Year',
-    bio: '🔥 Competitive Programmer | 📱 Mobile App Developer | 🎮 Gaming Enthusiast',
-    location: 'Delhi, India',
-    joinedDate: 'August 2021',
-    website: 'https://alexjohnson.dev',
-    email: 'alex@bitmesra.ac.in',
-    verified: true,
-    followers: 892,
-    following: 234,
-    postsCount: 78,
-    relationshipStatus: 'In a relationship',
-    totalLikes: 3240,
-    totalComments: 567,
-    totalShares: 123,
-    applaudsReceived: 89,
-    profileViews: 8900,
-    interests: ['Competitive Programming', 'Mobile Development', 'Gaming'],
-    skills: ['C++', 'Java', 'Flutter', 'Dart', 'Firebase'],
-    achievements: [
-      { title: 'ICPC Regionalist', year: '2023', icon: '🥇' },
-      { title: 'Google Summer of Code', year: '2023', icon: '🌟' }
-    ],
-    socialLinks: {
-      github: 'https://github.com/alexjohnson',
-      linkedin: 'https://linkedin.com/in/alexjohnson'
-    }
-  }
-};
-
-// Enhanced mock posts
-const mockUserPosts = [
-  {
-    id: 1,
-    type: 'image',
-    content: 'Beautiful sunset from the hostel terrace! 🌅 Perfect end to a productive day of coding. #Photography #SunsetViews #BITLife #HostelLife',
-    time: '2h',
-    likes: 156,
-    comments: 23,
-    shares: 12,
-    views: 890,
-    applauds: 34,
-    media: [
-      {
-        id: 'm1',
-        type: 'image',
-        url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=400&fit=crop',
-        alt: 'Beautiful sunset view',
-        caption: 'Sunset from Hostel C terrace'
-      }
-    ]
-  },
-  {
-    id: 2,
-    type: 'text',
-    content: 'Just deployed my first full-stack web application! 🚀 Built with React, Node.js, and MongoDB. Feeling grateful for all the learning opportunities at BIT Mesra. #WebDevelopment #FullStack #Achievement #coding',
-    time: '1d',
-    likes: 234,
-    comments: 45,
-    shares: 28,
-    views: 1240,
-    applauds: 67
-  },
-  {
-    id: 3,
-    type: 'achievement',
-    content: '🏆 Won the Smart India Hackathon 2024! Our team&apos;s solution for sustainable agriculture using IoT sensors got the first prize. Proud moment for BIT Mesra! #SIH2024 #Hackathon #Winner #IoT #Agriculture',
-    time: '3d',
-    likes: 456,
-    comments: 78,
-    shares: 89,
-    views: 2100,
-    applauds: 123,
-    achievement: {
-      title: 'Smart India Hackathon Winner',
-      badge: '🏆'
-    }
-  }
-];
-
-export default function ProfilePage() {
+export default function UserProfilePage() {
   const params = useParams();
   const router = useRouter();
   const [user, setUser] = useState(null);
@@ -297,7 +172,7 @@ export default function ProfilePage() {
     {
       id: 3,
       type: 'achievement',
-      content: '🏆 Won the Smart India Hackathon 2024! Our team&apos;s solution for sustainable agriculture using IoT sensors got the first prize. Proud moment for BIT Mesra! #SIH2024 #Hackathon #Winner #IoT #Agriculture',
+      content: '🏆 Won the Smart India Hackathon 2024! Our team\'s solution for sustainable agriculture using IoT sensors got the first prize. Proud moment for BIT Mesra! #SIH2024 #Hackathon #Winner #IoT #Agriculture',
       time: '3d',
       likes: 456,
       comments: 78,
@@ -312,9 +187,7 @@ export default function ProfilePage() {
   ];
 
   useEffect(() => {
-    // For main profile page, show the current user (shaswatraj)
-    // For username-based profiles, show the requested user
-    const username = params.username || 'shaswatraj';
+    const username = params.username;
     const userData = mockUsers[username];
     
     if (userData) {
@@ -326,7 +199,7 @@ export default function ProfilePage() {
     }
     
     setIsLoading(false);
-  }, [params.username, mockUsers, mockUserPosts]);
+  }, [params.username]);
 
   const handleFollow = () => {
     setIsFollowing(!isFollowing);
@@ -389,7 +262,7 @@ export default function ProfilePage() {
         <div className="container mx-auto px-4 py-6 max-w-6xl text-center">
           <div className="space-y-4">
             <h1 className="text-3xl font-bold">User Not Found</h1>
-            <p className="text-muted-foreground">The user you&apos;re looking for doesn&apos;t exist.</p>
+            <p className="text-muted-foreground">The user you're looking for doesn't exist.</p>
             <Button onClick={() => router.push('/')}>Go Home</Button>
           </div>
         </div>
