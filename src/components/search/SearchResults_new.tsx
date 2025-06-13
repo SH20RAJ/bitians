@@ -41,8 +41,8 @@ interface SearchFilters {
   hasLinks: boolean;
   minLikes: number;
   dateRange?: {
-    from?: Date;
-    to?: Date;
+    from: Date;
+    to: Date;
   };
 }
 
@@ -57,56 +57,48 @@ interface SearchResultsProps {
 
 function ResultCard({ result }: { result: SearchResult }) {
   const icons = {
-    person: UserPlus,
-    post: MessageCircle,
-    event: Calendar,
-    'study-group': BookOpen,
-    note: BookOpen,
-    hashtag: Hash,
+    person: <UserPlus className="h-4 w-4" />,
+    post: <MessageCircle className="h-4 w-4" />,
+    event: <Calendar className="h-4 w-4" />,
+    'study-group': <BookOpen className="h-4 w-4" />,
+    note: <BookOpen className="h-4 w-4" />,
+    hashtag: <Hash className="h-4 w-4" />,
   };
-
-  const Icon = icons[result.type];
 
   return (
     <Card className="p-4 hover:shadow-md transition-shadow cursor-pointer">
       <div className="flex items-start space-x-3">
-        {result.avatar && (
-          <Avatar className="h-12 w-12 border border-border/50">
-            <div className="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-semibold">
-              {result.avatar}
-            </div>
+        {result.avatar ? (
+          <Avatar className="h-12 w-12">
+            <img src={result.avatar} alt={result.title} className="h-full w-full object-cover" />
           </Avatar>
-        )}
-        
-        {!result.avatar && (
-          <div className="h-12 w-12 rounded-full bg-muted flex items-center justify-center">
-            <Icon className="h-6 w-6 text-muted-foreground" />
+        ) : (
+          <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
+            {icons[result.type]}
           </div>
         )}
         
         <div className="flex-1 min-w-0">
           <div className="flex items-center space-x-2 mb-1">
-            <h3 className="font-semibold text-sm truncate">{result.title}</h3>
-            {result.badge && (
-              <KBatchBadge kBatch={result.badge} size="sm" />
+            <h3 className="font-semibold truncate">{result.title}</h3>
+            {result.badge && <KBatchBadge kBatch={result.badge} />}
+            {result.metadata?.verified && (
+              <Badge variant="secondary" className="text-xs">✓</Badge>
             )}
-            <Badge variant="secondary" className="text-xs">
-              {result.type.replace('-', ' ')}
-            </Badge>
           </div>
           
           {result.subtitle && (
-            <p className="text-xs text-muted-foreground mb-1">{result.subtitle}</p>
+            <p className="text-sm text-muted-foreground mb-1">{result.subtitle}</p>
           )}
           
           {result.description && (
-            <p className="text-sm text-muted-foreground line-clamp-2">
+            <p className="text-sm text-muted-foreground line-clamp-2 mb-2">
               {result.description}
             </p>
           )}
           
           {result.metadata && (
-            <div className="flex items-center space-x-4 mt-2 text-xs text-muted-foreground">
+            <div className="flex items-center space-x-4 text-xs text-muted-foreground">
               {result.metadata.followers && (
                 <span>{result.metadata.followers} followers</span>
               )}
@@ -146,7 +138,7 @@ function ResultCard({ result }: { result: SearchResult }) {
 export function SearchResults({ 
   results, 
   query, 
-  filter: _filter, 
+  filter, 
   filters,
   isLoading, 
   className 

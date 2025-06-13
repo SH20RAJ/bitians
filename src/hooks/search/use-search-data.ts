@@ -10,7 +10,20 @@ interface SearchResult {
   description?: string;
   avatar?: string;
   badge?: string;
-  metadata?: Record<string, any>;
+  metadata?: {
+    followers?: number;
+    posts?: number;
+    date?: string;
+    likes?: number;
+    participants?: number;
+    members?: number;
+    downloads?: number;
+    rating?: string;
+    trending?: boolean;
+    verified?: boolean;
+    hasMedia?: boolean;
+    hasLinks?: boolean;
+  };
 }
 
 // Mock data for search results
@@ -23,7 +36,13 @@ const MOCK_RESULTS: SearchResult[] = [
     description: 'Machine Learning enthusiast, placement coordinator',
     avatar: 'RS',
     badge: 'K23',
-    metadata: { followers: 234, posts: 89 }
+    metadata: { 
+      followers: 234, 
+      posts: 89, 
+      verified: false,
+      hasMedia: true,
+      hasLinks: true
+    }
   },
   {
     id: '2',
@@ -31,7 +50,13 @@ const MOCK_RESULTS: SearchResult[] = [
     title: 'Machine Learning Workshop Results',
     subtitle: 'Posted by Tech Society BIT',
     description: 'Amazing turnout for our ML workshop! 150+ students participated and learned about neural networks, deep learning fundamentals...',
-    metadata: { date: '2 hours ago', likes: 45 }
+    metadata: { 
+      date: '2 hours ago', 
+      likes: 45,
+      verified: true,
+      hasMedia: true,
+      hasLinks: false
+    }
   },
   {
     id: '3',
@@ -39,7 +64,13 @@ const MOCK_RESULTS: SearchResult[] = [
     title: 'TechFest 2024 - Coding Competition',
     subtitle: 'Computer Science Department',
     description: 'Annual coding competition with exciting prizes. Register now!',
-    metadata: { date: 'Dec 25, 2024', participants: 120 }
+    metadata: { 
+      date: 'Dec 25, 2024', 
+      participants: 120,
+      verified: true,
+      hasMedia: false,
+      hasLinks: true
+    }
   },
   {
     id: '4',
@@ -47,7 +78,13 @@ const MOCK_RESULTS: SearchResult[] = [
     title: 'Data Structures & Algorithms',
     subtitle: 'Computer Science • K23 Batch',
     description: 'Weekly study sessions for DSA preparation. Join us every Sunday at 7 PM in CR-1.',
-    metadata: { members: 45, posts: 123 }
+    metadata: { 
+      members: 45, 
+      posts: 123,
+      verified: false,
+      hasMedia: false,
+      hasLinks: false
+    }
   },
   {
     id: '5',
@@ -55,7 +92,13 @@ const MOCK_RESULTS: SearchResult[] = [
     title: 'Operating Systems Unit 3 Notes',
     subtitle: 'Shared by Priya Singh',
     description: 'Comprehensive notes covering process scheduling, memory management, and deadlocks.',
-    metadata: { downloads: 89, rating: '4.8/5' }
+    metadata: { 
+      downloads: 89, 
+      rating: '4.8/5',
+      verified: false,
+      hasMedia: true,
+      hasLinks: false
+    }
   },
   {
     id: '6',
@@ -63,7 +106,13 @@ const MOCK_RESULTS: SearchResult[] = [
     title: '#MachineLearning',
     subtitle: '234 posts • Trending',
     description: 'Latest discussions about ML projects, research, and career opportunities.',
-    metadata: { posts: 234, trending: true }
+    metadata: { 
+      posts: 234, 
+      trending: true,
+      verified: false,
+      hasMedia: true,
+      hasLinks: true
+    }
   },
 ];
 
