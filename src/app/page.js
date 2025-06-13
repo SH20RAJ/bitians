@@ -217,6 +217,119 @@ export default function HomePage() {
                     caption: "Complete Java reference books - like new condition"
                 }
             ]
+        },
+        {
+            id: 5,
+            author: 'Neha Gupta',
+            avatar: 'NG',
+            kBatch: 'K22',
+            time: '8h',
+            content: 'Amazing robotics workshop today! 🤖 Learned so much about autonomous systems. Thanks to @robolution_club for organizing this. Anyone else interested in joining the robotics team? #robotics #workshop #technology #innovation #bitlife',
+            likes: 65,
+            comments: 18,
+            branch: 'ME',
+            year: '3rd Year',
+            verified: false,
+            category: 'academic',
+            media: [
+                {
+                    id: "m6",
+                    type: "image", 
+                    url: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=500&h=300&fit=crop",
+                    alt: "Robotics workshop in progress",
+                    caption: "Building autonomous robots in the workshop"
+                }
+            ]
+        },
+        {
+            id: 6,
+            author: 'ACM BIT Mesra',
+            avatar: 'ACM',
+            kBatch: 'Official',
+            time: '10h',
+            content: '🚀 Exciting news! ACM Coding Contest 2024 registrations are now open! Win prizes worth ₹50,000. Register before June 20th. @everyone who loves coding should participate! #ACM #coding #contest #prizes #competitive_programming',
+            likes: 89,
+            comments: 34,
+            branch: 'Official Club',
+            year: 'Community',
+            verified: true,
+            isCirclePost: true,
+            category: 'events',
+            media: [
+                {
+                    id: "m7",
+                    type: "image",
+                    url: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=500&h=300&fit=crop", 
+                    alt: "ACM Coding Contest poster",
+                    caption: "ACM Coding Contest 2024 - Register Now!"
+                }
+            ]
+        },
+        {
+            id: 7,
+            author: 'Vikash Kumar',
+            avatar: 'VK',
+            kBatch: 'K23',
+            time: '12h',
+            content: 'Found a wallet near the library! 📱 It has some cards and cash. If it\'s yours, please DM me with details to verify. Let\'s help each other out! #lost_and_found #help #community #library #bitlife',
+            likes: 23,
+            comments: 7,
+            branch: 'EE',
+            year: '2nd Year',
+            verified: false,
+            category: 'social'
+        },
+        {
+            id: 8,
+            author: 'Literary Society',
+            avatar: 'LS',
+            kBatch: 'Official',
+            time: '14h',
+            content: '📚 Poetry Night this Friday at 7 PM in the auditorium! Come share your poems or just enjoy listening to amazing verses. Open mic for everyone. @poetry_lovers #poetry #literature #event #friday #creative_writing',
+            likes: 41,
+            comments: 15,
+            branch: 'Official Club',
+            year: 'Community',
+            verified: true,
+            isCirclePost: true,
+            category: 'events'
+        },
+        {
+            id: 9,
+            author: 'Ankit Sharma',
+            avatar: 'AS2',
+            kBatch: 'K21',
+            time: '16h',
+            content: 'Placement season stress is real! 😅 But we got this! Thanks to all my friends for the support. @placement_warriors let\'s crack these interviews together! #placement #interviews #support #friends #career #motivation',
+            likes: 78,
+            comments: 25,
+            branch: 'CSE',
+            year: '4th Year',
+            verified: false,
+            category: 'career'
+        },
+        {
+            id: 10,
+            author: 'Food Committee',
+            avatar: 'FC',
+            kBatch: 'Official',
+            time: '18h',
+            content: '🍕 New food stall opening in the campus! Italian cuisine with amazing pasta and pizzas. Special discount for students this week. Check it out near the central plaza! #food #new_stall #italian #discount #campus_food',
+            likes: 156,
+            comments: 45,
+            branch: 'Official',
+            year: 'Community',
+            verified: true,
+            category: 'social',
+            media: [
+                {
+                    id: "m8",
+                    type: "image",
+                    url: "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=500&h=300&fit=crop",
+                    alt: "Delicious Italian food",
+                    caption: "Fresh pasta and pizza available now!"
+                }
+            ]
         }
     ];
 
@@ -504,7 +617,23 @@ export default function HomePage() {
                             </CardContent>
                         </Card>
 
-                        {/* Featured Posts */}
+                        {/* Feed Header */}
+                        <div className="flex items-center justify-between">
+                            <h2 className="text-xl font-bold flex items-center gap-2">
+                                <TrendingUp className="w-5 h-5 text-blue-500" />
+                                Latest from BIT Community
+                            </h2>
+                            <div className="flex items-center gap-2">
+                                <Badge variant="outline" className="text-xs">
+                                    {featuredPosts.length} posts
+                                </Badge>
+                                <Button variant="ghost" size="sm" onClick={() => window.location.href = '/feeds'}>
+                                    View All
+                                </Button>
+                            </div>
+                        </div>
+
+                        {/* Main Feed */}
                         <div className="space-y-4">
                             {featuredPosts.map((post) => (
                                 <Card
@@ -676,6 +805,21 @@ export default function HomePage() {
                                     </CardContent>
                                 </Card>
                             ))}
+                        </div>
+                        
+                        {/* Load More Posts */}
+                        <div className="text-center pt-4">
+                            <Button 
+                                variant="outline" 
+                                className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white border-0"
+                                onClick={() => window.location.href = '/feeds'}
+                            >
+                                <TrendingUp className="w-4 h-4 mr-2" />
+                                Load More Posts
+                            </Button>
+                            <p className="text-sm text-muted-foreground mt-2">
+                                See all posts in the <span className="text-blue-500 cursor-pointer" onClick={() => window.location.href = '/feeds'}>Feeds page</span>
+                            </p>
                         </div>
                     </div>
 
