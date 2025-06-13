@@ -1,76 +1,268 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/Button";
-import { Card, CardContent } from "@/components/ui/Card";
-import { Input } from "@/components/ui/Input";
-import { Avatar, AvatarFallback } from "@/components/ui/Avatar";
-import { Badge } from "@/components/ui/Badge";
-import { MediaPlayer, MediaGrid } from "@/components/ui/MediaPlayer";
-import { KBatchBadge } from "@/components/ui/KBatchBadge";
-import { RichText } from "@/components/ui/RichText";
-import { useTheme } from "@/components/ThemeProvider";
-import { useToast } from "@/components/Toast";
-import BottomNavigation from "@/components/BottomNavigation";
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import MobileHeader from '@/components/MobileHeader';
+import { Card, CardContent } from '@/components/ui/Card';
+import { Button } from '@/components/ui/Button';
+import { Input } from '@/components/ui/Input';
+import { Avatar, AvatarFallback } from '@/components/ui/Avatar';
+import { Badge } from '@/components/ui/Badge';
+import { MediaPlayer, MediaGrid } from '@/components/ui/MediaPlayer';
+import { KBatchBadge } from '@/components/ui/KBatchBadge';
+import { RichText } from '@/components/ui/RichText';
+import { useToast } from '@/components/Toast';
+import BottomNavigation from '@/components/BottomNavigation';
 import {
     Heart,
     MessageCircle,
     Share2,
-    BookOpen,
-    Users,
-    Calendar,
-    MapPin,
     Search,
-    Bell,
-    Settings,
-    Plus,
-    Home,
-    User,
-    ShoppingBag,
-    GraduationCap,
-    Coffee,
-    Zap,
-    Star,
     Bookmark,
-    MoreHorizontal,
-    ArrowLeft,
-    Flame,
-    TrendingUp,
+    MoreVertical,
     Filter,
-    Sun,
-    Moon,
-} from "lucide-react";
+    TrendingUp,
+    Clock,
+    Eye,
+    Users,
+    Camera,
+    Video,
+    Calendar,
+    Pin,
+    Star,
+    BarChart3,
+    Play,
+    Image as ImageIcon,
+    Hash,
+    MapPin,
+    Gift,
+    Zap,
+    ThumbsUp,
+    EyeOff
+} from 'lucide-react';
+import { PageLayout } from '@/components/PageLayout';
 
 export default function FeedsPage() {
-    const { theme, toggleTheme } = useTheme();
-    const { toast } = useToast();
-    const [isLoaded, setIsLoaded] = useState(false);
+    const router = useRouter();
+    const [posts, setPosts] = useState([]);
     const [likedPosts, setLikedPosts] = useState(new Set());
     const [bookmarkedPosts, setBookmarkedPosts] = useState(new Set());
-    const [activeFilter, setActiveFilter] = useState("all");
+    const [activeFilter, setActiveFilter] = useState('all');
+    const [sortBy, setSortBy] = useState('recent');
+    const { toast } = useToast();
+
+    // Enhanced mock data with different post types
+    const mockPosts = [
+        {
+            id: 1,
+            type: 'text',
+            author: 'Arjun Sharma',
+            avatar: 'AS',
+            kBatch: 'K23',
+            time: '2h',
+            isVerified: true,
+            content: 'Just completed my first internship at Microsoft! 🎉 The experience was incredible and I learned so much about software development at scale. Special thanks to @priya_mehta for the referral! #Internship #Microsoft #Grateful #TechLife #BITLife',
+            likes: 234,
+            comments: 67,
+            shares: 45,
+            views: 1200,
+            location: 'Hyderabad, India',
+            feeling: 'excited'
+        },
+        {
+            id: 2,
+            type: 'image',
+            author: 'Photography Club',
+            avatar: 'PC',
+            kBatch: 'Official',
+            time: '3h',
+            isVerified: true,
+            isClub: true,
+            content: '🌅 Morning vibes from the BIT Mesra campus! Captured this beautiful sunrise from the main building. Nature therapy before classes begin! #BITMesra #Photography #Sunrise #CampusLife #NaturePhotography',
+            likes: 456,
+            comments: 89,
+            shares: 123,
+            views: 2500,
+            media: [
+                {
+                    id: 'm1',
+                    type: 'image',
+                    url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop',
+                    alt: 'Beautiful sunrise from BIT Mesra campus',
+                    caption: 'Sunrise from Main Building - Shot on iPhone 14 Pro'
+                }
+            ]
+        },
+        {
+            id: 3,
+            type: 'confession',
+            author: 'Anonymous',
+            avatar: '??',
+            kBatch: 'K22',
+            time: '5h',
+            isAnonymous: true,
+            content: "I've been struggling with imposter syndrome since my placement got confirmed. Everyone expects so much from me now, but I feel like I don't deserve it. Anyone else feel this way? #ImpostorSyndrome #MentalHealth #PlacementStress #Anxiety",
+            likes: 89,
+            comments: 45,
+            shares: 12,
+            views: 780,
+            mood: 'anxious'
+        },
+        {
+            id: 4,
+            type: 'video',
+            author: 'Rahul Singh',
+            avatar: 'RS',
+            kBatch: 'K21',
+            time: '6h',
+            isVerified: true,
+            content: '🎸 Late night jam session in the hostel! Nothing beats music to destress from coding marathons. Who else is a music lover here? #Music #HostelLife #Jamming #StressRelief #BITLife',
+            likes: 178,
+            comments: 34,
+            shares: 56,
+            views: 1100,
+            media: [
+                {
+                    id: 'm2',
+                    type: 'video',
+                    url: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4',
+                    thumbnail: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800&h=600&fit=crop',
+                    caption: 'Late night guitar session in hostel common room'
+                }
+            ]
+        },
+        {
+            id: 5,
+            type: 'poll',
+            author: 'Priya Mehta',
+            avatar: 'PM',
+            kBatch: 'K22',
+            time: '8h',
+            isVerified: false,
+            content: 'Planning a weekend trek to Hundru Falls! 🏔️ Which day works better for everyone? Let me know in the poll below! #Trek #Adventure #Weekend #HundruFalls #BITLife',
+            likes: 67,
+            comments: 23,
+            shares: 18,
+            views: 450,
+            poll: {
+                question: 'Which day is better for the trek?',
+                options: [
+                    { text: 'Saturday', votes: 45, percentage: 65 },
+                    { text: 'Sunday', votes: 24, percentage: 35 }
+                ],
+                totalVotes: 69,
+                hasVoted: false
+            }
+        },
+        {
+            id: 6,
+            type: 'event',
+            author: 'Cultural Committee',
+            avatar: 'CC',
+            kBatch: 'Official',
+            time: '1d',
+            isVerified: true,
+            isClub: true,
+            content: '🎭 Annual Cultural Fest "Pantheon 2024" is here! Join us for 3 days of amazing performances, competitions, and fun. Registration open now! #Pantheon2024 #CulturalFest #BITMesra #Events #Registration',
+            likes: 589,
+            comments: 156,
+            shares: 234,
+            views: 3400,
+            event: {
+                title: 'Pantheon 2024 - Annual Cultural Fest',
+                date: '2024-03-15',
+                time: '09:00 AM',
+                location: 'BIT Mesra Campus',
+                attendees: 234
+            }
+        },
+        {
+            id: 7,
+            type: 'achievement',
+            author: 'Neha Gupta',
+            avatar: 'NG',
+            kBatch: 'K20',
+            time: '1d',
+            isVerified: true,
+            content: '🏆 Won the Grand Prize at HackIndia 2024! Our project on sustainable agriculture using IoT got selected among 500+ teams. Proud to represent BIT Mesra! Team: @arjun_sharma @rahul_singh @priya_mehta #HackIndia2024 #Winner #IoT #Agriculture #BITMesra #TeamWork',
+            likes: 345,
+            comments: 78,
+            shares: 89,
+            views: 1890,
+            achievement: {
+                title: 'HackIndia 2024 Grand Prize Winner',
+                organization: 'HackIndia',
+                badge: '🏆'
+            }
+        },
+        {
+            id: 8,
+            type: 'marketplace',
+            author: 'Amit Kumar',
+            avatar: 'AK',
+            kBatch: 'K21',
+            time: '2d',
+            isVerified: false,
+            content: '📚 Selling my programming books collection! All in excellent condition. Perfect for placement prep and semester exams. DM for details and prices! #Books #Programming #PlacementPrep #BitMart #Textbooks',
+            likes: 23,
+            comments: 12,
+            shares: 8,
+            views: 234,
+            marketplace: {
+                price: '₹2,500',
+                condition: 'Like New',
+                category: 'Books',
+                negotiable: true
+            },
+            media: [
+                {
+                    id: 'm3',
+                    type: 'image',
+                    url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=600&fit=crop',
+                    alt: 'Programming books collection',
+                    caption: 'Complete programming books collection for sale'
+                }
+            ]
+        }
+    ];
+
+    const postTypes = [
+        { id: 'all', label: 'All Posts', icon: Hash },
+        { id: 'text', label: 'Text', icon: MessageCircle },
+        { id: 'image', label: 'Photos', icon: Camera },
+        { id: 'video', label: 'Videos', icon: Video },
+        { id: 'confession', label: 'Confessions', icon: EyeOff },
+        { id: 'poll', label: 'Polls', icon: BarChart3 },
+        { id: 'event', label: 'Events', icon: Calendar },
+        { id: 'marketplace', label: 'Marketplace', icon: Gift }
+    ];
 
     useEffect(() => {
-        setIsLoaded(true);
+        setPosts(mockPosts);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    const filteredPosts = posts.filter(post => {
+        const matchesFilter = activeFilter === 'all' || post.type === activeFilter;
+        const matchesSearch = searchTerm === '' ||
+            post.content.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            post.author.toLowerCase().includes(searchTerm.toLowerCase());
+        return matchesFilter && matchesSearch;
+    }).sort((a, b) => {
+        switch (sortBy) {
+            case 'popular': return b.likes - a.likes;
+            case 'discussed': return b.comments - a.comments;
+            case 'views': return b.views - a.views;
+            default: return 0; // recent (already in order)
+        }
+    });
 
     const handleLike = (postId) => {
         const newLiked = new Set(likedPosts);
         if (newLiked.has(postId)) {
             newLiked.delete(postId);
-            toast({
-                title: "Unliked",
-                description: "Post removed from your likes",
-                type: "info",
-                duration: 2000,
-            });
         } else {
             newLiked.add(postId);
-            toast({
-                title: "Liked! ❤️",
-                description: "Post added to your likes",
-                type: "success",
-                duration: 2000,
-            });
         }
         setLikedPosts(newLiked);
     };
@@ -79,512 +271,329 @@ export default function FeedsPage() {
         const newBookmarked = new Set(bookmarkedPosts);
         if (newBookmarked.has(postId)) {
             newBookmarked.delete(postId);
-            toast({
-                title: "Bookmark removed",
-                description: "Post removed from your bookmarks",
-                type: "info",
-                duration: 2000,
-            });
         } else {
             newBookmarked.add(postId);
-            toast({
-                title: "Bookmarked! 🔖",
-                description: "Post saved to your bookmarks",
-                type: "success",
-                duration: 2000,
-            });
         }
         setBookmarkedPosts(newBookmarked);
     };
 
-    const handleShare = (post) => {
-        if (navigator.share) {
-            navigator.share({
-                title: `${post.author}'s post on BITians.org`,
-                text: post.content,
-                url: window.location.href,
-            });
-        } else {
-            navigator.clipboard.writeText(window.location.href);
-            toast({
-                title: "Link copied! 📋",
-                description: "Post link copied to clipboard",
-                type: "success",
-                duration: 2000,
-            });
-        }
+    const renderPostTypeIndicator = (post) => {
+        const getTypeInfo = () => {
+            switch (post.type) {
+                case 'confession': return { icon: EyeOff, color: 'bg-gray-500', label: 'Confession' };
+                case 'poll': return { icon: BarChart3, color: 'bg-orange-500', label: 'Poll' };
+                case 'event': return { icon: Calendar, color: 'bg-pink-500', label: 'Event' };
+                case 'video': return { icon: Video, color: 'bg-purple-500', label: 'Video' };
+                case 'image': return { icon: Camera, color: 'bg-green-500', label: 'Photo' };
+                case 'marketplace': return { icon: Gift, color: 'bg-yellow-500', label: 'Marketplace' };
+                case 'achievement': return { icon: Star, color: 'bg-amber-500', label: 'Achievement' };
+                default: return null;
+            }
+        };
+
+        const typeInfo = getTypeInfo();
+        if (!typeInfo) return null;
+
+        const Icon = typeInfo.icon;
+        return (
+            <Badge variant="secondary" className="text-xs">
+                <div className={`w-2 h-2 rounded-full ${typeInfo.color} mr-1`}></div>
+                {typeInfo.label}
+            </Badge>
+        );
     };
 
-    const allPosts = [
-        {
-            id: 1,
-            author: "Arjun Sharma",
-            avatar: "AS",
-            kBatch: "K23",
-            time: "2h",
-            content: "Just aced my Data Structures exam! 🎉 Thanks to the amazing study group we formed last week. Collaboration really works! Special thanks to @priya_mehta and @rohit_verma for the help. #DSA #academics #bitlife #teamwork",
-            likes: 42,
-            comments: 8,
-            branch: "CSE",
-            year: "2nd Year",
-            verified: true,
-            category: "academic",
-            media: [
-                {
-                    id: "m1",
-                    type: "image",
-                    url: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=500&h=300&fit=crop",
-                    alt: "Data Structures textbook and notes",
-                    caption: "My DSA notes and reference books"
-                }
-            ]
-        },
-        {
-            id: 2,
-            author: "Photography Club",
-            avatar: "PC",
-            kBatch: "Official",
-            time: "3h",
-            content: "🔥 New post in Photography Circle! Check out this stunning sunset shot from the hostel terrace. Join our circle for daily photo challenges and tips! @everyone come check this out! #BitPhotography #sunset #hostellife #photography #golden_hour",
-            likes: 67,
-            comments: 23,
-            branch: "Circle",
-            year: "Community",
-            verified: true,
-            isCirclePost: true,
-            category: "circles",
-            media: [
-                {
-                    id: "m2",
-                    type: "image",
-                    url: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=400&fit=crop",
-                    alt: "Beautiful sunset from hostel terrace",
-                    caption: "Sunset from Hostel C terrace - Shot on iPhone"
-                },
-                {
-                    id: "m3",
-                    type: "image",
-                    url: "https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=600&h=400&fit=crop",
-                    alt: "Another angle of the sunset",
-                    caption: "Different angle of the same sunset"
-                }
-            ]
-        },
-        {
-            id: 3,
-            author: "Priya Mehta",
-            avatar: "PM",
-            kBatch: "K22",
-            time: "4h",
-            content: "Anyone interested in a weekend trek to Hundru Falls? Looking for adventure buddies! 🏔️ Planning to leave Saturday morning. @arjun_sharma @neha_gupta you guys in? #trek #adventure #weekend #hundru_falls #bitlife",
-            likes: 28,
-            comments: 15,
-            branch: "ECE",
-            year: "3rd Year",
-            verified: false,
-            category: "social",
-            media: [
-                {
-                    id: "m4",
-                    type: "video",
-                    url: "https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4",
-                    thumbnail: "https://images.unsplash.com/photo-1551632811-561732d1e306?w=600&h=400&fit=crop",
-                    caption: "Last year's trek to Hundru Falls - it was amazing!"
-                }
-            ]
-        },
-        {
-            id: 4,
-            author: "Rahul Singh",
-            avatar: "RS",
-            kBatch: "K21",
-            time: "6h",
-            content: "Selling my Java programming books - perfect condition! Great for semester prep. DM if interested 📚 Especially good for @k24_students who are starting with programming. #books #java #programming #semester #bitmart #textbooks",
-            likes: 19,
-            comments: 5,
-            branch: "IT",
-            year: "4th Year",
-            verified: true,
-            category: "marketplace",
-            media: [
-                {
-                    id: "m5",
-                    type: "image",
-                    url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&h=300&fit=crop",
-                    alt: "Java programming books for sale",
-                    caption: "Complete Java reference books - like new condition"
-                }
-            ]
-        },
-        {
-            id: 5,
-            author: "Neha Gupta",
-            avatar: "NG",
-            kBatch: "K24",
-            time: "8h",
-            content: "Lost my water bottle near the library. It's a blue Tupperware bottle with 'Neha' written on it. Please message if found! 💧 Really need it back, it was a gift from home. #lost #library #help #waterbottle",
-            likes: 12,
-            comments: 3,
-            branch: "ME",
-            year: "1st Year",
-            verified: false,
-            category: "lost-found"
-        },
-        {
-            id: 6,
-            author: "Tech Society BIT",
-            avatar: "TS",
-            kBatch: "Official",
-            time: "10h",
-            content: "🚀 Hackathon registration is now open! 48 hours of non-stop coding, amazing prizes, and networking opportunities. Register now at bit.ly/hackathon2024. Special tracks for @k24_students and @k23_students! #hackathon #coding #techfest #registration #prizes #innovation",
-            likes: 89,
-            comments: 32,
-            branch: "Society",
-            year: "Official",
-            verified: true,
-            category: "events",
-            media: [
-                {
-                    id: "m6",
-                    type: "video",
-                    url: "https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_2mb.mp4",
-                    thumbnail: "https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=600&h=400&fit=crop",
-                    caption: "Highlights from last year's hackathon"
-                },
-                {
-                    id: "m7",
-                    type: "audio",
-                    url: "https://www.soundjay.com/misc/sounds/bell-ringing-05.wav",
-                    title: "Hackathon Announcement",
-                    caption: "Audio announcement from the organizing committee"
-                }
-            ]
-        },
-        {
-            id: 7,
-            author: "Amit Kumar",
-            avatar: "AK",
-            kBatch: "K23",
-            time: "12h",
-            content: "Looking for study partners for Advanced Algorithms. Let's meet at the library every evening at 6 PM. Who's in? 📖 @priya_mehta @arjun_sharma are you guys interested? #study #algorithms #library #evening #group_study",
-            likes: 24,
-            comments: 11,
-            branch: "CSE",
-            year: "2nd Year",
-            verified: false,
-            category: "academic"
-        },
-        {
-            id: 8,
-            author: "Music Club BIT",
-            avatar: "MC",
-            kBatch: "Official",
-            time: "14h",
-            content: "🎵 New cover released! Our rendition of 'Vande Mataram' for Republic Day. Check out the full video and audio! Amazing vocals by @shreya_singer and guitar by @rahul_guitarist. #music #cover #vande_mataram #republic_day #singing #guitar",
-            likes: 156,
-            comments: 47,
-            branch: "Club",
-            year: "Official",
-            verified: true,
-            category: "events",
-            media: [
-                {
-                    id: "m8",
-                    type: "audio",
-                    url: "https://www.soundjay.com/misc/sounds/bell-ringing-05.wav",
-                    title: "Vande Mataram Cover - Music Club BIT",
-                    caption: "Republic Day special cover by Music Club"
-                },
-                {
-                    id: "m9",
-                    type: "video",
-                    url: "https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4",
-                    thumbnail: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=600&h=400&fit=crop",
-                    caption: "Behind the scenes of our recording session"
-                }
-            ]
-        }
-    ];
-
-    const filters = [
-        { id: "all", label: "All", icon: Home, count: allPosts.length },
-        { id: "academic", label: "Academic", icon: BookOpen, count: allPosts.filter(p => p.category === "academic").length },
-        { id: "circles", label: "Circles", icon: Users, count: allPosts.filter(p => p.category === "circles").length },
-        { id: "events", label: "Events", icon: Calendar, count: allPosts.filter(p => p.category === "events").length },
-        { id: "social", label: "Social", icon: Coffee, count: allPosts.filter(p => p.category === "social").length },
-    ];
-
-    const filteredPosts = activeFilter === "all"
-        ? allPosts
-        : allPosts.filter(post => post.category === activeFilter);
-
-    if (!isLoaded) {
-        return (
-            <div className="min-h-screen bg-background flex items-center justify-center">
-                <div className="text-center space-y-4">
-                    <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center mx-auto animate-pulse">
-                        <GraduationCap className="w-8 h-8 text-white" />
-                    </div>
+    const renderSpecialContent = (post) => {
+        // Poll content
+        if (post.type === 'poll' && post.poll) {
+            return (
+                <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4 mb-4">
+                    <h4 className="font-medium mb-3">{post.poll.question}</h4>
                     <div className="space-y-2">
-                        <div className="h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full w-32 mx-auto animate-pulse"></div>
-                        <p className="text-sm text-muted-foreground">Loading feeds...</p>
-                    </div>
-                </div>
-            </div>
-        );
-    }
-
-    return (
-        <div className="min-h-screen bg-background">
-            {/* Mobile-First Header */}
-            <header className="sticky top-0 z-50 glass border-b bg-background/80 backdrop-blur-xl">
-                <div className="px-4 py-3">
-                    <div className="flex items-center justify-between">
-                        {/* Back Button & Title */}
-                        <div className="flex items-center space-x-3">
-                            <Button
-                                variant="ghost"
-                                size="icon"
-                                onClick={() => window.location.href = '/'}
-                                className="btn-scale"
-                            >
-                                <ArrowLeft className="w-5 h-5" />
-                            </Button>
-                            <div>
-                                <h1 className="text-xl font-bold gradient-text">Feeds</h1>
-                                <p className="text-xs text-muted-foreground">{filteredPosts.length} posts</p>
+                        {post.poll.options.map((option, index) => (
+                            <div key={index} className="relative">
+                                <div className="flex items-center justify-between p-3 bg-white dark:bg-gray-800 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                    <span className="font-medium">{option.text}</span>
+                                    <span className="text-sm text-muted-foreground">{option.votes} votes</span>
+                                </div>
+                                <div
+                                    className="absolute bottom-0 left-0 h-1 bg-blue-500 rounded-b-lg transition-all"
+                                    style={{ width: `${option.percentage}%` }}
+                                ></div>
                             </div>
-                        </div>
-
-                        {/* Action Buttons */}
-                        <div className="flex items-center space-x-2">
-                            <Button variant="ghost" size="icon" className="relative">
-                                <Bell className="w-5 h-5" />
-                                <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></div>
-                            </Button>
-                            <Button variant="ghost" size="icon" onClick={toggleTheme}>
-                                {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-                            </Button>
-                        </div>
-                    </div>
-
-                    {/* Search Bar */}
-                    <div className="mt-3">
-                        <div className="relative">
-                            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-                            <Input
-                                placeholder="Search posts, students..."
-                                className="pl-10 bg-secondary/50 border-0 focus:ring-2 focus:ring-primary rounded-full"
-                            />
-                        </div>
-                    </div>
-
-                    {/* Filter Tabs */}
-                    <div className="mt-4 flex space-x-2 overflow-x-auto pb-2 scrollbar-hide">
-                        {filters.map((filter) => (
-                            <Button
-                                key={filter.id}
-                                variant={activeFilter === filter.id ? "default" : "outline"}
-                                size="sm"
-                                className={`flex-shrink-0 rounded-full transition-all ${activeFilter === filter.id
-                                    ? "bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg"
-                                    : "bg-secondary/50 hover:bg-secondary"
-                                    }`}
-                                onClick={() => setActiveFilter(filter.id)}
-                            >
-                                <filter.icon className="w-3 h-3 mr-1" />
-                                {filter.label}
-                                <Badge
-                                    variant="secondary"
-                                    className={`ml-2 text-xs ${activeFilter === filter.id ? "bg-white/20 text-white" : "bg-primary/10"
-                                        }`}
-                                >
-                                    {filter.count}
-                                </Badge>
-                            </Button>
                         ))}
                     </div>
+                    <p className="text-sm text-muted-foreground mt-2">{post.poll.totalVotes} total votes</p>
                 </div>
-            </header>
+            );
+        }
 
-            {/* Posts Feed - Starting from top */}
-            <div className="px-4 py-2 pb-20">
-                <div className="space-y-4">
-                    {filteredPosts.map((post) => (
-                        <Card key={post.id} className={`glass hover:shadow-lg transition-all duration-300 card-hover cursor-pointer ${post.isCirclePost ? 'border-indigo-200 dark:border-indigo-800 bg-gradient-to-r from-indigo-50/50 to-purple-50/50 dark:from-indigo-950/10 dark:to-purple-950/10' : ''
-                            }`}
-                            onClick={() => window.location.href = `/post/${post.id}`}>
-                            <CardContent className="p-4">
-                                {/* Circle Post Header */}
-                                {post.isCirclePost && (
-                                    <div className="flex items-center space-x-2 mb-3 pb-3 border-b border-indigo-200 dark:border-indigo-800">
-                                        <Users className="w-4 h-4 text-indigo-500" />
-                                        <span className="text-sm font-medium text-indigo-600 dark:text-indigo-400">Circle Post</span>
-                                        <Badge className="bg-indigo-500 text-white text-xs">
-                                            Featured
-                                        </Badge>
-                                    </div>
-                                )}
+        // Event content
+        if (post.type === 'event' && post.event) {
+            return (
+                <div className="bg-gradient-to-r from-pink-50 to-purple-50 dark:from-pink-950/20 dark:to-purple-950/20 rounded-lg p-4 mb-4 border border-pink-200 dark:border-pink-800">
+                    <div className="flex items-start gap-3">
+                        <div className="w-12 h-12 bg-pink-500 rounded-lg flex items-center justify-center">
+                            <Calendar className="w-6 h-6 text-white" />
+                        </div>
+                        <div className="flex-1">
+                            <h4 className="font-semibold text-pink-900 dark:text-pink-100 mb-1">{post.event.title}</h4>
+                            <div className="space-y-1 text-sm text-pink-700 dark:text-pink-300">
+                                <div className="flex items-center gap-2">
+                                    <Clock className="w-3 h-3" />
+                                    <span>{post.event.date} at {post.event.time}</span>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <MapPin className="w-3 h-3" />
+                                    <span>{post.event.location}</span>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <Users className="w-3 h-3" />
+                                    <span>{post.event.attendees} attending</span>
+                                </div>
+                            </div>
+                            <Button size="sm" className="mt-3 bg-pink-500 hover:bg-pink-600">
+                                Interested
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
 
-                                {/* Post Header */}
-                                <div className="flex items-center justify-between mb-3">
-                                    <div className="flex items-center space-x-3">
-                                        <Avatar className="w-10 h-10">
-                                            <AvatarFallback className={`text-white text-sm ${post.isCirclePost
-                                                ? 'bg-gradient-to-r from-indigo-500 to-purple-500'
-                                                : 'bg-gradient-to-r from-blue-500 to-purple-500'
+        // Achievement content
+        if (post.type === 'achievement' && post.achievement) {
+            return (
+                <div className="bg-gradient-to-r from-amber-50 to-yellow-50 dark:from-amber-950/20 dark:to-yellow-950/20 rounded-lg p-4 mb-4 border border-amber-200 dark:border-amber-800">
+                    <div className="flex items-center gap-3">
+                        <div className="text-2xl">{post.achievement.badge}</div>
+                        <div>
+                            <h4 className="font-semibold text-amber-900 dark:text-amber-100">{post.achievement.title}</h4>
+                            <p className="text-sm text-amber-700 dark:text-amber-300">from {post.achievement.organization}</p>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        // Marketplace content
+        if (post.type === 'marketplace' && post.marketplace) {
+            return (
+                <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-950/20 dark:to-emerald-950/20 rounded-lg p-4 mb-4 border border-green-200 dark:border-green-800">
+                    <div className="flex items-center justify-between">
+                        <div>
+                            <div className="text-2xl font-bold text-green-600">{post.marketplace.price}</div>
+                            <div className="text-sm text-green-700 dark:text-green-300">
+                                {post.marketplace.condition} • {post.marketplace.category}
+                                {post.marketplace.negotiable && ' • Negotiable'}
+                            </div>
+                        </div>
+                        <Button size="sm" className="bg-green-500 hover:bg-green-600">
+                            Contact Seller
+                        </Button>
+                    </div>
+                </div>
+            );
+        }
+
+        return null;
+    };
+
+    return (
+        <PageLayout>
+            <div className="max-w-4xl mx-auto px-4 py-6">
+                {/* Header */}
+                <div className="text-center mb-8">
+                    <h1 className="text-4xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent mb-4">
+                        Community Feeds
+                    </h1>
+                    <p className="text-muted-foreground text-lg">
+                        Discover what&apos;s happening in the BIT community
+                    </p>
+                </div>
+
+                {/* Filters and Search */}
+                <Card className="mb-8 p-6">
+                    <div className="space-y-4">
+                        {/* Search */}
+                        <div className="relative">
+                            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5" />
+                            <Input
+                                placeholder="Search posts, users, or content..."
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                                className="pl-10"
+                            />
+                        </div>
+
+                        {/* Filter Tabs */}
+                        <div className="flex flex-wrap gap-2">
+                            {postTypes.map((type) => {
+                                const Icon = type.icon;
+                                return (
+                                    <Button
+                                        key={type.id}
+                                        variant={activeFilter === type.id ? 'default' : 'outline'}
+                                        size="sm"
+                                        onClick={() => setActiveFilter(type.id)}
+                                        className="flex items-center gap-2"
+                                    >
+                                        <Icon className="w-4 h-4" />
+                                        {type.label}
+                                    </Button>
+                                );
+                            })}
+                        </div>
+
+                        {/* Sort Options */}
+                        <div className="flex items-center justify-between">
+                            <div className="text-sm text-muted-foreground">
+                                {filteredPosts.length} posts found
+                            </div>
+                            <select
+                                value={sortBy}
+                                onChange={(e) => setSortBy(e.target.value)}
+                                className="text-sm border rounded-lg px-3 py-1 bg-background"
+                            >
+                                <option value="recent">Most Recent</option>
+                                <option value="popular">Most Popular</option>
+                                <option value="discussed">Most Discussed</option>
+                                <option value="views">Most Viewed</option>
+                            </select>
+                        </div>
+                    </div>
+                </Card>
+
+                {/* Posts Feed */}
+                <div className="space-y-6">
+                    {filteredPosts.map(post => (
+                        <Card key={post.id} className="overflow-hidden hover:shadow-lg transition-all duration-300">
+                            {/* Post Header */}
+                            <div className="p-6 pb-4">
+                                <div className="flex items-center justify-between mb-4">
+                                    <div className="flex items-center gap-3">
+                                        <Avatar className="w-12 h-12">
+                                            <div className={`w-full h-full rounded-full flex items-center justify-center text-white font-semibold ${post.isClub ? 'bg-gradient-to-r from-purple-500 to-pink-500' : 'bg-gradient-to-r from-blue-500 to-purple-500'
                                                 }`}>
                                                 {post.avatar}
-                                            </AvatarFallback>
+                                            </div>
                                         </Avatar>
-                                        <div className="flex-1 min-w-0">
-                                            <div className="flex items-center space-x-2">
-                                                <h4 className="font-semibold text-sm truncate">{post.author}</h4>
-                                                {post.verified && (
-                                                    <div className="w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
+                                        <div className="flex-1">
+                                            <div className="flex items-center gap-2">
+                                                <button
+                                                    onClick={() => router.push(`/profile/${post.author.toLowerCase().replace(' ', '')}`)}
+                                                    className="font-semibold hover:text-blue-600 transition-colors cursor-pointer"
+                                                >
+                                                    {post.author}
+                                                </button>
+                                                {post.isVerified && (
+                                                    <div className="w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
                                                         <span className="text-xs text-white">✓</span>
                                                     </div>
                                                 )}
-                                                {/* K-Batch Badge */}
-                                                <KBatchBadge kBatch={post.kBatch} size="sm" />
+                                                {!post.isAnonymous && <KBatchBadge kBatch={post.kBatch} size="sm" />}
+                                                {post.isClub && <Badge variant="secondary" className="text-xs">Official</Badge>}
+                                                {renderPostTypeIndicator(post)}
                                             </div>
-                                            <div className="flex items-center space-x-2 text-xs text-muted-foreground">
-                                                <Badge variant="outline" className="text-xs px-1 py-0">
-                                                    {post.branch}
-                                                </Badge>
-                                                <span>•</span>
+                                            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                                <Clock className="w-3 h-3" />
                                                 <span>{post.time}</span>
+                                                <Eye className="w-3 h-3 ml-2" />
+                                                <span>{post.views}</span>
+                                                {post.location && (
+                                                    <>
+                                                        <MapPin className="w-3 h-3 ml-2" />
+                                                        <span>{post.location}</span>
+                                                    </>
+                                                )}
                                             </div>
                                         </div>
                                     </div>
-                                    <Button variant="ghost" size="icon" className="w-8 h-8">
-                                        <MoreHorizontal className="w-4 h-4" />
+                                    <Button variant="ghost" size="icon">
+                                        <MoreVertical className="w-4 h-4" />
                                     </Button>
                                 </div>
 
-                                {/* Post Content with Rich Text */}
+                                {/* Post Content */}
                                 <div className="mb-4">
-                                    <RichText 
-                                        content={post.content} 
-                                        className="leading-relaxed text-sm"
+                                    <RichText
+                                        content={post.content}
+                                        className="leading-relaxed"
                                         onHashtagClick={(hashtag) => {
-                                            toast({
-                                                title: `Hashtag clicked: ${hashtag}`,
-                                                description: `Searching for posts with ${hashtag}`,
-                                                type: "info",
-                                                duration: 2000,
-                                            });
+                                            router.push(`/hashtags?tag=${hashtag}`);
                                         }}
                                         onMentionClick={(username) => {
-                                            toast({
-                                                title: `@${username}`,
-                                                description: `Viewing ${username}'s profile`,
-                                                type: "info",
-                                                duration: 2000,
-                                            });
-                                            // Navigate to user profile
-                                            window.location.href = `/profile/${username}`;
+                                            router.push(`/profile/${username}`);
                                         }}
                                     />
                                 </div>
 
+                                {/* Special Content */}
+                                {renderSpecialContent(post)}
+
                                 {/* Media Content */}
                                 {post.media && post.media.length > 0 && (
                                     <div className="mb-4">
-                                        <MediaGrid 
+                                        <MediaGrid
                                             mediaItems={post.media}
                                             className="rounded-lg overflow-hidden"
-                                            onMediaClick={(media) => {
-                                                toast({
-                                                    title: "Media opened",
-                                                    description: media.caption || "Viewing media",
-                                                    type: "info",
-                                                    duration: 2000,
-                                                });
-                                            }}
                                         />
                                     </div>
                                 )}
+                            </div>
 
-                                {/* Post Actions */}
-                                <div className="flex items-center justify-between pt-3 border-t border-border/50">
-                                    <div className="flex items-center space-x-4">
-                                        <Button
-                                            variant="ghost"
-                                            size="sm"
-                                            className={`transition-colors btn-scale text-xs h-8 px-2 ${likedPosts.has(post.id) ? 'text-red-500' : 'text-muted-foreground hover:text-red-500'}`}
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                handleLike(post.id);
-                                            }}
+                            {/* Post Actions */}
+                            <div className="px-6 py-4 border-t bg-gray-50/50 dark:bg-gray-900/50">
+                                <div className="flex items-center justify-between">
+                                    <div className="flex items-center gap-6">
+                                        <button
+                                            onClick={() => handleLike(post.id)}
+                                            className={`flex items-center gap-2 transition-colors ${likedPosts.has(post.id)
+                                                ? 'text-red-500 hover:text-red-600'
+                                                : 'text-muted-foreground hover:text-red-500'
+                                                }`}
                                         >
-                                            <Heart className={`w-4 h-4 mr-1 ${likedPosts.has(post.id) ? 'fill-current' : ''}`} />
-                                            {post.likes + (likedPosts.has(post.id) ? 1 : 0)}
-                                        </Button>
-                                        <Button
-                                            variant="ghost"
-                                            size="sm"
-                                            className="text-muted-foreground hover:text-blue-500 btn-scale text-xs h-8 px-2"
-                                            onClick={(e) => e.stopPropagation()}
-                                        >
-                                            <MessageCircle className="w-4 h-4 mr-1" />
-                                            {post.comments}
-                                        </Button>
-                                        <Button
-                                            variant="ghost"
-                                            size="sm"
-                                            className="text-muted-foreground hover:text-green-500 btn-scale text-xs h-8 px-2"
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                handleShare(post);
-                                            }}
-                                        >
-                                            <Share2 className="w-4 h-4 mr-1" />
-                                            Share
-                                        </Button>
+                                            <Heart className={`w-5 h-5 ${likedPosts.has(post.id) ? 'fill-current' : ''}`} />
+                                            <span className="font-medium">{post.likes + (likedPosts.has(post.id) ? 1 : 0)}</span>
+                                        </button>
+
+                                        <button className="flex items-center gap-2 text-muted-foreground hover:text-blue-500 transition-colors">
+                                            <MessageCircle className="w-5 h-5" />
+                                            <span className="font-medium">{post.comments}</span>
+                                        </button>
+
+                                        <button className="flex items-center gap-2 text-muted-foreground hover:text-green-500 transition-colors">
+                                            <Share2 className="w-5 h-5" />
+                                            <span className="font-medium">{post.shares}</span>
+                                        </button>
                                     </div>
-                                    <Button
-                                        variant="ghost"
-                                        size="icon"
-                                        className={`btn-scale w-8 h-8 ${bookmarkedPosts.has(post.id) ? 'text-yellow-500' : 'text-muted-foreground hover:text-yellow-500'}`}
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            handleBookmark(post.id);
-                                        }}
+
+                                    <button
+                                        onClick={() => handleBookmark(post.id)}
+                                        className={`transition-colors ${bookmarkedPosts.has(post.id)
+                                            ? 'text-yellow-500'
+                                            : 'text-muted-foreground hover:text-yellow-500'
+                                            }`}
                                     >
-                                        <Bookmark className={`w-4 h-4 ${bookmarkedPosts.has(post.id) ? 'fill-current' : ''}`} />
-                                    </Button>
+                                        <Bookmark className={`w-5 h-5 ${bookmarkedPosts.has(post.id) ? 'fill-current' : ''}`} />
+                                    </button>
                                 </div>
-
-                                {/* Circle Post Action */}
-                                {post.isCirclePost && (
-                                    <div className="mt-3 pt-3 border-t border-indigo-200 dark:border-indigo-800">
-                                        <div className="flex items-center justify-between">
-                                            <div className="text-xs text-muted-foreground">
-                                                💡 From Circle community
-                                            </div>
-                                            <Button
-                                                size="sm"
-                                                className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 btn-scale text-xs h-7"
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    window.location.href = '/circles';
-                                                }}
-                                            >
-                                                <Users className="w-3 h-3 mr-1" />
-                                                Join
-                                            </Button>
-                                        </div>
-                                    </div>
-                                )}
-                            </CardContent>
+                            </div>
                         </Card>
                     ))}
                 </div>
-            </div>
 
-            {/* Bottom Navigation */}
+                {filteredPosts.length === 0 && (
+                    <Card className="p-12 text-center">
+                        <Search className="w-16 h-16 text-muted-foreground/30 mx-auto mb-4" />
+                        <h3 className="text-lg font-medium mb-2">No posts found</h3>
+                        <p className="text-muted-foreground">
+                            Try adjusting your filters or search terms
+                        </p>
+                    </Card>
+                )}
+            </div>
             <BottomNavigation currentPage="feeds" />
-        </div>
+        </PageLayout>
     );
 }

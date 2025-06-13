@@ -423,8 +423,8 @@ export default function UserProfilePage() {
                     <button
                       onClick={() => setActiveTab('posts')}
                       className={`text-sm font-medium pb-2 border-b-2 transition-colors ${activeTab === 'posts'
-                          ? 'border-blue-500 text-blue-600'
-                          : 'border-transparent text-muted-foreground hover:text-foreground'
+                        ? 'border-blue-500 text-blue-600'
+                        : 'border-transparent text-muted-foreground hover:text-foreground'
                         }`}
                     >
                       Posts
@@ -432,8 +432,8 @@ export default function UserProfilePage() {
                     <button
                       onClick={() => setActiveTab('media')}
                       className={`text-sm font-medium pb-2 border-b-2 transition-colors ${activeTab === 'media'
-                          ? 'border-blue-500 text-blue-600'
-                          : 'border-transparent text-muted-foreground hover:text-foreground'
+                        ? 'border-blue-500 text-blue-600'
+                        : 'border-transparent text-muted-foreground hover:text-foreground'
                         }`}
                     >
                       Media
@@ -441,8 +441,8 @@ export default function UserProfilePage() {
                     <button
                       onClick={() => setActiveTab('likes')}
                       className={`text-sm font-medium pb-2 border-b-2 transition-colors ${activeTab === 'likes'
-                          ? 'border-blue-500 text-blue-600'
-                          : 'border-transparent text-muted-foreground hover:text-foreground'
+                        ? 'border-blue-500 text-blue-600'
+                        : 'border-transparent text-muted-foreground hover:text-foreground'
                         }`}
                     >
                       Likes
@@ -568,9 +568,9 @@ export default function UserProfilePage() {
           </div>
         </div>
       </div>
+
+      {/* Bottom Navigation */}
+      <BottomNavigation currentPage="profile" />
     </PageLayout>
-    
-    {/* Bottom Navigation */ }
-  <BottomNavigation currentPage="profile" />
   );
 }

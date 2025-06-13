@@ -5,9 +5,10 @@ import { useRouter } from 'next/navigation';
 import MobileHeader from '@/components/MobileHeader';
 import { Card, CardContent } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
+import { Input } from '@/components/ui/Input';
 import { Avatar, AvatarFallback } from '@/components/ui/Avatar';
 import { Badge } from '@/components/ui/Badge';
-import { MediaGrid } from '@/components/ui/MediaPlayer';
+import { MediaPlayer, MediaGrid } from '@/components/ui/MediaPlayer';
 import { KBatchBadge } from '@/components/ui/KBatchBadge';
 import { RichText } from '@/components/ui/RichText';
 import { useToast } from '@/components/Toast';
@@ -26,13 +27,19 @@ import {
     Camera,
     Video,
     Calendar,
+    Pin,
     Star,
     BarChart3,
+    Play,
+    Image as ImageIcon,
     Hash,
     MapPin,
     Gift,
+    Zap,
+    ThumbsUp,
     EyeOff
 } from 'lucide-react';
+import { PageLayout } from '@/components/PageLayout';
 
 export default function FeedsPage() {
     const router = useRouter();
@@ -58,7 +65,8 @@ export default function FeedsPage() {
             comments: 67,
             shares: 45,
             views: 1200,
-            location: 'Hyderabad, India'
+            location: 'Hyderabad, India',
+            feeling: 'excited'
         },
         {
             id: 2,
@@ -80,7 +88,7 @@ export default function FeedsPage() {
                     type: 'image',
                     url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop',
                     alt: 'Beautiful sunrise from BIT Mesra campus',
-                    caption: 'Sunrise from Main Building'
+                    caption: 'Sunrise from Main Building - Shot on iPhone 14 Pro'
                 }
             ]
         },
@@ -96,7 +104,8 @@ export default function FeedsPage() {
             likes: 89,
             comments: 45,
             shares: 12,
-            views: 780
+            views: 780,
+            mood: 'anxious'
         },
         {
             id: 4,
@@ -117,7 +126,7 @@ export default function FeedsPage() {
                     type: 'video',
                     url: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4',
                     thumbnail: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800&h=600&fit=crop',
-                    caption: 'Late night guitar session'
+                    caption: 'Late night guitar session in hostel common room'
                 }
             ]
         },
@@ -140,7 +149,8 @@ export default function FeedsPage() {
                     { text: 'Saturday', votes: 45, percentage: 65 },
                     { text: 'Sunday', votes: 24, percentage: 35 }
                 ],
-                totalVotes: 69
+                totalVotes: 69,
+                hasVoted: false
             }
         },
         {
@@ -216,22 +226,27 @@ export default function FeedsPage() {
     ];
 
     const postTypes = [
-        { id: 'all', label: 'All', icon: Hash },
+        { id: 'all', label: 'All Posts', icon: Hash },
         { id: 'text', label: 'Text', icon: MessageCircle },
         { id: 'image', label: 'Photos', icon: Camera },
         { id: 'video', label: 'Videos', icon: Video },
-        { id: 'confession', label: 'Anonymous', icon: EyeOff },
+        { id: 'confession', label: 'Confessions', icon: EyeOff },
         { id: 'poll', label: 'Polls', icon: BarChart3 },
         { id: 'event', label: 'Events', icon: Calendar },
-        { id: 'marketplace', label: 'Market', icon: Gift }
+        { id: 'marketplace', label: 'Marketplace', icon: Gift }
     ];
 
     useEffect(() => {
         setPosts(mockPosts);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const filteredPosts = posts.filter(post => {
-        return activeFilter === 'all' || post.type === activeFilter;
+        const matchesFilter = activeFilter === 'all' || post.type === activeFilter;
+        const matchesSearch = searchTerm === '' ||
+            post.content.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            post.author.toLowerCase().includes(searchTerm.toLowerCase());
+        return matchesFilter && matchesSearch;
     }).sort((a, b) => {
         switch (sortBy) {
             case 'popular': return b.likes - a.likes;
@@ -264,12 +279,12 @@ export default function FeedsPage() {
     const renderPostTypeIndicator = (post) => {
         const getTypeInfo = () => {
             switch (post.type) {
-                case 'confession': return { icon: EyeOff, color: 'bg-gray-500', label: 'Anonymous' };
+                case 'confession': return { icon: EyeOff, color: 'bg-gray-500', label: 'Confession' };
                 case 'poll': return { icon: BarChart3, color: 'bg-orange-500', label: 'Poll' };
                 case 'event': return { icon: Calendar, color: 'bg-pink-500', label: 'Event' };
                 case 'video': return { icon: Video, color: 'bg-purple-500', label: 'Video' };
                 case 'image': return { icon: Camera, color: 'bg-green-500', label: 'Photo' };
-                case 'marketplace': return { icon: Gift, color: 'bg-yellow-500', label: 'Market' };
+                case 'marketplace': return { icon: Gift, color: 'bg-yellow-500', label: 'Marketplace' };
                 case 'achievement': return { icon: Star, color: 'bg-amber-500', label: 'Achievement' };
                 default: return null;
             }
@@ -278,8 +293,12 @@ export default function FeedsPage() {
         const typeInfo = getTypeInfo();
         if (!typeInfo) return null;
 
+        const Icon = typeInfo.icon;
         return (
-            <div className={`w-2 h-2 rounded-full ${typeInfo.color}`}></div>
+            <Badge variant="secondary" className="text-xs">
+                <div className={`w-2 h-2 rounded-full ${typeInfo.color} mr-1`}></div>
+                {typeInfo.label}
+            </Badge>
         );
     };
 
@@ -287,23 +306,23 @@ export default function FeedsPage() {
         // Poll content
         if (post.type === 'poll' && post.poll) {
             return (
-                <div className="bg-muted/50 rounded-xl p-4 mb-3">
-                    <h4 className="font-medium mb-3 text-sm">{post.poll.question}</h4>
+                <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4 mb-4">
+                    <h4 className="font-medium mb-3">{post.poll.question}</h4>
                     <div className="space-y-2">
                         {post.poll.options.map((option, index) => (
                             <div key={index} className="relative">
-                                <div className="flex items-center justify-between p-2 bg-background rounded-lg cursor-pointer hover:bg-muted transition-colors">
-                                    <span className="text-sm font-medium">{option.text}</span>
-                                    <span className="text-xs text-muted-foreground">{option.votes}</span>
+                                <div className="flex items-center justify-between p-3 bg-white dark:bg-gray-800 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                    <span className="font-medium">{option.text}</span>
+                                    <span className="text-sm text-muted-foreground">{option.votes} votes</span>
                                 </div>
                                 <div
-                                    className="absolute bottom-0 left-0 h-0.5 bg-blue-500 rounded-full transition-all"
+                                    className="absolute bottom-0 left-0 h-1 bg-blue-500 rounded-b-lg transition-all"
                                     style={{ width: `${option.percentage}%` }}
                                 ></div>
                             </div>
                         ))}
                     </div>
-                    <p className="text-xs text-muted-foreground mt-2">{post.poll.totalVotes} votes</p>
+                    <p className="text-sm text-muted-foreground mt-2">{post.poll.totalVotes} total votes</p>
                 </div>
             );
         }
@@ -311,28 +330,28 @@ export default function FeedsPage() {
         // Event content
         if (post.type === 'event' && post.event) {
             return (
-                <div className="bg-gradient-to-r from-pink-50 to-purple-50 dark:from-pink-950/20 dark:to-purple-950/20 rounded-xl p-4 mb-3 border border-pink-200 dark:border-pink-800">
+                <div className="bg-gradient-to-r from-pink-50 to-purple-50 dark:from-pink-950/20 dark:to-purple-950/20 rounded-lg p-4 mb-4 border border-pink-200 dark:border-pink-800">
                     <div className="flex items-start gap-3">
-                        <div className="w-10 h-10 bg-pink-500 rounded-lg flex items-center justify-center flex-shrink-0">
-                            <Calendar className="w-5 h-5 text-white" />
+                        <div className="w-12 h-12 bg-pink-500 rounded-lg flex items-center justify-center">
+                            <Calendar className="w-6 h-6 text-white" />
                         </div>
-                        <div className="flex-1 min-w-0">
-                            <h4 className="font-semibold text-pink-900 dark:text-pink-100 text-sm mb-1">{post.event.title}</h4>
-                            <div className="space-y-1 text-xs text-pink-700 dark:text-pink-300">
-                                <div className="flex items-center gap-1">
+                        <div className="flex-1">
+                            <h4 className="font-semibold text-pink-900 dark:text-pink-100 mb-1">{post.event.title}</h4>
+                            <div className="space-y-1 text-sm text-pink-700 dark:text-pink-300">
+                                <div className="flex items-center gap-2">
                                     <Clock className="w-3 h-3" />
                                     <span>{post.event.date} at {post.event.time}</span>
                                 </div>
-                                <div className="flex items-center gap-1">
+                                <div className="flex items-center gap-2">
                                     <MapPin className="w-3 h-3" />
                                     <span>{post.event.location}</span>
                                 </div>
-                                <div className="flex items-center gap-1">
+                                <div className="flex items-center gap-2">
                                     <Users className="w-3 h-3" />
                                     <span>{post.event.attendees} attending</span>
                                 </div>
                             </div>
-                            <Button size="sm" className="mt-2 h-7 text-xs bg-pink-500 hover:bg-pink-600">
+                            <Button size="sm" className="mt-3 bg-pink-500 hover:bg-pink-600">
                                 Interested
                             </Button>
                         </div>
@@ -344,12 +363,12 @@ export default function FeedsPage() {
         // Achievement content
         if (post.type === 'achievement' && post.achievement) {
             return (
-                <div className="bg-gradient-to-r from-amber-50 to-yellow-50 dark:from-amber-950/20 dark:to-yellow-950/20 rounded-xl p-3 mb-3 border border-amber-200 dark:border-amber-800">
+                <div className="bg-gradient-to-r from-amber-50 to-yellow-50 dark:from-amber-950/20 dark:to-yellow-950/20 rounded-lg p-4 mb-4 border border-amber-200 dark:border-amber-800">
                     <div className="flex items-center gap-3">
-                        <div className="text-xl">{post.achievement.badge}</div>
+                        <div className="text-2xl">{post.achievement.badge}</div>
                         <div>
-                            <h4 className="font-semibold text-amber-900 dark:text-amber-100 text-sm">{post.achievement.title}</h4>
-                            <p className="text-xs text-amber-700 dark:text-amber-300">from {post.achievement.organization}</p>
+                            <h4 className="font-semibold text-amber-900 dark:text-amber-100">{post.achievement.title}</h4>
+                            <p className="text-sm text-amber-700 dark:text-amber-300">from {post.achievement.organization}</p>
                         </div>
                     </div>
                 </div>
@@ -359,17 +378,17 @@ export default function FeedsPage() {
         // Marketplace content
         if (post.type === 'marketplace' && post.marketplace) {
             return (
-                <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-950/20 dark:to-emerald-950/20 rounded-xl p-3 mb-3 border border-green-200 dark:border-green-800">
+                <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-950/20 dark:to-emerald-950/20 rounded-lg p-4 mb-4 border border-green-200 dark:border-green-800">
                     <div className="flex items-center justify-between">
                         <div>
-                            <div className="text-xl font-bold text-green-600">{post.marketplace.price}</div>
-                            <div className="text-xs text-green-700 dark:text-green-300">
+                            <div className="text-2xl font-bold text-green-600">{post.marketplace.price}</div>
+                            <div className="text-sm text-green-700 dark:text-green-300">
                                 {post.marketplace.condition} • {post.marketplace.category}
                                 {post.marketplace.negotiable && ' • Negotiable'}
                             </div>
                         </div>
-                        <Button size="sm" className="h-7 text-xs bg-green-500 hover:bg-green-600">
-                            Contact
+                        <Button size="sm" className="bg-green-500 hover:bg-green-600">
+                            Contact Seller
                         </Button>
                     </div>
                 </div>
@@ -380,198 +399,200 @@ export default function FeedsPage() {
     };
 
     return (
-        <div className="min-h-screen bg-background">
-            <MobileHeader title="Feeds" />
-            
-            {/* Filters - Mobile First */}
-            <div className="px-4 py-3 bg-background/95 backdrop-blur-sm border-b sticky top-14 z-30">
-                <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide pb-2">
-                    {postTypes.map((type) => (
-                        <Button
-                            key={type.id}
-                            variant={activeFilter === type.id ? "default" : "outline"}
-                            size="sm"
-                            className="whitespace-nowrap flex-shrink-0 h-8 px-3"
-                            onClick={() => setActiveFilter(type.id)}
-                        >
-                            <type.icon className="w-3 h-3 mr-1" />
-                            {type.label}
-                        </Button>
-                    ))}
+        <PageLayout>
+            <div className="max-w-4xl mx-auto px-4 py-6">
+                {/* Header */}
+                <div className="text-center mb-8">
+                    <h1 className="text-4xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent mb-4">
+                        Community Feeds
+                    </h1>
+                    <p className="text-muted-foreground text-lg">
+                        Discover what&apos;s happening in the BIT community
+                    </p>
                 </div>
-                
-                {/* Sort Options */}
-                <div className="flex items-center gap-2 mt-2">
-                    <Filter className="w-4 h-4 text-muted-foreground" />
-                    <div className="flex gap-1">
-                        {[
-                            { id: 'recent', label: 'Recent', icon: Clock },
-                            { id: 'popular', label: 'Popular', icon: TrendingUp },
-                            { id: 'discussed', label: 'Discussed', icon: MessageCircle },
-                        ].map((sort) => (
-                            <Button
-                                key={sort.id}
-                                variant={sortBy === sort.id ? "secondary" : "ghost"}
-                                size="sm"
-                                className="h-7 px-2 text-xs"
-                                onClick={() => setSortBy(sort.id)}
-                            >
-                                <sort.icon className="w-3 h-3 mr-1" />
-                                {sort.label}
-                            </Button>
-                        ))}
-                    </div>
-                </div>
-            </div>
 
-            {/* Posts Feed */}
-            <div className="pb-20">
-                {filteredPosts.map((post) => (
-                    <Card key={post.id} className="mb-1 rounded-none border-x-0 border-t-0 last:border-b-0 shadow-none">
-                        <CardContent className="p-0">
+                {/* Filters and Search */}
+                <Card className="mb-8 p-6">
+                    <div className="space-y-4">
+                        {/* Search */}
+                        <div className="relative">
+                            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5" />
+                            <Input
+                                placeholder="Search posts, users, or content..."
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                                className="pl-10"
+                            />
+                        </div>
+
+                        {/* Filter Tabs */}
+                        <div className="flex flex-wrap gap-2">
+                            {postTypes.map((type) => {
+                                const Icon = type.icon;
+                                return (
+                                    <Button
+                                        key={type.id}
+                                        variant={activeFilter === type.id ? 'default' : 'outline'}
+                                        size="sm"
+                                        onClick={() => setActiveFilter(type.id)}
+                                        className="flex items-center gap-2"
+                                    >
+                                        <Icon className="w-4 h-4" />
+                                        {type.label}
+                                    </Button>
+                                );
+                            })}
+                        </div>
+
+                        {/* Sort Options */}
+                        <div className="flex items-center justify-between">
+                            <div className="text-sm text-muted-foreground">
+                                {filteredPosts.length} posts found
+                            </div>
+                            <select
+                                value={sortBy}
+                                onChange={(e) => setSortBy(e.target.value)}
+                                className="text-sm border rounded-lg px-3 py-1 bg-background"
+                            >
+                                <option value="recent">Most Recent</option>
+                                <option value="popular">Most Popular</option>
+                                <option value="discussed">Most Discussed</option>
+                                <option value="views">Most Viewed</option>
+                            </select>
+                        </div>
+                    </div>
+                </Card>
+
+                {/* Posts Feed */}
+                <div className="space-y-6">
+                    {filteredPosts.map(post => (
+                        <Card key={post.id} className="overflow-hidden hover:shadow-lg transition-all duration-300">
                             {/* Post Header */}
-                            <div className="flex items-start justify-between p-4 pb-3">
-                                <div className="flex items-start gap-3 flex-1">
-                                    <Avatar className="w-10 h-10 flex-shrink-0">
-                                        <AvatarFallback className={
-                                            post.isAnonymous
-                                                ? "bg-gray-500"
-                                                : "bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold"
-                                        }>
-                                            {post.isAnonymous ? '?' : post.avatar}
-                                        </AvatarFallback>
-                                    </Avatar>
-                                    <div className="flex-1 min-w-0">
-                                        <div className="flex items-center gap-2 flex-wrap">
-                                            <button
-                                                onClick={() => !post.isAnonymous && router.push(`/profile/${post.author.toLowerCase().replace(' ', '')}`)}
-                                                className="font-semibold text-sm hover:text-blue-600 transition-colors truncate"
-                                            >
-                                                {post.isAnonymous ? 'Anonymous' : post.author}
-                                            </button>
-                                            {post.isVerified && (
-                                                <div className="w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
-                                                    <span className="text-xs text-white">✓</span>
-                                                </div>
-                                            )}
-                                            {!post.isAnonymous && <KBatchBadge kBatch={post.kBatch} size="xs" />}
-                                            {post.isClub && <Badge variant="secondary" className="text-xs">Official</Badge>}
-                                            {renderPostTypeIndicator(post)}
-                                        </div>
-                                        <div className="flex items-center gap-2 text-xs text-muted-foreground mt-1">
-                                            <Clock className="w-3 h-3" />
-                                            <span>{post.time}</span>
-                                            {post.location && (
-                                                <>
-                                                    <span>•</span>
-                                                    <MapPin className="w-3 h-3" />
-                                                    <span className="truncate max-w-20">{post.location}</span>
-                                                </>
-                                            )}
+                            <div className="p-6 pb-4">
+                                <div className="flex items-center justify-between mb-4">
+                                    <div className="flex items-center gap-3">
+                                        <Avatar className="w-12 h-12">
+                                            <div className={`w-full h-full rounded-full flex items-center justify-center text-white font-semibold ${post.isClub ? 'bg-gradient-to-r from-purple-500 to-pink-500' : 'bg-gradient-to-r from-blue-500 to-purple-500'
+                                                }`}>
+                                                {post.avatar}
+                                            </div>
+                                        </Avatar>
+                                        <div className="flex-1">
+                                            <div className="flex items-center gap-2">
+                                                <button
+                                                    onClick={() => router.push(`/profile/${post.author.toLowerCase().replace(' ', '')}`)}
+                                                    className="font-semibold hover:text-blue-600 transition-colors cursor-pointer"
+                                                >
+                                                    {post.author}
+                                                </button>
+                                                {post.isVerified && (
+                                                    <div className="w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
+                                                        <span className="text-xs text-white">✓</span>
+                                                    </div>
+                                                )}
+                                                {!post.isAnonymous && <KBatchBadge kBatch={post.kBatch} size="sm" />}
+                                                {post.isClub && <Badge variant="secondary" className="text-xs">Official</Badge>}
+                                                {renderPostTypeIndicator(post)}
+                                            </div>
+                                            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                                <Clock className="w-3 h-3" />
+                                                <span>{post.time}</span>
+                                                <Eye className="w-3 h-3 ml-2" />
+                                                <span>{post.views}</span>
+                                                {post.location && (
+                                                    <>
+                                                        <MapPin className="w-3 h-3 ml-2" />
+                                                        <span>{post.location}</span>
+                                                    </>
+                                                )}
+                                            </div>
                                         </div>
                                     </div>
+                                    <Button variant="ghost" size="icon">
+                                        <MoreVertical className="w-4 h-4" />
+                                    </Button>
                                 </div>
-                                <Button variant="ghost" size="icon" className="h-8 w-8 flex-shrink-0">
-                                    <MoreVertical className="w-4 h-4" />
-                                </Button>
-                            </div>
 
-                            {/* Post Content */}
-                            <div className="px-4 pb-3">
-                                <RichText
-                                    content={post.content}
-                                    className="leading-relaxed text-sm"
-                                />
-                            </div>
-
-                            {/* Special Content */}
-                            <div className="px-4">
-                                {renderSpecialContent(post)}
-                            </div>
-
-                            {/* Media Content */}
-                            {post.media && post.media.length > 0 && (
-                                <div className="px-4 pb-3">
-                                    <MediaGrid
-                                        mediaItems={post.media}
-                                        className="rounded-xl overflow-hidden"
+                                {/* Post Content */}
+                                <div className="mb-4">
+                                    <RichText
+                                        content={post.content}
+                                        className="leading-relaxed"
+                                        onHashtagClick={(hashtag) => {
+                                            router.push(`/hashtags?tag=${hashtag}`);
+                                        }}
+                                        onMentionClick={(username) => {
+                                            router.push(`/profile/${username}`);
+                                        }}
                                     />
                                 </div>
-                            )}
 
-                            {/* Post Stats */}
-                            <div className="px-4 py-2 flex items-center gap-4 text-xs text-muted-foreground border-t">
-                                <div className="flex items-center gap-1">
-                                    <Eye className="w-3 h-3" />
-                                    <span>{post.views}</span>
-                                </div>
-                                <span>•</span>
-                                <span>{post.likes + (likedPosts.has(post.id) ? 1 : 0)} likes</span>
-                                <span>•</span>
-                                <span>{post.comments} comments</span>
+                                {/* Special Content */}
+                                {renderSpecialContent(post)}
+
+                                {/* Media Content */}
+                                {post.media && post.media.length > 0 && (
+                                    <div className="mb-4">
+                                        <MediaGrid
+                                            mediaItems={post.media}
+                                            className="rounded-lg overflow-hidden"
+                                        />
+                                    </div>
+                                )}
                             </div>
 
                             {/* Post Actions */}
-                            <div className="px-4 py-3 border-t">
+                            <div className="px-6 py-4 border-t bg-gray-50/50 dark:bg-gray-900/50">
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center gap-6">
                                         <button
                                             onClick={() => handleLike(post.id)}
-                                            className={`flex items-center gap-2 transition-colors ${
-                                                likedPosts.has(post.id)
-                                                    ? 'text-red-500'
-                                                    : 'text-muted-foreground hover:text-red-500'
-                                            }`}
+                                            className={`flex items-center gap-2 transition-colors ${likedPosts.has(post.id)
+                                                ? 'text-red-500 hover:text-red-600'
+                                                : 'text-muted-foreground hover:text-red-500'
+                                                }`}
                                         >
                                             <Heart className={`w-5 h-5 ${likedPosts.has(post.id) ? 'fill-current' : ''}`} />
+                                            <span className="font-medium">{post.likes + (likedPosts.has(post.id) ? 1 : 0)}</span>
                                         </button>
 
-                                        <button 
-                                            className="flex items-center gap-2 text-muted-foreground hover:text-blue-500 transition-colors"
-                                            onClick={() => router.push(`/post/${post.id}`)}
-                                        >
+                                        <button className="flex items-center gap-2 text-muted-foreground hover:text-blue-500 transition-colors">
                                             <MessageCircle className="w-5 h-5" />
+                                            <span className="font-medium">{post.comments}</span>
                                         </button>
 
                                         <button className="flex items-center gap-2 text-muted-foreground hover:text-green-500 transition-colors">
                                             <Share2 className="w-5 h-5" />
+                                            <span className="font-medium">{post.shares}</span>
                                         </button>
                                     </div>
 
                                     <button
                                         onClick={() => handleBookmark(post.id)}
-                                        className={`transition-colors ${
-                                            bookmarkedPosts.has(post.id)
-                                                ? 'text-yellow-500'
-                                                : 'text-muted-foreground hover:text-yellow-500'
-                                        }`}
+                                        className={`transition-colors ${bookmarkedPosts.has(post.id)
+                                            ? 'text-yellow-500'
+                                            : 'text-muted-foreground hover:text-yellow-500'
+                                            }`}
                                     >
                                         <Bookmark className={`w-5 h-5 ${bookmarkedPosts.has(post.id) ? 'fill-current' : ''}`} />
                                     </button>
                                 </div>
                             </div>
-                        </CardContent>
-                    </Card>
-                ))}
+                        </Card>
+                    ))}
+                </div>
 
                 {filteredPosts.length === 0 && (
-                    <div className="p-8 text-center">
-                        <Hash className="w-16 h-16 text-muted-foreground/30 mx-auto mb-4" />
+                    <Card className="p-12 text-center">
+                        <Search className="w-16 h-16 text-muted-foreground/30 mx-auto mb-4" />
                         <h3 className="text-lg font-medium mb-2">No posts found</h3>
-                        <p className="text-muted-foreground text-sm">
-                            Try adjusting your filters or create a new post
+                        <p className="text-muted-foreground">
+                            Try adjusting your filters or search terms
                         </p>
-                        <Button 
-                            className="mt-4" 
-                            onClick={() => router.push('/create')}
-                        >
-                            Create Post
-                        </Button>
-                    </div>
+                    </Card>
                 )}
             </div>
-            
             <BottomNavigation currentPage="feeds" />
-        </div>
+        </PageLayout>
     );
 }
