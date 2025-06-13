@@ -489,8 +489,8 @@ export default function SettingsPage() {
                 key={value}
                 onClick={() => setAppSettings(prev => ({ ...prev, theme: value }))}
                 className={`p-4 rounded-lg border-2 transition-all ${appSettings.theme === value
-                    ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
-                    : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
+                  ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
+                  : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
                   }`}
               >
                 <Icon className={`w-6 h-6 mx-auto mb-2 ${appSettings.theme === value ? 'text-blue-500' : 'text-gray-500'
@@ -759,8 +759,8 @@ export default function SettingsPage() {
                       key={section.id}
                       onClick={() => setActiveSection(section.id)}
                       className={`w-full flex items-center gap-3 p-3 rounded-lg text-left transition-colors ${activeSection === section.id
-                          ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300'
-                          : 'hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300'
+                        ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300'
+                        : 'hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300'
                         }`}
                     >
                       <Icon className="w-5 h-5" />
@@ -785,9 +785,9 @@ export default function SettingsPage() {
           </div>
         </div>
       </div>
+      {/* Bottom Navigation */}
+      <BottomNavigation currentPage="settings" />
     </PageLayout>
-    
-    {/* Bottom Navigation */ }
-  <BottomNavigation currentPage="settings" />
+
   );
 }

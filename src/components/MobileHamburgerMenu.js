@@ -122,8 +122,8 @@ export default function MobileHamburgerMenu() {
 
       {/* Sheet Overlay */}
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
-        <SheetContent onClose={() => setIsOpen(false)} className="w-full sm:w-80 p-0">
-          <div className="flex flex-col h-full">
+        <SheetContent side="left" className="w-full h-screen p-0 bg-background border-none">
+          <div className="flex flex-col h-full overflow-hidden">
             {/* Header with User Info */}
             <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white p-6">
               <div className="flex items-center space-x-4">
@@ -181,7 +181,7 @@ export default function MobileHamburgerMenu() {
             </div>
 
             {/* Navigation Menu */}
-            <div className="flex-1 overflow-y-auto">
+            <div className="flex-1 overflow-y-auto max-h-[calc(100vh-240px)] px-2">
               {menuSections.map((section, sectionIndex) => (
                 <div key={section.title} className="py-2">
                   <div className="px-6 py-2">
