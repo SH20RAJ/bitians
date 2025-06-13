@@ -3,6 +3,9 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTheme } from '@/components/ThemeProvider';
+import NotificationCenter from '@/components/NotificationCenter';
+import EnhancedSearch from '@/components/EnhancedSearch';
+import ActivityIndicator from '@/components/ActivityIndicator';
 import {
   Sheet,
   SheetContent,
@@ -101,15 +104,19 @@ export default function MobileHeader({ title = "BITians.org", showSearch = true 
           {/* Actions */}
           <div className="flex items-center gap-2">
             {showSearch && (
-              <Button
-                variant="ghost"
-                size="icon"
-                className="h-9 w-9"
-                onClick={() => router.push('/search')}
-              >
-                <Search className="h-4 w-4" />
-              </Button>
+              <EnhancedSearch />
             )}
+
+            {/* Activity Indicator */}
+            <ActivityIndicator 
+              onClick={() => {
+                // Could open activity modal or navigate to activity page
+                router.push('/activity');
+              }}
+            />
+
+            {/* Notification Center */}
+            <NotificationCenter />
 
             {/* Menu Sheet Trigger */}
             <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>

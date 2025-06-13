@@ -205,13 +205,12 @@ export default function MobileHamburgerMenu() {
                             <span className="font-medium text-sm">{item.label}</span>
                           </div>
                           {item.badge && (
-                            <Badge 
-                              variant={item.badge === 'NEW' ? 'default' : 'secondary'} 
-                              className={`text-xs ${
-                                item.badge === 'NEW' 
-                                  ? 'bg-green-500 text-white' 
+                            <Badge
+                              variant={item.badge === 'NEW' ? 'default' : 'secondary'}
+                              className={`text-xs ${item.badge === 'NEW'
+                                  ? 'bg-green-500 text-white'
                                   : 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300'
-                              }`}
+                                }`}
                             >
                               {item.badge}
                             </Badge>

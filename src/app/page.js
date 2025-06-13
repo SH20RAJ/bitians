@@ -13,6 +13,7 @@ import { useTheme } from '@/components/ThemeProvider';
 import { useToast } from '@/components/Toast';
 import BottomNavigation from '@/components/BottomNavigation';
 import MobileHamburgerMenu from '@/components/MobileHamburgerMenu';
+import ActivityFeed from '@/components/ActivityFeed';
 import {
     Heart,
     MessageCircle,
@@ -821,10 +822,20 @@ export default function HomePage() {
                                 See all posts in the <span className="text-blue-500 cursor-pointer" onClick={() => window.location.href = '/feeds'}>Feeds page</span>
                             </p>
                         </div>
+
+                        {/* Mobile Activity Feed - Visible on mobile, hidden on large screens */}
+                        <div className="lg:hidden mt-8">
+                            <ActivityFeed compact={true} />
+                        </div>
                     </div>
 
                     {/* Right Sidebar */}
                     <div className="lg:col-span-1 space-y-6">
+                        {/* Activity Feed - Hidden on mobile, visible on large screens */}
+                        <div className="hidden lg:block sticky top-20">
+                            <ActivityFeed />
+                        </div>
+
                         {/* Trending */}
                         <Card className="glass card-hover">
                             <CardHeader>

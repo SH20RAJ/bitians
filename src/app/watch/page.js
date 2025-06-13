@@ -13,6 +13,87 @@ import { useToast } from '@/components/Toast';
 import BottomNavigation from '@/components/BottomNavigation';
 import MobileHamburgerMenu from '@/components/MobileHamburgerMenu';
 import {
+    ArrowLeft,
+    Play,
+    Pause,
+    Volume2,
+    VolumeX,
+    MoreVertical,
+    Heart,
+    MessageCircle,
+    Share2,
+    Bookmark,
+    Search,
+    Bell,
+    TrendingUp,
+    Clock,
+    Eye,
+    Users,
+    Filter,
+    Grid3X3,
+    List,
+    Maximize,
+    Minimize,
+    SkipBack,
+    SkipForward,
+    Repeat,
+    Shuffle,
+    ThumbsUp,
+    ThumbsDown,
+    Plus,
+    Check,
+    Star,
+    Flag,
+    Download,
+    Send,
+    Smile,
+    Camera,
+    Mic,
+    Image,
+    Gift,
+    Hash,
+    AtSign,
+    MapPin,
+    Calendar,
+    Settings,
+    UserPlus,
+    Crown,
+    Verified,
+    Zap,
+    Target,
+    Trophy,
+    Sparkles,
+    BookOpen,
+  X,
+  Code,
+  Coffee
+} from 'lucide-react';export default function WatchPage() {
+  const router = useRouter();
+  const { toast } = useToast();
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
+  const [activeTab, setActiveTab] = useState('for-you');
+  const [showComments, setShowComments] = useState(false);
+  const [newComment, setNewComment] = useState('');
+  const [likedVideos, setLikedVideos] = useState(new Set());
+  const [followedUsers, setFollowedUsers] = useState(new Set());
+  const [savedVideos, setSavedVideos] = useState(new Set());
+  const videoRef = useRef(null);  // Enhanced video data following UI/UX principles  const videos = [    {      id: 1,      title: 'Campus Life at BIT Mesra: A Day in Paradise 🌅',      author: {        name: 'Priya Sharma',        username: 'priyasharma_k22',        avatar: 'PS',        kBatch: 'K22',        verified: true,        followers: '12.5K'      },      description: 'Starting my day at 6 AM with a beautiful sunrise from the hostel terrace, then off to classes, library sessions, and ending with friends at the lake. This is what makes BIT Mesra special! ✨',      duration: '2:45',      views: '45.2K',      likes: 3420,      comments: 234,      shares: 156,      timestamp: '2h ago',      thumbnail: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&h=600&fit=crop',      videoUrl: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4',      tags: ['campus', 'lifestyle', 'bitmesra', 'student'],      category: 'Lifestyle',      engagement: 8.5,      trending: true    },    {      id: 2,      title: 'Coding Bootcamp: React.js in 60 Seconds! 🚀',      author: {        name: 'Arjun Patel',        username: 'arjuncode',        avatar: 'AP',        kBatch: 'K21',        verified: true,        followers: '28.3K'      },      description: 'Quick React tutorial covering components, hooks, and state management. Perfect for beginners! Drop your questions in comments 👇',      duration: '1:12',      views: '89.1K',      likes: 5670,      comments: 445,      shares: 234,      timestamp: '4h ago',      thumbnail: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=600&fit=crop',      videoUrl: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_2mb.mp4',      tags: ['coding', 'react', 'tutorial', 'programming'],      category: 'Education',      engagement: 9.2,      trending: false    },    {      id: 3,      title: 'Hostel Food vs Home Food: The Eternal Debate 😂',      author: {        name: 'Sneha Reddy',        username: 'sneha_foodie',        avatar: 'SR',        kBatch: 'K20',        verified: false,        followers: '8.7K'      },      description: 'POV: You are missing home food but hostel maggi hits different at 2 AM 🍜 Tag someone who relates!',      duration: '0:45',      views: '156.8K',      likes: 12450,      comments: 1234,      shares: 567,      timestamp: '1d ago',      thumbnail: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=600&fit=crop',      videoUrl: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4',      tags: ['food', 'hostel', 'funny', 'relatable'],      category: 'Comedy',      engagement: 9.8,      trending: true    },    {      id: 4,      title: 'Late Night Study Session Vibes 📚✨',      author: {        name: 'Rahul Kumar',        username: 'rahul_studies',        avatar: 'RK',        kBatch: 'K23',        verified: false,        followers: '5.2K'      },      description: 'When you have an exam tomorrow but you are just starting to study 😅 The library at 2 AM hits different though!',      duration: '1:33',      views: '23.4K',      likes: 1890,      comments: 167,      shares: 89,      timestamp: '6h ago',      thumbnail: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&h=600&fit=crop',      videoUrl: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_2mb.mp4',      tags: ['study', 'exam', 'library', 'student'],      category: 'Education',      engagement: 7.8,      trending: false    }  ];  const categories = [    { id: 'for-you', label: 'For You', icon: TrendingUp },    { id: 'following', label: 'Following', icon: Users },    { id: 'education', label: 'Education', icon: BookOpen },    { id: 'lifestyle', label: 'Lifestyle', icon: Heart },    { id: 'comedy', label: 'Comedy', icon: Smile },    { id: 'events', label: 'Events', icon: Calendar }  ];  const currentVideo = videos[currentVideoIndex];  const handleVideoInteraction = (action, videoId) => {    switch (action) {      case 'like':        setLikedVideos(prev => {          const newSet = new Set(prev);          if (newSet.has(videoId)) {            newSet.delete(videoId);            toast({ title: 'Removed from liked videos' });          } else {            newSet.add(videoId);            toast({ title: 'Added to liked videos' });          }          return newSet;        });        break;      case 'save':        setSavedVideos(prev => {          const newSet = new Set(prev);          if (newSet.has(videoId)) {            newSet.delete(videoId);            toast({ title: 'Removed from saved videos' });          } else {            newSet.add(videoId);            toast({ title: 'Video saved' });          }          return newSet;        });        break;      case 'follow':        const authorUsername = videos.find(v => v.id === videoId)?.author.username;        if (authorUsername) {          setFollowedUsers(prev => {            const newSet = new Set(prev);            if (newSet.has(authorUsername)) {              newSet.delete(authorUsername);              toast({ title: 'Unfollowed user' });            } else {              newSet.add(authorUsername);              toast({ title: 'Following user' });            }            return newSet;          });        }        break;    }  };  const handleShare = (video) => {    if (navigator.share) {      navigator.share({        title: video.title,        text: video.description,        url: window.location.href      });    } else {      navigator.clipboard.writeText(window.location.href);      toast({ title: 'Link copied to clipboard!' });    }  };  const togglePlayPause = () => {    setIsPlaying(!isPlaying);  };  const toggleMute = () => {    setIsMuted(!isMuted);  };  const nextVideo = () => {    setCurrentVideoIndex((prev) => (prev + 1) % videos.length);  };  const prevVideo = () => {    setCurrentVideoIndex((prev) => (prev - 1 + videos.length) % videos.length);  };  const submitComment = () => {    if (newComment.trim()) {      toast({ title: 'Comment posted!' });      setNewComment('');      setShowComments(false);    }  };  return (    <div className="min-h-screen bg-black text-white">      {/* Mobile Header */}      <div className="fixed top-0 left-0 right-0 z-50 bg-black/50 backdrop-blur-sm">        <div className="flex items-center justify-between p-4">          <Button            variant="ghost"            size="icon"            onClick={() => router.back()}            className="text-white hover:bg-white/20"          >            <ArrowLeft className="w-5 h-5" />          </Button>          <h1 className="font-bold text-lg">BIT Watch</h1>          <Button            variant="ghost"            size="icon"            className="text-white hover:bg-white/20"          >            <Search className="w-5 h-5" />          </Button>        </div>        {/* Category Tabs */}        <div className="flex space-x-4 px-4 pb-2 overflow-x-auto">          {categories.map((category) => {            const Icon = category.icon;            return (              <Button                key={category.id}                variant={activeTab === category.id ? 'default' : 'ghost'}                size="sm"                onClick={() => setActiveTab(category.id)}                className={`flex items-center space-x-2 whitespace-nowrap ${                  activeTab === category.id                    ? 'bg-white text-black'                    : 'text-white hover:bg-white/20'                }`}              >                <Icon className="w-4 h-4" />                <span>{category.label}</span>              </Button>            );          })}        </div>      </div>      {/* Video Player Area */}      <div className="relative h-screen">        {/* Video Background */}        <div           className="absolute inset-0 bg-cover bg-center"          style={{             backgroundImage: `url(${currentVideo.thumbnail})`,            filter: 'blur(20px)',            transform: 'scale(1.1)'          }}        />                {/* Video Container */}        <div className="relative z-10 h-full flex items-center justify-center">          <div className="w-full max-w-md mx-auto bg-black rounded-lg overflow-hidden">            <div className="aspect-video relative">              <img                src={currentVideo.thumbnail}                alt={currentVideo.title}                className="w-full h-full object-cover"              />                            {/* Video Controls Overlay */}              <div className="absolute inset-0 flex items-center justify-center">                <Button                  variant="ghost"                  size="icon"                  onClick={togglePlayPause}                  className="w-16 h-16 bg-black/50 hover:bg-black/70 text-white rounded-full"                >                  {isPlaying ? (                    <Pause className="w-8 h-8" />                  ) : (                    <Play className="w-8 h-8 ml-1" />                  )}                </Button>              </div>              {/* Video Info Overlay */}              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">                <div className="flex items-center space-x-3 mb-2">                  <Avatar className="w-10 h-10">                    <AvatarFallback className="bg-gradient-to-r from-blue-500 to-purple-500 text-white">                      {currentVideo.author.avatar}                    </AvatarFallback>                  </Avatar>                  <div className="flex-1">                    <div className="flex items-center space-x-2">                      <span className="font-semibold text-white">                        {currentVideo.author.name}                      </span>                      {currentVideo.author.verified && (                        <Verified className="w-4 h-4 text-blue-400" />                      )}                    </div>                    <div className="flex items-center space-x-2 text-sm text-gray-300">                      <KBatchBadge kBatch={currentVideo.author.kBatch} size="xs" />                      <span>•</span>                      <span>{currentVideo.author.followers} followers</span>                    </div>                  </div>                  <Button                    variant={followedUsers.has(currentVideo.author.username) ? 'default' : 'outline'}                    size="sm"                    onClick={() => handleVideoInteraction('follow', currentVideo.id)}                    className="bg-white text-black hover:bg-gray-200"                  >                    {followedUsers.has(currentVideo.author.username) ? 'Following' : 'Follow'}                  </Button>                </div>                <div className="mb-3">                  <h3 className="font-semibold text-white mb-1">                    {currentVideo.title}                  </h3>                  <RichText                    content={currentVideo.description}                    className="text-sm text-gray-300 line-clamp-2"                  />                </div>                <div className="flex items-center justify-between text-sm text-gray-400">                  <div className="flex items-center space-x-4">                    <span className="flex items-center space-x-1">                      <Eye className="w-4 h-4" />                      <span>{currentVideo.views}</span>                    </span>                    <span className="flex items-center space-x-1">                      <Clock className="w-4 h-4" />                      <span>{currentVideo.timestamp}</span>                    </span>                  </div>                  <span>{currentVideo.duration}</span>                </div>              </div>            </div>          </div>        </div>        {/* Side Action Bar */}        <div className="absolute right-4 bottom-32 z-20 space-y-4">          {/* Like Button */}          <div className="flex flex-col items-center">            <Button              variant="ghost"              size="icon"              onClick={() => handleVideoInteraction('like', currentVideo.id)}              className={`w-12 h-12 rounded-full ${                likedVideos.has(currentVideo.id)                  ? 'bg-red-500 text-white'                  : 'bg-black/50 text-white hover:bg-black/70'              }`}            >              <Heart className={`w-6 h-6 ${likedVideos.has(currentVideo.id) ? 'fill-current' : ''}`} />            </Button>            <span className="text-xs text-white mt-1">              {currentVideo.likes + (likedVideos.has(currentVideo.id) ? 1 : 0)}            </span>          </div>          {/* Comment Button */}          <div className="flex flex-col items-center">            <Button              variant="ghost"              size="icon"              onClick={() => setShowComments(true)}              className="w-12 h-12 rounded-full bg-black/50 text-white hover:bg-black/70"            >              <MessageCircle className="w-6 h-6" />            </Button>            <span className="text-xs text-white mt-1">{currentVideo.comments}</span>          </div>          {/* Share Button */}          <div className="flex flex-col items-center">            <Button              variant="ghost"              size="icon"              onClick={() => handleShare(currentVideo)}              className="w-12 h-12 rounded-full bg-black/50 text-white hover:bg-black/70"            >              <Share2 className="w-6 h-6" />            </Button>            <span className="text-xs text-white mt-1">{currentVideo.shares}</span>          </div>          {/* Save Button */}          <Button            variant="ghost"            size="icon"            onClick={() => handleVideoInteraction('save', currentVideo.id)}            className={`w-12 h-12 rounded-full ${              savedVideos.has(currentVideo.id)                ? 'bg-yellow-500 text-white'                : 'bg-black/50 text-white hover:bg-black/70'            }`}          >            <Bookmark className={`w-6 h-6 ${savedVideos.has(currentVideo.id) ? 'fill-current' : ''}`} />          </Button>        </div>        {/* Navigation Arrows */}        <div className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20">          <Button            variant="ghost"            size="icon"            onClick={prevVideo}            className="w-12 h-12 rounded-full bg-black/50 text-white hover:bg-black/70"          >            <SkipBack className="w-6 h-6" />          </Button>        </div>        <div className="absolute right-20 top-1/2 transform -translate-y-1/2 z-20">          <Button            variant="ghost"            size="icon"            onClick={nextVideo}            className="w-12 h-12 rounded-full bg-black/50 text-white hover:bg-black/70"          >            <SkipForward className="w-6 h-6" />          </Button>        </div>      </div>      {/* Comments Modal */}      {showComments && (        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm">          <div className="absolute bottom-0 left-0 right-0 bg-white rounded-t-xl max-h-[70vh] overflow-hidden">            <div className="p-4 border-b border-gray-200 flex items-center justify-between">              <h3 className="font-semibold text-black">Comments ({currentVideo.comments})</h3>              <Button                variant="ghost"                size="icon"                onClick={() => setShowComments(false)}                className="text-black hover:bg-gray-100"              >                <X className="w-5 h-5" />              </Button>            </div>                        <div className="p-4 space-y-4 max-h-96 overflow-y-auto">              {/* Sample Comments */}              {[1, 2, 3].map((comment) => (                <div key={comment} className="flex space-x-3">                  <Avatar className="w-8 h-8">                    <AvatarFallback className="bg-gray-300 text-black text-sm">                      U{comment}                    </AvatarFallback>                  </Avatar>                  <div className="flex-1">                    <div className="flex items-center space-x-2">                      <span className="font-semibold text-sm text-black">User{comment}</span>                      <span className="text-xs text-gray-500">2m ago</span>                    </div>                    <p className="text-sm text-gray-700">                      Great video! Really helpful content 👍                    </p>                  </div>                </div>              ))}            </div>            <div className="p-4 border-t border-gray-200">              <div className="flex space-x-3">                <Avatar className="w-8 h-8">                  <AvatarFallback className="bg-blue-500 text-white text-sm">                    SR                  </AvatarFallback>                </Avatar>                <div className="flex-1 flex space-x-2">                  <Input                    placeholder="Add a comment..."                    value={newComment}                    onChange={(e) => setNewComment(e.target.value)}                    className="flex-1 text-black"                  />                  <Button                    onClick={submitComment}                    disabled={!newComment.trim()}                    className="bg-blue-500 text-white hover:bg-blue-600"                  >                    <Send className="w-4 h-4" />                  </Button>                </div>              </div>            </div>          </div>        </div>      )}      {/* Bottom Navigation */}      <BottomNavigation currentPage="watch" />    </div>  );}
+
+import { useState, useRef, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { Card, CardContent } from '@/components/ui/Card';
+import { Button } from '@/components/ui/Button';
+import { Input } from '@/components/ui/Input';
+import { Avatar, AvatarFallback } from '@/components/ui/Avatar';
+import { Badge } from '@/components/ui/Badge';
+import { KBatchBadge } from '@/components/ui/KBatchBadge';
+import { RichText } from '@/components/ui/RichText';
+import { useToast } from '@/components/Toast';
+import BottomNavigation from '@/components/BottomNavigation';
+import MobileHamburgerMenu from '@/components/MobileHamburgerMenu';
+import {
   ArrowLeft,
   Play,
   Pause,
@@ -30,585 +111,534 @@ import {
   Eye,
   Users,
   Filter,
-  Grid3X3,
-  List,
-  Maximize,
-  Minimize,
   SkipBack,
   SkipForward,
-  Repeat,
-  Shuffle,
   ThumbsUp,
   ThumbsDown,
-  Plus,
-  Check,
-  Star,
-  Flag,
-  Download,
   Send,
   Smile,
   Camera,
-  Mic,
-  Image,
-  Gift,
-  Hash,
-  AtSign,
-  MapPin,
-  Calendar,
-  Settings,
-  UserPlus,
-  Crown,
-  Verified,
-  Zap,
-  Target,
-  Trophy,
-  Sparkles,
+  X,
+  Code,
+  Coffee,
   BookOpen,
-  X
+  Calendar,
+  Verified
 } from 'lucide-react';
-import { MediaPlayer } from '@/components/ui/MediaPlayer';
-import { PageLayout } from '@/components/PageLayout';
 
 export default function WatchPage() {
-    const [videos, setVideos] = useState([
-        {
-            id: 1,
-            title: 'Campus Tour: BIT Mesra Highlights',
-            author: 'Raj Kumar',
-            avatar: 'RK',
-            kBatch: 'K22',
-            time: '2h',
-            views: 1250,
-            likes: 89,
-            comments: 23,
-            shares: 15,
-            duration: '5:32',
-            description: 'A complete tour of BIT Mesra campus showing all the important places every BITian should know! From the main gate to the hostels, library, and the beautiful lake. #campus #bitmesra #tour',
-            category: 'Campus Life',
-            branch: 'CSE',
-            year: '3rd Year',
-            verified: true,
-            media: {
-                type: 'video',
-                url: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4',
-                thumbnail: 'https://images.unsplash.com/photo-1562774053-701939374585?w=800&h=450&fit=crop',
-                caption: 'BIT Mesra Campus Tour - Complete Guide'
-            },
-            tags: ['campus', 'tour', 'bitmesra', 'guide']
-        },
-        {
-            id: 2,
-            title: 'Data Structures Tutorial: Trees Explained',
-            author: 'Priya Sharma',
-            avatar: 'PS',
-            kBatch: 'K21',
-            time: '4h',
-            views: 3400,
-            likes: 234,
-            comments: 67,
-            shares: 45,
-            duration: '15:24',
-            description: 'Complete explanation of Tree data structures with examples and code implementation. Perfect for placements and semester exams! #DSA #programming #trees #coding',
-            category: 'Academic',
-            branch: 'CSE',
-            year: '4th Year',
-            verified: true,
-            media: {
-                type: 'video',
-                url: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4',
-                thumbnail: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&h=450&fit=crop',
-                caption: 'Data Structures: Trees Tutorial'
-            },
-            tags: ['dsa', 'programming', 'trees', 'tutorial', 'coding']
-        },
-        {
-            id: 3,
-            title: 'Hostel Life Vlog: A Day in BIT Mesra',
-            author: 'Arjun Verma',
-            avatar: 'AV',
-            kBatch: 'K23',
-            time: '1d',
-            views: 892,
-            likes: 156,
-            comments: 34,
-            shares: 28,
-            duration: '8:45',
-            description: 'Follow me through a typical day in BIT Mesra hostel! From morning routine to late night study sessions. Real hostel life experience! #hostellife #vlog #bitmesra #student',
-            category: 'Lifestyle',
-            branch: 'ECE',
-            year: '2nd Year',
-            verified: false,
-            media: {
-                type: 'video',
-                url: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4',
-                thumbnail: 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=800&h=450&fit=crop',
-                caption: 'Hostel Life Vlog - A Day in BIT Mesra'
-            },
-            tags: ['hostel', 'vlog', 'lifestyle', 'student', 'daily']
-        },
-        {
-            id: 4,
-            title: 'Placement Interview Experience: Goldman Sachs',
-            author: 'Neha Gupta',
-            avatar: 'NG',
-            kBatch: 'K20',
-            time: '3d',
-            views: 5600,
-            likes: 445,
-            comments: 123,
-            shares: 89,
-            duration: '12:18',
-            description: 'My complete placement interview experience at Goldman Sachs. Technical rounds, HR questions, and tips for success! Must watch for final year students. #placement #interview #goldmansachs #career',
-            category: 'Career',
-            branch: 'CSE',
-            year: 'Alumni',
-            verified: true,
-            media: {
-                type: 'video',
-                url: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4',
-                thumbnail: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=450&fit=crop',
-                caption: 'Goldman Sachs Interview Experience'
-            },
-            tags: ['placement', 'interview', 'career', 'tips', 'experience']
-        },
-        {
-            id: 5,
-            title: 'Tech Fest 2024: Behind the Scenes',
-            author: 'Tech Team BIT',
-            avatar: 'TB',
-            kBatch: 'Official',
-            time: '1w',
-            views: 2300,
-            likes: 198,
-            comments: 56,
-            shares: 67,
-            duration: '9:33',
-            description: 'Exclusive behind the scenes footage from Tech Fest 2024! See how the biggest technical event of BIT Mesra was organized. #techfest #events #bitmesra #technical',
-            category: 'Events',
-            branch: 'Official',
-            year: 'Community',
-            verified: true,
-            media: {
-                type: 'video',
-                url: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4',
-                thumbnail: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&h=450&fit=crop',
-                caption: 'Tech Fest 2024 - Behind the Scenes'
-            },
-            tags: ['techfest', 'events', 'technical', 'fest', 'college']
-        },
-        {
-            id: 6,
-            title: 'Coding Competition Prep: Dynamic Programming',
-            author: 'Rohit Singh',
-            avatar: 'RS',
-            kBatch: 'K22',
-            time: '5d',
-            views: 1890,
-            likes: 167,
-            comments: 45,
-            shares: 32,
-            duration: '18:42',
-            description: 'Master Dynamic Programming for coding competitions! Step by step approach with examples and practice problems. Perfect for ACM ICPC and other contests. #dp #coding #competitive #programming',
-            category: 'Programming',
-            branch: 'CSE',
-            year: '3rd Year',
-            verified: true,
-            media: {
-                type: 'video',
-                url: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4',
-                thumbnail: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&h=450&fit=crop',
-                caption: 'Dynamic Programming Tutorial'
-            },
-            tags: ['dp', 'coding', 'competitive', 'programming', 'tutorial']
+  const router = useRouter();
+  const { toast } = useToast();
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
+  const [activeTab, setActiveTab] = useState('for-you');
+  const [showComments, setShowComments] = useState(false);
+  const [newComment, setNewComment] = useState('');
+  const [likedVideos, setLikedVideos] = useState(new Set());
+  const [followedUsers, setFollowedUsers] = useState(new Set());
+  const [savedVideos, setSavedVideos] = useState(new Set());
+  const videoRef = useRef(null);
+
+  // Enhanced video data following UI/UX principles
+  const videos = [
+    {
+      id: 1,
+      title: 'Campus Life at BIT Mesra: A Day in Paradise 🌅',
+      author: {
+        name: 'Priya Sharma',
+        username: 'priyasharma_k22',
+        avatar: 'PS',
+        kBatch: 'K22',
+        verified: true,
+        followers: '12.5K'
+      },
+      description: 'Starting my day at 6 AM with a beautiful sunrise from the hostel terrace, then off to classes, library sessions, and ending with friends at the lake. This is what makes BIT Mesra special! ✨',
+      duration: '2:45',
+      views: '45.2K',
+      likes: 3420,
+      comments: 234,
+      shares: 156,
+      timestamp: '2h ago',
+      thumbnail: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&h=600&fit=crop',
+      videoUrl: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4',
+      tags: ['campus', 'lifestyle', 'bitmesra', 'student'],
+      category: 'Lifestyle',
+      engagement: 8.5,
+      trending: true
+    },
+    {
+      id: 2,
+      title: 'Coding Bootcamp: React.js in 60 Seconds! 🚀',
+      author: {
+        name: 'Arjun Patel',
+        username: 'arjuncode',
+        avatar: 'AP',
+        kBatch: 'K21',
+        verified: true,
+        followers: '28.3K'
+      },
+      description: 'Quick React tutorial covering components, hooks, and state management. Perfect for beginners! Drop your questions in comments 👇',
+      duration: '1:12',
+      views: '89.1K',
+      likes: 5670,
+      comments: 445,
+      shares: 234,
+      timestamp: '4h ago',
+      thumbnail: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=600&fit=crop',
+      videoUrl: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_2mb.mp4',
+      tags: ['coding', 'react', 'tutorial', 'programming'],
+      category: 'Education',
+      engagement: 9.2,
+      trending: false
+    },
+    {
+      id: 3,
+      title: 'Hostel Food vs Home Food: The Eternal Debate 😂',
+      author: {
+        name: 'Sneha Reddy',
+        username: 'sneha_foodie',
+        avatar: 'SR',
+        kBatch: 'K20',
+        verified: false,
+        followers: '8.7K'
+      },
+      description: 'POV: You are missing home food but hostel maggi hits different at 2 AM 🍜 Tag someone who relates!',
+      duration: '0:45',
+      views: '156.8K',
+      likes: 12450,
+      comments: 1234,
+      shares: 567,
+      timestamp: '1d ago',
+      thumbnail: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=600&fit=crop',
+      videoUrl: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4',
+      tags: ['food', 'hostel', 'funny', 'relatable'],
+      category: 'Comedy',
+      engagement: 9.8,
+      trending: true
+    },
+    {
+      id: 4,
+      title: 'Late Night Study Session Vibes 📚✨',
+      author: {
+        name: 'Rahul Kumar',
+        username: 'rahul_studies',
+        avatar: 'RK',
+        kBatch: 'K23',
+        verified: false,
+        followers: '5.2K'
+      },
+      description: 'When you have an exam tomorrow but you are just starting to study 😅 The library at 2 AM hits different though!',
+      duration: '1:33',
+      views: '23.4K',
+      likes: 1890,
+      comments: 167,
+      shares: 89,
+      timestamp: '6h ago',
+      thumbnail: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&h=600&fit=crop',
+      videoUrl: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_2mb.mp4',
+      tags: ['study', 'exam', 'library', 'student'],
+      category: 'Education',
+      engagement: 7.8,
+      trending: false
+    }
+  ];
+
+  const categories = [
+    { id: 'for-you', label: 'For You', icon: TrendingUp },
+    { id: 'following', label: 'Following', icon: Users },
+    { id: 'education', label: 'Education', icon: BookOpen },
+    { id: 'lifestyle', label: 'Lifestyle', icon: Heart },
+    { id: 'comedy', label: 'Comedy', icon: Smile },
+    { id: 'events', label: 'Events', icon: Calendar }
+  ];
+
+  const currentVideo = videos[currentVideoIndex];
+
+  const handleVideoInteraction = (action, videoId) => {
+    switch (action) {
+      case 'like':
+        setLikedVideos(prev => {
+          const newSet = new Set(prev);
+          if (newSet.has(videoId)) {
+            newSet.delete(videoId);
+            toast({ title: 'Removed from liked videos' });
+          } else {
+            newSet.add(videoId);
+            toast({ title: 'Added to liked videos' });
+          }
+          return newSet;
+        });
+        break;
+      case 'save':
+        setSavedVideos(prev => {
+          const newSet = new Set(prev);
+          if (newSet.has(videoId)) {
+            newSet.delete(videoId);
+            toast({ title: 'Removed from saved videos' });
+          } else {
+            newSet.add(videoId);
+            toast({ title: 'Video saved' });
+          }
+          return newSet;
+        });
+        break;
+      case 'follow':
+        const authorUsername = videos.find(v => v.id === videoId)?.author.username;
+        if (authorUsername) {
+          setFollowedUsers(prev => {
+            const newSet = new Set(prev);
+            if (newSet.has(authorUsername)) {
+              newSet.delete(authorUsername);
+              toast({ title: 'Unfollowed user' });
+            } else {
+              newSet.add(authorUsername);
+              toast({ title: 'Following user' });
+            }
+            return newSet;
+          });
         }
-    ]);
+        break;
+    }
+  };
 
-    const [searchTerm, setSearchTerm] = useState('');
-    const [selectedCategory, setSelectedCategory] = useState('all');
-    const [sortBy, setSortBy] = useState('recent');
-    const [showFilters, setShowFilters] = useState(false);
-    const [likedVideos, setLikedVideos] = useState(new Set());
-    const [bookmarkedVideos, setBookmarkedVideos] = useState(new Set());
-    const { toast } = useToast();
+  const handleShare = (video) => {
+    if (navigator.share) {
+      navigator.share({
+        title: video.title,
+        text: video.description,
+        url: window.location.href
+      });
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+      toast({ title: 'Link copied to clipboard!' });
+    }
+  };
 
-    const categories = [
-        { id: 'academic', name: 'Academic', icon: BookOpen, color: 'text-blue-500' },
-        { id: 'campus', name: 'Campus Life', icon: Users, color: 'text-green-500' },
-        { id: 'career', name: 'Career', icon: TrendingUp, color: 'text-purple-500' },
-        { id: 'programming', name: 'Programming', icon: Code, color: 'text-orange-500' },
-        { id: 'lifestyle', name: 'Lifestyle', icon: Coffee, color: 'text-pink-500' },
-        { id: 'events', name: 'Events', icon: Camera, color: 'text-red-500' }
-    ];
+  const togglePlayPause = () => {
+    setIsPlaying(!isPlaying);
+  };
 
-    const filteredVideos = videos.filter(video => {
-        const matchesSearch = video.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            video.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            video.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
-        const matchesCategory = selectedCategory === 'all' ||
-            video.category.toLowerCase().includes(selectedCategory.toLowerCase());
+  const toggleMute = () => {
+    setIsMuted(!isMuted);
+  };
 
-        return matchesSearch && matchesCategory;
-    }).sort((a, b) => {
-        switch (sortBy) {
-            case 'popular': return b.views - a.views;
-            case 'liked': return b.likes - a.likes;
-            case 'discussed': return b.comments - a.comments;
-            default: return 0; // recent (already in order)
-        }
-    });
+  const nextVideo = () => {
+    setCurrentVideoIndex((prev) => (prev + 1) % videos.length);
+  };
 
-    const handleLike = (videoId) => {
-        const newLiked = new Set(likedVideos);
-        if (newLiked.has(videoId)) {
-            newLiked.delete(videoId);
-            toast({
-                title: 'Unliked',
-                description: 'Video removed from your likes',
-                type: 'info',
-                duration: 2000,
-            });
-        } else {
-            newLiked.add(videoId);
-            toast({
-                title: 'Liked! ❤️',
-                description: 'Video added to your likes',
-                type: 'success',
-                duration: 2000,
-            });
-        }
-        setLikedVideos(newLiked);
-    };
+  const prevVideo = () => {
+    setCurrentVideoIndex((prev) => (prev - 1 + videos.length) % videos.length);
+  };
 
-    const handleBookmark = (videoId) => {
-        const newBookmarked = new Set(bookmarkedVideos);
-        if (newBookmarked.has(videoId)) {
-            newBookmarked.delete(videoId);
-            toast({
-                title: 'Bookmark removed',
-                description: 'Video removed from your watchlist',
-                type: 'info',
-                duration: 2000,
-            });
-        } else {
-            newBookmarked.add(videoId);
-            toast({
-                title: 'Bookmarked! 🔖',
-                description: 'Video added to your watchlist',
-                type: 'success',
-                duration: 2000,
-            });
-        }
-        setBookmarkedVideos(newBookmarked);
-    };
+  const submitComment = () => {
+    if (newComment.trim()) {
+      toast({ title: 'Comment posted!' });
+      setNewComment('');
+      setShowComments(false);
+    }
+  };
 
-    const handleShare = (video) => {
-        if (navigator.share) {
-            navigator.share({
-                title: video.title,
-                text: video.description,
-                url: `${window.location.origin}/watch/${video.id}`,
-            });
-        } else {
-            navigator.clipboard.writeText(`${window.location.origin}/watch/${video.id}`);
-            toast({
-                title: 'Link copied! 📋',
-                description: 'Video link copied to clipboard',
-                type: 'success',
-                duration: 2000,
-            });
-        }
-    };
+  return (
+    <div className="min-h-screen bg-black text-white">
+      {/* Mobile Header */}
+      <div className="fixed top-0 left-0 right-0 z-50 bg-black/50 backdrop-blur-sm">
+        <div className="flex items-center justify-between p-4">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => router.back()}
+            className="text-white hover:bg-white/20"
+          >
+            <ArrowLeft className="w-5 h-5" />
+          </Button>
+          <h1 className="font-bold text-lg">BIT Watch</h1>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="text-white hover:bg-white/20"
+          >
+            <Search className="w-5 h-5" />
+          </Button>
+        </div>
 
-    const getCategoryIcon = (category) => {
-        const cat = categories.find(c => category.toLowerCase().includes(c.name.toLowerCase()));
-        return cat ? { icon: cat.icon, color: cat.color } : { icon: Play, color: 'text-gray-500' };
-    };
+        {/* Category Tabs */}
+        <div className="flex space-x-4 px-4 pb-2 overflow-x-auto">
+          {categories.map((category) => {
+            const Icon = category.icon;
+            return (
+              <Button
+                key={category.id}
+                variant={activeTab === category.id ? 'default' : 'ghost'}
+                size="sm"
+                onClick={() => setActiveTab(category.id)}
+                className={`flex items-center space-x-2 whitespace-nowrap ${
+                  activeTab === category.id
+                    ? 'bg-white text-black'
+                    : 'text-white hover:bg-white/20'
+                }`}
+              >
+                <Icon className="w-4 h-4" />
+                <span>{category.label}</span>
+              </Button>
+            );
+          })}
+        </div>
+      </div>
 
-    return (
-        <PageLayout>
-            <div className="container mx-auto px-4 py-6 max-w-7xl">
-                {/* Header */}
-                <div className="text-center mb-8">
-                    <h1 className="text-4xl font-bold bg-gradient-to-r from-red-600 to-pink-600 bg-clip-text text-transparent mb-4">
-                        BIT Watch
-                    </h1>
-                    <p className="text-muted-foreground text-lg">
-                        Discover and watch videos from the BIT community
-                    </p>
+      {/* Video Player Area */}
+      <div className="relative h-screen">
+        {/* Video Background */}
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage: `url(${currentVideo.thumbnail})`,
+            filter: 'blur(20px)',
+            transform: 'scale(1.1)'
+          }}
+        />
+
+        {/* Video Container */}
+        <div className="relative z-10 h-full flex items-center justify-center">
+          <div className="w-full max-w-md mx-auto bg-black rounded-lg overflow-hidden">
+            <div className="aspect-video relative">
+              <img
+                src={currentVideo.thumbnail}
+                alt={currentVideo.title}
+                className="w-full h-full object-cover"
+              />
+
+              {/* Video Controls Overlay */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={togglePlayPause}
+                  className="w-16 h-16 bg-black/50 hover:bg-black/70 text-white rounded-full"
+                >
+                  {isPlaying ? (
+                    <Pause className="w-8 h-8" />
+                  ) : (
+                    <Play className="w-8 h-8 ml-1" />
+                  )}
+                </Button>
+              </div>
+
+              {/* Video Info Overlay */}
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+                <div className="flex items-center space-x-3 mb-2">
+                  <Avatar className="w-10 h-10">
+                    <AvatarFallback className="bg-gradient-to-r from-blue-500 to-purple-500 text-white">
+                      {currentVideo.author.avatar}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="flex-1">
+                    <div className="flex items-center space-x-2">
+                      <span className="font-semibold text-white">
+                        {currentVideo.author.name}
+                      </span>
+                      {currentVideo.author.verified && (
+                        <Verified className="w-4 h-4 text-blue-400" />
+                      )}
+                    </div>
+                    <div className="flex items-center space-x-2 text-sm text-gray-300">
+                      <KBatchBadge kBatch={currentVideo.author.kBatch} size="xs" />
+                      <span>•</span>
+                      <span>{currentVideo.author.followers} followers</span>
+                    </div>
+                  </div>
+                  <Button
+                    variant={followedUsers.has(currentVideo.author.username) ? 'default' : 'outline'}
+                    size="sm"
+                    onClick={() => handleVideoInteraction('follow', currentVideo.id)}
+                    className="bg-white text-black hover:bg-gray-200"
+                  >
+                    {followedUsers.has(currentVideo.author.username) ? 'Following' : 'Follow'}
+                  </Button>
                 </div>
 
-                {/* Search and Controls */}
-                <div className="mb-8 space-y-4">
-                    <div className="flex flex-col sm:flex-row gap-4">
-                        <div className="relative flex-1">
-                            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5" />
-                            <Input
-                                placeholder="Search videos, channels, or tags..."
-                                value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
-                                className="pl-10"
-                            />
-                        </div>
-                        <div className="flex gap-2">
-                            <Button
-                                variant={showFilters ? "default" : "outline"}
-                                onClick={() => setShowFilters(!showFilters)}
-                                className="flex items-center gap-2"
-                            >
-                                <Filter className="h-4 w-4" />
-                                Filters
-                            </Button>
-                        </div>
-                    </div>
-
-                    {/* Filter Panel */}
-                    {showFilters && (
-                        <Card className="p-4 space-y-4 animate-fade-in">
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                <div>
-                                    <label className="block text-sm font-medium mb-2">Category</label>
-                                    <select
-                                        value={selectedCategory}
-                                        onChange={(e) => setSelectedCategory(e.target.value)}
-                                        className="w-full p-2 border rounded-lg bg-background"
-                                    >
-                                        <option value="all">All Categories</option>
-                                        {categories.map(category => (
-                                            <option key={category.id} value={category.id}>
-                                                {category.name}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-medium mb-2">Sort By</label>
-                                    <select
-                                        value={sortBy}
-                                        onChange={(e) => setSortBy(e.target.value)}
-                                        className="w-full p-2 border rounded-lg bg-background"
-                                    >
-                                        <option value="recent">Most Recent</option>
-                                        <option value="popular">Most Viewed</option>
-                                        <option value="liked">Most Liked</option>
-                                        <option value="discussed">Most Discussed</option>
-                                    </select>
-                                </div>
-                                <div className="flex items-end">
-                                    <Button
-                                        variant="outline"
-                                        onClick={() => {
-                                            setSelectedCategory('all');
-                                            setSortBy('recent');
-                                            setSearchTerm('');
-                                        }}
-                                        className="w-full"
-                                    >
-                                        Clear Filters
-                                    </Button>
-                                </div>
-                            </div>
-                        </Card>
-                    )}
+                <div className="mb-3">
+                  <h3 className="font-semibold text-white mb-1">
+                    {currentVideo.title}
+                  </h3>
+                  <RichText
+                    content={currentVideo.description}
+                    className="text-sm text-gray-300 line-clamp-2"
+                  />
                 </div>
 
-                {/* Category Quick Filters */}
-                <div className="mb-8">
-                    <div className="flex flex-wrap gap-2">
-                        <Button
-                            variant={selectedCategory === 'all' ? 'default' : 'outline'}
-                            size="sm"
-                            onClick={() => setSelectedCategory('all')}
-                            className="rounded-full"
-                        >
-                            All
-                        </Button>
-                        {categories.map(category => {
-                            const Icon = category.icon;
-                            return (
-                                <Button
-                                    key={category.id}
-                                    variant={selectedCategory === category.id ? 'default' : 'outline'}
-                                    size="sm"
-                                    onClick={() => setSelectedCategory(category.id)}
-                                    className="rounded-full flex items-center gap-1"
-                                >
-                                    <Icon className={`h-3 w-3 ${category.color}`} />
-                                    {category.name}
-                                </Button>
-                            );
-                        })}
-                    </div>
+                <div className="flex items-center justify-between text-sm text-gray-400">
+                  <div className="flex items-center space-x-4">
+                    <span className="flex items-center space-x-1">
+                      <Eye className="w-4 h-4" />
+                      <span>{currentVideo.views}</span>
+                    </span>
+                    <span className="flex items-center space-x-1">
+                      <Clock className="w-4 h-4" />
+                      <span>{currentVideo.timestamp}</span>
+                    </span>
+                  </div>
+                  <span>{currentVideo.duration}</span>
                 </div>
-
-                {/* Videos Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {filteredVideos.map(video => {
-                        const categoryInfo = getCategoryIcon(video.category);
-                        const CategoryIcon = categoryInfo.icon;
-
-                        return (
-                            <Card key={video.id} className="overflow-hidden hover:shadow-xl transition-all duration-300 card-hover">
-                                {/* Video Thumbnail */}
-                                <div className="relative aspect-video bg-muted">
-                                    <MediaPlayer
-                                        media={video.media}
-                                        className="w-full h-full"
-                                        showControls={false}
-                                    />
-                                    <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity cursor-pointer">
-                                        <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center">
-                                            <Play className="w-8 h-8 text-black ml-1" />
-                                        </div>
-                                    </div>
-                                    <div className="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-2 py-1 rounded">
-                                        {video.duration}
-                                    </div>
-                                </div>
-
-                                {/* Video Info */}
-                                <div className="p-4">
-                                    {/* Header */}
-                                    <div className="flex items-start gap-3 mb-3">
-                                        <Avatar className="w-10 h-10">
-                                            <div className="w-full h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-semibold">
-                                                {video.avatar}
-                                            </div>
-                                        </Avatar>
-                                        <div className="flex-1 min-w-0">
-                                            <h3 className="font-semibold text-sm line-clamp-2 mb-1">
-                                                {video.title}
-                                            </h3>
-                                            <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                                                <span>{video.author}</span>
-                                                {video.verified && (
-                                                    <div className="w-3 h-3 bg-blue-500 rounded-full flex items-center justify-center">
-                                                        <span className="text-xs text-white">✓</span>
-                                                    </div>
-                                                )}
-                                                <KBatchBadge kBatch={video.kBatch} size="xs" />
-                                            </div>
-                                        </div>
-                                        <Button variant="ghost" size="icon" className="w-6 h-6">
-                                            <MoreVertical className="w-3 h-3" />
-                                        </Button>
-                                    </div>
-
-                                    {/* Stats */}
-                                    <div className="flex items-center gap-4 text-xs text-muted-foreground mb-3">
-                                        <div className="flex items-center gap-1">
-                                            <Eye className="w-3 h-3" />
-                                            {video.views.toLocaleString()}
-                                        </div>
-                                        <div className="flex items-center gap-1">
-                                            <Clock className="w-3 h-3" />
-                                            {video.time}
-                                        </div>
-                                        <div className="flex items-center gap-1">
-                                            <CategoryIcon className={`w-3 h-3 ${categoryInfo.color}`} />
-                                            {video.category}
-                                        </div>
-                                    </div>
-
-                                    {/* Description */}
-                                    <div className="mb-3">
-                                        <RichText
-                                            content={video.description}
-                                            className="text-xs text-muted-foreground line-clamp-2"
-                                            onHashtagClick={(hashtag) => {
-                                                setSearchTerm(hashtag);
-                                            }}
-                                        />
-                                    </div>
-
-                                    {/* Tags */}
-                                    <div className="flex flex-wrap gap-1 mb-3">
-                                        {video.tags.slice(0, 3).map(tag => (
-                                            <Badge
-                                                key={tag}
-                                                variant="secondary"
-                                                className="text-xs cursor-pointer hover:bg-primary hover:text-primary-foreground"
-                                                onClick={() => setSearchTerm(tag)}
-                                            >
-                                                #{tag}
-                                            </Badge>
-                                        ))}
-                                    </div>
-
-                                    {/* Actions */}
-                                    <div className="flex items-center justify-between pt-3 border-t">
-                                        <div className="flex items-center gap-4">
-                                            <button
-                                                onClick={() => handleLike(video.id)}
-                                                className={`flex items-center gap-1 text-xs transition-colors ${likedVideos.has(video.id)
-                                                    ? 'text-red-500 hover:text-red-600'
-                                                    : 'text-muted-foreground hover:text-red-500'
-                                                    }`}
-                                            >
-                                                <Heart className={`h-3 w-3 ${likedVideos.has(video.id) ? 'fill-current' : ''}`} />
-                                                <span>{video.likes + (likedVideos.has(video.id) ? 1 : 0)}</span>
-                                            </button>
-
-                                            <button className="flex items-center gap-1 text-xs text-muted-foreground hover:text-blue-500 transition-colors">
-                                                <MessageCircle className="h-3 w-3" />
-                                                <span>{video.comments}</span>
-                                            </button>
-
-                                            <button
-                                                onClick={() => handleShare(video)}
-                                                className="flex items-center gap-1 text-xs text-muted-foreground hover:text-green-500 transition-colors"
-                                            >
-                                                <Share2 className="h-3 w-3" />
-                                                <span>{video.shares}</span>
-                                            </button>
-                                        </div>
-
-                                        <button
-                                            onClick={() => handleBookmark(video.id)}
-                                            className={`transition-colors ${bookmarkedVideos.has(video.id)
-                                                ? 'text-yellow-500'
-                                                : 'text-muted-foreground hover:text-yellow-500'
-                                                }`}
-                                        >
-                                            <Bookmark className={`h-4 w-4 ${bookmarkedVideos.has(video.id) ? 'fill-current' : ''}`} />
-                                        </button>
-                                    </div>
-                                </div>
-                            </Card>
-                        );
-                    })}
-                </div>
-
-                {filteredVideos.length === 0 && (
-                    <div className="text-center py-12">
-                        <Play className="h-16 w-16 text-muted-foreground/30 mx-auto mb-4" />
-                        <h3 className="text-lg font-medium mb-2">No videos found</h3>
-                        <p className="text-muted-foreground">
-                            Try adjusting your search or filter criteria
-                        </p>
-                    </div>
-                )}
-
-                {/* Trending Topics */}
-                <Card className="mt-8 p-6">
-                    <h3 className="font-semibold mb-4 flex items-center gap-2">
-                        <TrendingUp className="h-4 w-4 text-red-500" />
-                        Trending Topics
-                    </h3>
-                    <div className="flex flex-wrap gap-2">
-                        {['dsa', 'placement', 'campus', 'coding', 'hostel', 'techfest', 'tutorial', 'vlog'].map(tag => (
-                            <Badge
-                                key={tag}
-                                variant="outline"
-                                className="cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors"
-                                onClick={() => setSearchTerm(tag)}
-                            >
-                                #{tag}
-                            </Badge>
-                        ))}
-                    </div>
-                </Card>
+              </div>
             </div>
-            <BottomNavigation currentPage="watch" />
-        </PageLayout>
-    );
+          </div>
+        </div>
+
+        {/* Side Action Bar */}
+        <div className="absolute right-4 bottom-32 z-20 space-y-4">
+          {/* Like Button */}
+          <div className="flex flex-col items-center">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => handleVideoInteraction('like', currentVideo.id)}
+              className={`w-12 h-12 rounded-full ${
+                likedVideos.has(currentVideo.id)
+                  ? 'bg-red-500 text-white'
+                  : 'bg-black/50 text-white hover:bg-black/70'
+              }`}
+            >
+              <Heart className={`w-6 h-6 ${likedVideos.has(currentVideo.id) ? 'fill-current' : ''}`} />
+            </Button>
+            <span className="text-xs text-white mt-1">
+              {currentVideo.likes + (likedVideos.has(currentVideo.id) ? 1 : 0)}
+            </span>
+          </div>
+
+          {/* Comment Button */}
+          <div className="flex flex-col items-center">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setShowComments(true)}
+              className="w-12 h-12 rounded-full bg-black/50 text-white hover:bg-black/70"
+            >
+              <MessageCircle className="w-6 h-6" />
+            </Button>
+            <span className="text-xs text-white mt-1">{currentVideo.comments}</span>
+          </div>
+
+          {/* Share Button */}
+          <div className="flex flex-col items-center">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => handleShare(currentVideo)}
+              className="w-12 h-12 rounded-full bg-black/50 text-white hover:bg-black/70"
+            >
+              <Share2 className="w-6 h-6" />
+            </Button>
+            <span className="text-xs text-white mt-1">{currentVideo.shares}</span>
+          </div>
+
+          {/* Save Button */}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => handleVideoInteraction('save', currentVideo.id)}
+            className={`w-12 h-12 rounded-full ${
+              savedVideos.has(currentVideo.id)
+                ? 'bg-yellow-500 text-white'
+                : 'bg-black/50 text-white hover:bg-black/70'
+            }`}
+          >
+            <Bookmark className={`w-6 h-6 ${savedVideos.has(currentVideo.id) ? 'fill-current' : ''}`} />
+          </Button>
+        </div>
+
+        {/* Navigation Arrows */}
+        <div className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={prevVideo}
+            className="w-12 h-12 rounded-full bg-black/50 text-white hover:bg-black/70"
+          >
+            <SkipBack className="w-6 h-6" />
+          </Button>
+        </div>
+
+        <div className="absolute right-20 top-1/2 transform -translate-y-1/2 z-20">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={nextVideo}
+            className="w-12 h-12 rounded-full bg-black/50 text-white hover:bg-black/70"
+          >
+            <SkipForward className="w-6 h-6" />
+          </Button>
+        </div>
+      </div>
+
+      {/* Comments Modal */}
+      {showComments && (
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm">
+          <div className="absolute bottom-0 left-0 right-0 bg-white rounded-t-xl max-h-[70vh] overflow-hidden">
+            <div className="p-4 border-b border-gray-200 flex items-center justify-between">
+              <h3 className="font-semibold text-black">Comments ({currentVideo.comments})</h3>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setShowComments(false)}
+                className="text-black hover:bg-gray-100"
+              >
+                <X className="w-5 h-5" />
+              </Button>
+            </div>
+
+            <div className="p-4 space-y-4 max-h-96 overflow-y-auto">
+              {/* Sample Comments */}
+              {[1, 2, 3].map((comment) => (
+                <div key={comment} className="flex space-x-3">
+                  <Avatar className="w-8 h-8">
+                    <AvatarFallback className="bg-gray-300 text-black text-sm">
+                      U{comment}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="flex-1">
+                    <div className="flex items-center space-x-2">
+                      <span className="font-semibold text-sm text-black">User{comment}</span>
+                      <span className="text-xs text-gray-500">2m ago</span>
+                    </div>
+                    <p className="text-sm text-gray-700">
+                      Great video! Really helpful content 👍
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="p-4 border-t border-gray-200">
+              <div className="flex space-x-3">
+                <Avatar className="w-8 h-8">
+                  <AvatarFallback className="bg-blue-500 text-white text-sm">
+                    SR
+                  </AvatarFallback>
+                </Avatar>
+                <div className="flex-1 flex space-x-2">
+                  <Input
+                    placeholder="Add a comment..."
+                    value={newComment}
+                    onChange={(e) => setNewComment(e.target.value)}
+                    className="flex-1 text-black"
+                  />
+                  <Button
+                    onClick={submitComment}
+                    disabled={!newComment.trim()}
+                    className="bg-blue-500 text-white hover:bg-blue-600"
+                  >
+                    <Send className="w-4 h-4" />
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Bottom Navigation */}
+      <BottomNavigation currentPage="watch" />
+    </div>
+  );
 }
